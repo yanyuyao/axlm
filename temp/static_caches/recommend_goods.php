@@ -199,12 +199,12 @@ $data = array (
     ),
     39 => 
     array (
-      'goods_id' => '102',
+      'goods_id' => '99',
       'sort_order' => '100',
     ),
     40 => 
     array (
-      'goods_id' => '99',
+      'goods_id' => '102',
       'sort_order' => '100',
     ),
     41 => 
@@ -662,12 +662,12 @@ $data = array (
     ),
     63 => 
     array (
-      'goods_id' => '102',
+      'goods_id' => '99',
       'sort_order' => '100',
     ),
     64 => 
     array (
-      'goods_id' => '99',
+      'goods_id' => '102',
       'sort_order' => '100',
     ),
     65 => 

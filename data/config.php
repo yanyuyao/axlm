@@ -1,15 +1,15 @@
 <?php
 // database host
-$db_host   = "localhost:3306";
+$db_host   = "47.88.227.140:3306";
 
 // database name
-$db_name   = "xxxxxx";
+$db_name   = "axlm365";
 
 // database username
-$db_user   = "xxx";
+$db_user   = "root";
 
 // database password
-$db_pass   = "xxx";
+$db_pass   = "rootran";
 
 // table prefix
 $prefix    = "ecs_";

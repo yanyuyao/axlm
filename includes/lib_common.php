@@ -4449,7 +4449,7 @@ function GetPinyin($str, $ishead=0, $isclose=1)
 */
 function make_html()
 {
-	return '';//停止所有的静态页面生成
+	//return '';//停止所有的静态页面生成
 	global $_CFG;
 	
 	if(intval($_CFG['rewrite'])<=0){

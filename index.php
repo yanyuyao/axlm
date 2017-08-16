@@ -18,17 +18,20 @@ define('IN_ECS', true);
 
 require(dirname(__FILE__) . '/includes/init.php');
 
-if($is_show_wap){
-$wap_url = "http://www.365axlm.cn/mobile/";
-ecs_header("Location: $wap_url\n");
-}
+//if($is_show_wap){
+//$wap_url = "http://www.365axlm.cn/mobile/";
+//ecs_header("Location: $wap_url\n");
+//}
 
 //var_dump($_COOKIE);
+
 if ((DEBUG_MODE & 2) != 2)
 {
     $smarty->caching = true;
-}
+}    
 /* 修改 by www.cfweb2015.com start */
+$is_c = 1;
+
 if (isset($_REQUEST['is_c']))
 {
     $is_c = intval($_REQUEST['is_c']);
@@ -62,6 +65,8 @@ if(!(preg_match($smartuachar, $ua)) && ($ua == '' || preg_match($uachar, $ua))&&
 }
 /* 修改 by www.cfweb2015.com end */
 }
+
+
 /*------------------------------------------------------ */
 //-- Shopex系统地址转换
 /*------------------------------------------------------ */
@@ -694,7 +699,8 @@ function get_article_new( $id = array(0), $getwhat = 'art_id', $num = 0, $isrand
 	}
 	return $articles;
 }
-
+echo 88888;
+exit;
 /* 代码增加_start  By  www.cfweb2015.com   */
 make_html();
 /* 代码增加_end  By  www.cfweb2015.com   */

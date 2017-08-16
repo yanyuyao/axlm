@@ -17,7 +17,7 @@ if (!defined('IN_ECS'))
 {
     die('Hacking attempt');
 }
-$is_show_wap = true;
+$is_show_wap = false;
 
 
 error_reporting(0);
@@ -89,7 +89,7 @@ require(ROOT_PATH . 'includes/lib_insert.php');
 require(ROOT_PATH . 'includes/lib_goods.php');
 require(ROOT_PATH . 'includes/lib_article.php');
 require(ROOT_PATH . 'themes/68ecshopcom_360buy/php/init.php');
-require(ROOT_PATH . 'includes/inc_constan.php');
+//require(ROOT_PATH . 'includes/inc_constan.php');
 
 /* 对用户传入的变量进行转义操作。*/
 if (!get_magic_quotes_gpc())
