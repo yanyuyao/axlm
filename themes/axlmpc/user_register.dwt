@@ -20,7 +20,7 @@
 <script type="text/javascript" src="themes/68ecshopcom_360buy/js/validate/messages_zh.js"></script>
 <script type="text/javascript" src="themes/68ecshopcom_360buy/js/placeholder.js" ></script>
 {insert_scripts files='jquery.json.js,transport.js'} 
-{* 包含脚本文件 *} 
+{* 包含脚本文件 *}  
 {insert_scripts files='common.js,register.js'}
 </head>
 <body onclick="ecshop68_onclick();">

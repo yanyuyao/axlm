@@ -22,7 +22,7 @@
 <link type="text/css" rel="stylesheet" href="themes/axlmpc/axlm/css/short.css" />
 </head>
 <body onclick="ecshop68_onclick();">
-<script>
+<script> 
 function erweima1(obj, sType) { var oDiv = document.getElementById(obj); if (sType == 'show') { oDiv.style.display = 'block';} if (sType == 'hide') { oDiv.style.display = 'none';} }
 </script>
 <!-- #BeginLibraryItem "/library/page_header_short.lbi" --><!-- #EndLibraryItem -->
