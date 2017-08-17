@@ -1557,8 +1557,8 @@ ol.breadcrumb li a {
 	color: #9B9B9B;
 	line-height: 1.8em;
 }
-.residential-estate-grids:nth-child(3) {
-  margin: 5em 0 0;
+.residential-estate-grids {
+  margin: 3em 0 0;
 }
 /*-- //services --*/
 /*-- news --*/
