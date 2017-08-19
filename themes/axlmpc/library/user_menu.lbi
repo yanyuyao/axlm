@@ -8,6 +8,8 @@
         <a href="user.php?act=address_list" class="item {if $action eq 'address_list'}curs{/if}"><span>{$lang.label_address}</span><i></i></a>
         <!--<a href="user.php?act=account_log" class="item {if $action eq 'account_log'}curs{/if}"><span>{$lang.label_user_surplus}</span><i></i></a>-->
         <a href="account.php" class="item {if $is_account eq 1}curs{/if}"><span>资金账户</span><i></i></a>  
+        <a href="user.php?act=account_raply" class="item {if $action eq 'account_raply'}curs{/if}"><span>提现</span><i></i></a>  
+        <a href="user.php?act=account_deposit" class="item {if $action eq 'account_deposit'}curs{/if}"><span>充值</span><i></i></a>  
 		<!--<a href="user.php?act=bonus" class="item {if $action eq 'bonus'}curs{/if}"><span>{$lang.label_bonus}红包</span><i></i></a>-->
         <!--{if $show_transform_points}--> 
         <a href="user.php?act=transform_points" class="item {if $action eq 'transform_points'}curs{/if}"><span>{$lang.label_transform_points}</span><i></i></a>
@@ -20,7 +22,7 @@
         <!--<a href="user.php?act=back_list" class="item {if $action eq 'back_list' || $action eq 'back_order_detail'}curs{/if}"><span>退款/退货及维修</span><i></i></a>-->
         <a href="user.php?act=my_comment" class="item {if $action eq 'my_comment'}curs{/if}"><span>商品评价/晒单</span><i></i></a> 
         <a href="user.php?act=collection_list" class="item {if $action eq 'collection_list'}curs{/if}"><span>商品收藏</span><i></i></a> 
-        <a href="user.php?act=follow_shop" class="item {if $action eq 'follow_shop'}curs{/if}" title="关注的店铺"><span>店铺关注</span><i></i></a> 
+        <!--<a href="user.php?act=follow_shop" class="item {if $action eq 'follow_shop'}curs{/if}" title="关注的店铺"><span>店铺关注</span><i></i></a>-->
         <!--
 		<a href="user.php?act=auction_list" class="item {if $action eq 'auction_list'}curs{/if}"><span>我的竞拍</span><i></i></a> 
         <a href="user.php?act=tg_login" class="item {if $action eq 'tg_login'}curs{/if}"><span>{$lang.takegoods}</span><i></i></a> 
@@ -36,9 +38,10 @@
         <!-- {if $affiliate.on eq 1} -->
         <!--<a href="user.php?act=affiliate" class="item {if $action eq 'affiliate'}curs{/if}"><span>{$lang.label_affiliate}</span><i></i></a>-->
         <!--{/if}--> 
-		<a href="user.php?act=tuiguang" class="item {if $action eq 'tuiguang'}curs{/if}"><span>推荐中心</span><i></i></a>
+		<a href="account.php?act=show_expend_users" class="item {if $action eq 'show_expend_users'}curs{/if}"><span>推荐中心</span><i></i></a>
+		<a href="account.php?act=show_expend_users" class="item {if $action eq 'zhuanzhang'}curs{/if}"><span>转账</span><i></i></a>
 		<!-- {if $fenxiao.on eq 1} -->
-        <a href="user.php?act=fenxiao" class="item {if $action eq 'fenxiao'}curs{/if}"><span>分销中心</span><i></i></a>
+        <!--<a href="user.php?act=fenxiao" class="item {if $action eq 'fenxiao'}curs{/if}"><span>分销中心</span><i></i></a>-->
         <!--{/if}--> 
         <!--<a href="apply_index.php" class="item"><span>我要开店</span><i></i></a>-->
     </div>
