@@ -239,7 +239,9 @@
 				</ul>
 			  </div>
 			  <div class="mar_top">
-				<table width="100%" border="0" cellpadding="5" cellspacing="1" bgcolor="#eee">
+				<!--<a href="account.php?act=zhuanzhang&touser={$val.uid}" class="main-btn main-btn-large">转账给其他人</a>-->
+				
+				<table width="100%" style="margin-top:15px;" border="0" cellpadding="5" cellspacing="1" bgcolor="#eee">
 				  <tr align="center">
 					<td bgcolor="#ffffff">用户ID</td>
 					<td bgcolor="#ffffff">用户名</td>
@@ -319,7 +321,7 @@
 			  </div>
 			</div>
    <!-- {/if} -->
-    <!-- {if $exec eq 'tixian_list'}-->
+    <!-- {if $exec eq 'account_log'}-->
 			<div class="box"> 
 			  <div class="tabmenu">
 				<ul class="tab pngFix">
@@ -332,23 +334,32 @@
 						<tr align="center">
 							<td bgcolor="#ffffff">ID</td>
 							<td bgcolor="#ffffff">提现金额</td>
-							<td bgcolor="#ffffff">手续费</td>
+							<td bgcolor="#ffffff">到账金额</td>
 							<td bgcolor="#ffffff">申请时间</td>
+							<td bgcolor="#ffffff">备注</td>
 							<td bgcolor="#ffffff">状态</td>
 						</tr>
 						 <!-- {foreach from=$tixianlist key=level item=val name=fx} -->
 						<tr align="center">
 							<td bgcolor="#ffffff">{$val.id}</td>
 							<td bgcolor="#ffffff">{$val.money}</td>
-							<td bgcolor="#ffffff">{$val.shouxufei}</td>
+							<td bgcolor="#ffffff">{$val.daozhang_money}</td>
 							<td bgcolor="#ffffff">{$val.ctime}</td>
-							<td bgcolor="#ffffff">{$val.status}</td>
+							<td bgcolor="#ffffff">{$val.note}</td>
+							<td bgcolor="#ffffff">
+								<!-- {if $val.status eq ''} -->未审核
+								<!-- {elseif $val.status eq 'success'} -->提现成功
+								<!-- {elseif $val.status eq 'fail'} -->提现失败
+								<!-- {elseif $val.status eq 'error'} -->信息有误
+								<!-- {elseif $val.status eq 'decline'} -->提现被拒
+								<!-- {/if} -->
+							</td>
 						</tr>
 						<!-- {/foreach} -->
 						
 						<tr>
 							<td colspan="8" align="left">
-								<a href="user.php?act=fenxiao&exec=tixian" class="main-btn main-btn-large">申请提现</a>
+								<a href="user.php?act=account_raply" class="main-btn main-btn-large">申请提现</a>
 							</td>
 						</tr>
 					</tbody>

@@ -1044,7 +1044,7 @@ function submit_surplus_form(){
               <td align="right">
               	<!--<a href="user.php?act=account_deposit" class="main-color">{$lang.surplus_type_0}</a> | -->
                 <a href="user.php?act=account_raply" class="main-color">{$lang.surplus_type_1}</a> | 
-                <a href="user.php?act=account_detail" class="main-color">{$lang.add_surplus_log}</a> | 
+                <!--<a href="user.php?act=account_detail" class="main-color">{$lang.add_surplus_log}</a> | -->
                 <a href="user.php?act=account_log" class="main-color">{$lang.view_application}</a>
               </td>
             </tr>

@@ -36,8 +36,8 @@
 		  
           <li class="second">
             <div class="title"><span>我的推广</span></div>
-            <div class="pic"><a href="user.php?act=fenxiao"><i class="user_bg"></i></a></div>
-            <p><a href="user.php?act=fenxiao">进入</a></p>
+            <div class="pic"><a href="account.php?act=show_expend_users"><i class="user_bg"></i></a></div>
+            <p><a href="account.php?act=show_expend_users">进入</a></p>
           </li>
 		  
           <li class="third">

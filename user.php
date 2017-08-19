@@ -3667,6 +3667,17 @@ function action_account_log ()
 	$user_id = $_SESSION['user_id'];
 	$action = $GLOBALS['action'];
 	
+	
+	$sql = "select * , from_unixtime(ctime,'%Y-%m-%d %H-%i-%s') as ctime_format from ".$ecs->table('pc_user_tixian')." where uid = $user_id";
+	$tixianlist = $db->getAll($sql);
+	
+	// 模板赋值
+	$smarty->assign('tixianlist', $tixianlist);
+	$smarty->assign('pager', $pager);
+	$smarty->assign('exec', 'account_log');
+	$smarty->display('user_account.dwt');
+	exit;
+	
 	include_once (ROOT_PATH . 'includes/lib_clips.php');
 	
 	$page = isset($_REQUEST['page']) ? intval($_REQUEST['page']) : 1;
@@ -3716,12 +3727,47 @@ function action_act_account ()
 	$ecs = $GLOBALS['ecs'];
 	$user_id = $_SESSION['user_id'];
 	
-	include_once (ROOT_PATH . 'includes/lib_clips.php');
-	include_once (ROOT_PATH . 'includes/lib_order.php');
+	$checkLastTixianSql = "select * from ".$ecs->table('pc_user_tixian')." where uid = $user_id and status = '' ";
+	$checkLastTixian = $db->getRow($checkLastTixianSql);
+	if($checkLastTixian){
+		show_message('您上次的提现还没有完成，请等待');
+		exit;
+	}
 	$amount = isset($_POST['amount']) ? floatval($_POST['amount']) : 0;
 	$tixian_account_type = isset($_POST['tixian_account_type']) ? $_POST['tixian_account_type'] : 0;
 	$tixian_account_info = isset($_POST['tixian_account_info']) ? $_POST['tixian_account_info'] : 0;
 	$tixian_account_realname = isset($_POST['tixian_account_realname']) ? $_POST['tixian_account_realname'] : 0;
+	$user_note = isset($_POST['user_note']) ? $_POST['user_note'] : '';
+	
+	$tixian_kouchu_xiaofei = $db->getOne('select svalue from '.$ecs->table('pc_config').' where sname = "tixian_kouchu_xiaofei"');
+	$tixian_kouchu_shuishou = $db->getOne('select svalue from '.$ecs->table('pc_config').' where sname = "tixian_kouchu_shuishou"');
+	$tixian_kouchu_guanlifei = $db->getOne('select svalue from '.$ecs->table('pc_config').' where sname = "tixian_kouchu_guanlifei"');
+	$tixian_kouchu_xiaofei = $tixian_kouchu_xiaofei?floatval($tixian_kouchu_xiaofei):0;
+	$tixian_kouchu_shuishou = $tixian_kouchu_shuishou?floatval($tixian_kouchu_shuishou):0;
+	$tixian_kouchu_guanlifei = $tixian_kouchu_guanlifei?floatval($tixian_kouchu_guanlifei):0;
+	
+	$daozhang = $amount * floatval(1-$tixian_kouchu_xiaofei-$tixian_kouchu_shuishou-$tixian_kouchu_guanlifei);
+	
+	$sql = "insert into ".$ecs->table('pc_user_tixian')."(uid,realname,alipay_account,money,zhuanqu_xiaofeibi,shuishou,guanlifei,daozhang_money,note,status,ctime)values(".
+			"'".$user_id."',".
+			"'".$tixian_account_realname."',".
+			"'".$tixian_account_info."',".
+			"'".$amount."',".
+			"'".$amount*$tixian_kouchu_xiaofei."',".
+			"'".$amount*$tixian_kouchu_shuishou."',".
+			"'".$amount*$tixian_kouchu_guanlifei."',".
+			"'".$daozhang."',".
+			"'".$user_note."',".
+			"'',".
+			"'".time()."'".
+			")";
+	$flag = $db->query($sql);
+	if($flag){
+		show_message('提现成功');
+	}else{
+		show_message('提现失败');
+	}
+	return $flag;
 	
 	if($amount <= 0)
 	{
