@@ -97,15 +97,15 @@
 		   <div class="box"> 
 			  <div class="tabmenu">
 				<ul class="tab pngFix">
-				  <li class="first active"><a>我的推荐</a></li>
+				  <li class="first active"><a>我的推广</a></li>
 				</ul>
 			  </div>
 			  <div class="mar_top">
 				<div class="box-inner">基本信息 </div>
 				<table width="100%" border="0" cellpadding="5" cellspacing="1" bgcolor="#eee">
 				  <tr align="center">
-					<td bgcolor="#ffffff">推荐人数[有效人数]</td>
-					<td bgcolor="#ffffff" class="price_format">{$baseinfo.expend_user_amount}人<a href="account.php?act=show_expend_users" style="margin-left:10px;margin-top:10px;">[查看]</a></td>
+					<td bgcolor="#ffffff">推广人数</td>
+					<td bgcolor="#ffffff" class="price_format">{$userTotal}人<a href="account.php?act=show_expend_users" style="margin-left:10px;margin-top:10px;">[查看]</a></td>
 				  </tr>
 				</table>
 			  </div>
@@ -175,23 +175,95 @@
 			-->
 		   
    <!-- {/if} -->
+   <!-- {if $exec eq 'zhuanzhang'}-->
+			<div class="box"> 
+			  <div class="tabmenu">
+				<ul class="tab pngFix">
+				  <li class="first active"><a>转账</a></li>
+				</ul>
+			  </div>
+			  <div class="mar_top">
+			  <div id="find-box" class="uc_box">
+				<!-- {if $step eq 'default'} -->
+					<form action="account.php" method="post" id="fpForm" name="fpForm">
+						  <div id="error_container"><!--{if $msg neq ''}-->{$msg}<!-- {/if} --></div>
+						  <div class="item">
+							<label class="con_un">请输入二级支付密码：</label>
+							<input type="password" id="pwd2" name="pwd2" class="text"  autocomplete="off"  />
+						  </div>
+						  <div class="item">
+							<label class="con_un">&nbsp;</label>
+							<input type="hidden" name="act" value="zhuanzhang" />
+							<input type="hidden" name="step" value="checkpwd" />
+							<input type="hidden" name="touser" value="{$touser}" />
+							<input type="submit" name="button" id="btn_submit" class="main-btn main-btn-large" value="提交" />
+						  </div>
+					</form>
+				<!-- {elseif $step eq 'zhuanzhang'} -->
+					<form action="account.php" method="post" id="fpForm" name="fpForm">
+						  <div id="error_container"><!--{if $msg neq ''}-->{$msg}<!-- {/if} --></div>
+						  <div class="item">
+							<label class="con_un">转给：</label>
+							<input type="text" id="tousername" name="tousername" value="{$tousername}" class="text" readonly  autocomplete="off"  />
+						  </div>
+						  <div class="item">
+							<label class="con_un">转账金额：</label>
+							<input type="text" id="amount" name="amount" value="" class="text"  autocomplete="off"  />
+						  </div>
+						  <div class="item">
+							<label class="con_un">&nbsp;</label>
+							<input type="hidden" name="act" value="zhuanzhang" />
+							<input type="hidden" name="step" value="zhuanzhang" />
+							<input type="hidden" name="touser" value="{$touser}" />
+							<input type="submit" name="button" id="btn_submit" class="main-btn main-btn-large" value="提交" />
+						  </div>
+					</form>
+				<!-- {elseif $step eq 'success'} -->
+						
+						 <div id="find-box" class="uc_box">
+							<div class="find_box_end">
+									<p>转账成功</p>
+									<p class="on_go"> <a href="user.php" title="" class="back">返回用户中心&gt;&gt;</a> </p>
+							</div>
+						</div>
+				<!-- {/if} -->
+				</div>
+			  </div>
+			</div>
+   <!-- {/if} -->
    <!-- {if $exec eq 'show_expend_users'}-->
 			<div class="box"> 
 			  <div class="tabmenu">
 				<ul class="tab pngFix">
-				  <li class="first active"><a>我推荐的用户</a></li>
+				  <li class="first active"><a>我推广的用户</a></li>
 				</ul>
 			  </div>
 			  <div class="mar_top">
 				<table width="100%" border="0" cellpadding="5" cellspacing="1" bgcolor="#eee">
 				  <tr align="center">
+					<td bgcolor="#ffffff">用户ID</td>
 					<td bgcolor="#ffffff">用户名</td>
+					<td bgcolor="#ffffff">区域</td>
 					<td bgcolor="#ffffff">注册时间</td>
+					<td bgcolor="#ffffff">操作</td>
 				  </tr>
-				   <!-- {foreach from=$expend_users_list key=k item=val} -->
+				   <!-- {foreach from=$userlist key=k item=val} -->
 				  <tr align="center">
+					<td bgcolor="#ffffff">{$val.uid}</td>
 					<td bgcolor="#ffffff">{$val.user_name}</td>
-					<td bgcolor="#ffffff">{$val.expend_ctime_format}</td>
+					<td bgcolor="#ffffff">
+					<!-- {if $val.leftright eq 'left'} -->
+					左区
+					<!--{elseif $val.leftright eq 'right'}-->
+					右区
+					<!--{/if}-->
+					</td>
+					<td bgcolor="#ffffff">
+						{$val.reg_time_format}
+					</td>
+					<td bgcolor="#ffffff">
+						<a href="account.php?act=zhuanzhang&touser={$val.uid}" class="main-btn main-btn-large">转账</a>
+					</td>
 				  </tr>
 					<!-- {/foreach} -->
 				</table>
