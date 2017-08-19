@@ -12,9 +12,9 @@
 <!-- TemplateEndEditable -->
 <link rel="shortcut icon" href="favicon.ico" />
 <link rel="icon" href="animated_favicon.gif" type="image/gif" />
-<link rel="stylesheet" type="text/css" href="themes/68ecshopcom_360buy/css/category.css" />
-<script type="text/javascript" src="themes/68ecshopcom_360buy/js/jquery-1.9.1.min.js"></script>
-<script type="text/javascript" src="themes/68ecshopcom_360buy/js/jquery-lazyload.js" ></script>
+<link rel="stylesheet" type="text/css" href="themes/axlmpc//css/category.css" />
+<script type="text/javascript" src="themes/axlmpc//js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="themes/axlmpc//js/jquery-lazyload.js" ></script>
 {insert_scripts files='jquery.json.js,transport.js'}
 {insert_scripts files='common.js,global.js,compare.js'}
 <script>var jdpts = new Object(); jdpts._st = new Date().getTime();</script>
@@ -74,6 +74,6 @@ $("img").lazyload({
 	failure_limit : 20
 });
 </script> 
-<script type="text/javascript" src="themes/68ecshopcom_360buy/js/compare.js"></script> 
+<script type="text/javascript" src="themes/axlmpc//js/compare.js"></script> 
 </body>
 </html>

@@ -5,7 +5,7 @@
     <div class="myInfo clearfix"> 
       <div class="photo">
         <div class="mask"></div>
-        <img id="headImagePath" src="{if $smarty.session.headimg}{$smarty.session.headimg}{else}themes/68ecshopcom_360buy/images/people.gif{/if}" height="80" width="80">
+        <img id="headImagePath" src="{if $smarty.session.headimg}{$smarty.session.headimg}{else}themes/axlmpc/images/people.gif{/if}" height="80" width="80">
       </div>
       <div class="info-op">
       	<ul>

@@ -3,7 +3,7 @@
 	<!--{foreach from=$virtual_street item=shop name=name key=key}--> 
 	<div class="flow-item <!--{if $smarty.foreach.name.iteration % 5 eq 0}-->last<!--{/if}-->">
     	<a href="supplier.php?suppId={$shop.supplier_id}">
-        	<img title="{$shop.supplier_name}" width="220" height="220" data-original="{$shop.logo}" src="themes/68ecshopcom_360buy/images/loading.gif" >
+        	<img title="{$shop.supplier_name}" width="220" height="220" data-original="{$shop.logo}" src="themes/axlmpc/images/loading.gif" >
 	  		<h4 class="flow-title">{$shop.supplier_title}</h4>
 	  		<p class="flow-address">{$shop.address}</p>
         </a>

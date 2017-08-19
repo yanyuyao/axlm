@@ -13,9 +13,9 @@
 <link rel="shortcut icon" href="favicon.ico" />
 <link rel="icon" href="animated_favicon.gif" type="image/gif" />
 <link href="{$ecs_css_path}" rel="stylesheet" type="text/css" />
-<link rel="stylesheet" href="themes/68ecshopcom_360buy/css/activity.css">
-<script type="text/javascript" src="themes/68ecshopcom_360buy/js/jquery-1.9.1.min.js" ></script>
-<script type="text/javascript" src="themes/68ecshopcom_360buy/js/jquery-lazyload.js" ></script>
+<link rel="stylesheet" href="themes/axlmpc//css/activity.css">
+<script type="text/javascript" src="themes/axlmpc//js/jquery-1.9.1.min.js" ></script>
+<script type="text/javascript" src="themes/axlmpc//js/jquery-lazyload.js" ></script>
 {insert_scripts files='jquery.json.js,transport.js'}
 {insert_scripts files='common.js'}
 </head>
@@ -37,7 +37,7 @@
         </div>
         <div class="list-tuangou">
           <div class="list-tt">
-            <div class="fl"><img data-original="{$val.logo|default:images/ceshi.jpg}" src="themes/68ecshopcom_360buy/images/loading-big.gif" height="260" width="580"></div>
+            <div class="fl"><img data-original="{$val.logo|default:images/ceshi.jpg}" src="themes/axlmpc//images/loading-big.gif" height="260" width="580"></div>
             <div class="active-desc fr">
               <h3><i></i>{$lang.label_end_time}<span class="main-color">{$val.end_time}</span></h3>
               <p>{$lang.label_max_amount} 
@@ -74,7 +74,7 @@
             <!-- {foreach from=$val.gift item=goods name=name1} -->
             <table border="0" {if $smarty.foreach.name1.first}style="margin-left:30px;"{/if}>
               <tr>
-                <td align="center"><a href="goods.php?id={$goods.id}" class="thumb"><img data-original="{$goods.thumb}" src="themes/68ecshopcom_360buy/images/loading.gif" alt="{$goods.name}" width="160" height="160" /></a></td>
+                <td align="center"><a href="goods.php?id={$goods.id}" class="thumb"><img data-original="{$goods.thumb}" src="themes/axlmpc//images/loading.gif" alt="{$goods.name}" width="160" height="160" /></a></td>
               </tr>
               <tr>
                 <td align="center"><a href="goods.php?id={$goods.id}" title="{$goods.name}">{$goods.name|truncate:16}</a></td>

@@ -3,7 +3,7 @@ Author: W3layouts
 Author URL: http://w3layouts.com
 License: Creative Commons Attribution 3.0 Unported
 License URL: http://creativecommons.org/licenses/by/3.0/
--->
+--> 
 <!DOCTYPE html>
 <html>
 <head>
@@ -54,64 +54,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 </head>
 	
 <body>
-
-	<div class="header">
-		<div class="container">
-			<div class="header-nav">
-				<nav class="navbar navbar-default">
-					
-					<div class="navbar-header">
-					  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-						<span class="sr-only">Toggle navigation</span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-					  </button>
-					   <a class="navbar-brand" href="index.html"><span>P</span>roperty</a>
-					</div>
-
-					
-					<div class="collapse navbar-collapse nav-wil" id="bs-example-navbar-collapse-1">
-					 <ul class="nav navbar-nav">
-						<li class="active"><a href="index.html">首页</a></li>
-						<li class="act"><a href="blog.html">产品中心</a></li>
-						<li class="dropdown act">
-						  <a href="news.html" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">新闻资讯<span class="caret"></span></a>
-						  <ul class="dropdown-menu">
-							<li><a href="services.html">Featured Services</a></li>
-							<li><a href="services.html">Professional Services</a></li>
-							<li><a href="services.html">Residential Real Estate</a></li>
-						  </ul>
-						</li>
-						<li class="act"><a href="services.html">使用教程</a></li>
-						<li class="act"><a href="services.html">影视专区</a></li>
-						<li class="act"><a href="personal.html">妇科知道</a></li>
-						<li class="act"><a href="personal.html">个人中心</a></li>
-					  </ul>
-					</div>
-				</nav>
-			</div>
-	
-			
-			<script src="themes/axlmpc/axlm/js/classie.js"></script>
-			<script src="themes/axlmpc/axlm/js/uisearch.js"></script>
-				<script>
-					new UISearch( document.getElementById( 'sb-search' ) );
-				</script>
-			
-			
-					<script> 
-						$( "span.menu" ).click(function() {
-						$( "ul.nav1" ).slideToggle( 300, function() {
-						 // Animation complete.
-						});
-						});
-					</script>
-			
-			<div class="clearfix"> </div>
-		</div>
-	</div>
-
+<?php echo $this->fetch('library/page_header_common.lbi'); ?>
 
 
 	<div class="slider">

@@ -16,7 +16,7 @@
 <body>
 <div role="navigation" id="site-nav">
 <!-- #BeginLibraryItem "/library/page_header.lbi" --><!-- #EndLibraryItem -->
-<link href="themes/68ecshopcom_360buy/css/wuliu.css" rel="stylesheet" type="text/css">
+<link href="themes/axlmpc/css/wuliu.css" rel="stylesheet" type="text/css">
 <div class="clear pb10"></div>
 
 <!--{if $action eq 'save_kuaidi'} 保存快递单-->

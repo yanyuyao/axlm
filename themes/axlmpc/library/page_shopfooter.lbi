@@ -79,4 +79,4 @@ $(function(){
 	{/if}
 })
 </script>
-<script type="text/javascript" src="themes/68ecshopcom_360buy/js/base.js" ></script>
+<script type="text/javascript" src="themes/axlmpc/js/base.js" ></script>

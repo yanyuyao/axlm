@@ -17,7 +17,7 @@
 {insert_scripts files='common.js,transport.js'}
 </head>
 <body> 
-<script type="text/javascript" src="themes/68ecshopcom_360buy/js/base-2011.js"></script>
+<script type="text/javascript" src="themes/axlmpc/js/base-2011.js"></script>
   <!-- #BeginLibraryItem "/library/page_header.lbi" --><!-- #EndLibraryItem --> 
   <div class="blank"></div>
   <!-- #BeginLibraryItem "/library/ur_here.lbi" --><!-- #EndLibraryItem --> 

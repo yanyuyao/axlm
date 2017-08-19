@@ -12,9 +12,9 @@
 <!-- TemplateEndEditable -->
 <link rel="shortcut icon" href="favicon.ico" />
 <link rel="icon" href="animated_favicon.gif" type="image/gif" />
-<link rel="stylesheet" type="text/css" href="themes/68ecshopcom_360buy/css/pro_search.css"/>
-<script type="text/javascript" src="themes/68ecshopcom_360buy/js/jquery-1.9.1.min.js" ></script>
-<script type="text/javascript" src="themes/68ecshopcom_360buy/js/jquery-lazyload.js" ></script>
+<link rel="stylesheet" type="text/css" href="themes/axlmpc/css/pro_search.css"/>
+<script type="text/javascript" src="themes/axlmpc/js/jquery-1.9.1.min.js" ></script>
+<script type="text/javascript" src="themes/axlmpc/js/jquery-lazyload.js" ></script>
 {insert_scripts files='jquery.json.js,transport.js'}
 {insert_scripts files='utils.js,common.js'}
 </head>
@@ -102,7 +102,7 @@
                 <div class="pro-search-info {if $smarty.foreach.name.iteration mod 2 eq 1}pro-search-info-t{/if}">
                   <div class="img"> 
                   	<a href="{$goods.url}" target="_blank"> 
-                  		<img data-original="{$goods.goods_thumb}" src="themes/68ecshopcom_360buy/images/loading.gif" alt="{$goods.goods_name|escape:html}" class="img-ks-lazyload"> 
+                  		<img data-original="{$goods.goods_thumb}" src="themes/axlmpc/images/loading.gif" alt="{$goods.goods_name|escape:html}" class="img-ks-lazyload"> 
                         {if $goods.goods_number eq 0} 
                         <div class="sold-out"></div>
                         {/if}

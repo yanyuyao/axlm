@@ -14,11 +14,11 @@
 <link rel="shortcut icon" href="favicon.ico?t=11" />
 <link rel="icon" href="animated_favicon.gif" type="image/gif" />
 <link rel="alternate" type="application/rss+xml" title="RSS|{$page_title}" href="{$feed_url}" />
-<link rel="stylesheet" type="text/css" href="themes/68ecshopcom_360buy/css/index.css" />
-<script type="text/javascript" src="themes/68ecshopcom_360buy/js/jquery-1.9.1.min.js"></script>
-<script type="text/javascript" src="themes/68ecshopcom_360buy/js/jump.js"></script>
-<script type="text/javascript" src="themes/68ecshopcom_360buy/js/tab.js"></script>
-<script type="text/javascript" src="themes/68ecshopcom_360buy/js/jquery-lazyload.js" ></script>
+<link rel="stylesheet" type="text/css" href="themes/axlmpc/css/index.css" />
+<script type="text/javascript" src="themes/axlmpc/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="themes/axlmpc/js/jump.js"></script>
+<script type="text/javascript" src="themes/axlmpc/js/tab.js"></script>
+<script type="text/javascript" src="themes/axlmpc/js/jquery-lazyload.js" ></script>
 <script type="text/javascript">
 var compare_no_goods = "{$lang.compare_no_goods}";
 var btn_buy = "{$lang.btn_buy}";
@@ -74,13 +74,13 @@ var select_spe = "{$lang.select_spe}";
 <!-- #BeginLibraryItem "/library/cat_goods.lbi" --><!-- #EndLibraryItem -->
 <!-- TemplateEndEditable -->
 	</div>
-    <script type="text/javascript" src="themes/68ecshopcom_360buy/js/indexPrivate.min.js"></script>
+    <script type="text/javascript" src="themes/axlmpc/js/indexPrivate.min.js"></script>
     <!-- #BeginLibraryItem "/library/right_sidebar.lbi" --><!-- #EndLibraryItem -->
     <!-- #BeginLibraryItem "/library/page_footer_index.lbi" --><!-- #EndLibraryItem -->
     <!-- #BeginLibraryItem "/library/arrive_notice.lbi" --><!-- #EndLibraryItem -->
     <!-- #BeginLibraryItem "/library/left_sidebar.lbi" --><!-- #EndLibraryItem -->
 </body>
-<script type="text/javascript" src="themes/68ecshopcom_360buy/js/home_index.js"></script>
+<script type="text/javascript" src="themes/axlmpc/js/home_index.js"></script>
 <script type="text/javascript">
 	$(".brand-con").hover(function(){
 		var num = $(this).find("li").length;

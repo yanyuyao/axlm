@@ -12,9 +12,9 @@
 <!-- TemplateEndEditable -->
 <link rel="shortcut icon" href="favicon.ico" />
 <link rel="icon" href="animated_favicon.gif" type="image/gif" />
-<link rel="stylesheet" href="themes/68ecshopcom_360buy/css/virtual_group.css">
-<script type="text/javascript" src="themes/68ecshopcom_360buy/js/jquery-1.9.1.min.js" ></script>
-<script type="text/javascript" src="themes/68ecshopcom_360buy/js/jquery-lazyload.js" ></script>
+<link rel="stylesheet" href="themes/axlmpc/css/virtual_group.css">
+<script type="text/javascript" src="themes/axlmpc/js/jquery-1.9.1.min.js" ></script>
+<script type="text/javascript" src="themes/axlmpc/js/jquery-lazyload.js" ></script>
 {insert_scripts files='jquery.json.js,transport.js'}
 {insert_scripts files='utils.js,common.js'}
 </head>
@@ -101,7 +101,7 @@
       <div class="pic">
       	<a href="virtual_group_goods.php?id={$virtual_goods.goods_id}" target="_blank">
             {if $virtual_goods.goods_number eq 0}<!--抢光图标 star--><span class="row_soldout"></span><!--抢光图标 end-->{/if}
-            <img title="{$virtual_goods.goods_name|escape:html}" alt="{$virtual_goods.goods_name|escape:html}" width=280 height=280  data-original="{$virtual_goods.goods_thumb}" src="themes/68ecshopcom_360buy/images/loading.gif">
+            <img title="{$virtual_goods.goods_name|escape:html}" alt="{$virtual_goods.goods_name|escape:html}" width=280 height=280  data-original="{$virtual_goods.goods_thumb}" src="themes/axlmpc/images/loading.gif">
         </a>
         <div class="time"><span class="time_tit">购买倒计时</span><span class="settime" endTime="{$virtual_goods.valid_date}"></span></div>
       </div>

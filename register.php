@@ -583,10 +583,14 @@ function action_register ()
 		
 		if($result)
 		{
-                        /* 插入分销推广信息*/
-                        if($_COOKIE['fx_ucode']){
-							save_expend_fenxiao_userinfo($username,$_SESSION['user_id']);
-                        }
+			//插入pc_user
+			$newsql = 'INSERT INTO ' . $ecs->table('pc_user') . ' (`uid`) VALUES('.$_SESSION['user_id'].')';
+			$db->query($newsql);
+				
+			/* 插入分销推广信息*/
+			//if($_COOKIE['fx_ucode']){
+			//	save_expend_fenxiao_userinfo($username,$_SESSION['user_id']);
+			//}
                         
 			/* 把新注册用户的扩展信息插入数据库 */
 			$sql = 'SELECT id FROM ' . $ecs->table('reg_fields') . ' WHERE type = 0 AND display = 1 ORDER BY dis_order, id'; // 读出所有自定义扩展字段的id

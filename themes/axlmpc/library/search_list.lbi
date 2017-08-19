@@ -3,7 +3,7 @@
 <!--{foreach from=$shops_list item=shop name=shop}--> 
 	<div class="flow-item first"> 
       <a href="supplier.php?suppId={$shop.supplier_id}" class="flow-datu" title="{$shop.shop_name}"> 
-        <img title="{$shop.supplier_name}" width="150" height="150" alt="" data-original="{$shop.logo}" src="themes/68ecshopcom_360buy/images/loading.gif" >
+        <img title="{$shop.supplier_name}" width="150" height="150" alt="" data-original="{$shop.logo}" src="themes/axlmpc/images/loading.gif" >
       </a>
       <div class="flow-content">
       	<h4 class="flow-title">
@@ -16,7 +16,7 @@
         </h4>
         <p class="flow-logo">
         <a href="supplier.php?suppId={$shop.supplier_id}" style="float:none; display:inline-block;">
-	<img id="j_logo_{$shop.supplier_id}" alt="" width="90" height="45" data-original="{$logopath}logo_supplier{$shop.supplier_id}.jpg" src="themes/68ecshopcom_360buy/images/loading.gif">
+	<img id="j_logo_{$shop.supplier_id}" alt="" width="90" height="45" data-original="{$logopath}logo_supplier{$shop.supplier_id}.jpg" src="themes/axlmpc/images/loading.gif">
 	</a>
         </p>
 	  	<p class="flow-desc">

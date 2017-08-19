@@ -12,8 +12,8 @@
 <!-- TemplateEndEditable -->
 <link rel="shortcut icon" href="favicon.ico" />
 <link rel="icon" href="animated_favicon.gif" type="image/gif" />
-<link rel="stylesheet" type="text/css" href="themes/68ecshopcom_360buy/css/user.css" />
-<script type="text/javascript" src="themes/68ecshopcom_360buy/js/jquery-1.9.1.min.js"></script>
+<link rel="stylesheet" type="text/css" href="themes/axlmpc/css/user.css" />
+<script type="text/javascript" src="themes/axlmpc/js/jquery-1.9.1.min.js"></script>
 <style>
 	.newicon {
 		background: url(../images/new.png) no-repeat;
@@ -64,84 +64,54 @@
   <div class="user-left"> <!-- #BeginLibraryItem "/library/user_info.lbi" --><!-- #EndLibraryItem --> <!-- #BeginLibraryItem "/library/user_menu.lbi" --><!-- #EndLibraryItem --> </div>
   <div class="user-right">
 	<!-- {if $exec eq 'default'}-->
-			<!-- start 分销推广规则 --> 
-			<!-- {if $fenxiao.on eq 1} -->
+			<!-- start 资金账户 --> 
 			<div class="box"> 
 			  <div class="tabmenu">
 				<ul class="tab pngFix">
-				  <li class="first active"><a>分成规则</a></li>
+				  <li class="first active"><a>资金账户</a></li>
 				</ul>
 			  </div>
 			  <div class="mar_top">
-				<div class="box-inner"> 推广规则 </div>
+				<div class="box-inner"> 资金账户 <a href="account.php?act=detaillog" style="float:right;color:#E31939;">明细</a></div>
 				<table width="100%" border="0" cellpadding="5" cellspacing="1" bgcolor="#eee">
 				  <tr align="center">
-					<td bgcolor="#ffffff">直接要求有效人数</td>
-					<td bgcolor="#ffffff">一级分佣%</td>
-					<td bgcolor="#ffffff">二级分佣%</td>
-					<td bgcolor="#ffffff">三级分佣%</td>
+					<td bgcolor="#ffffff">现金币</td>
+					<td bgcolor="#ffffff">消费币</td>
+					<td bgcolor="#ffffff">爱心币</td>
+					<td bgcolor="#ffffff">积分币</td>
+					<td bgcolor="#ffffff">积分</td>
 				  </tr>
-				  <!-- {foreach from=$fenxiao_guize key=level item=val name=fx} -->
 				  <tr align="center">
-					<td bgcolor="#ffffff">{$val.people_num}</td>
-					<td bgcolor="#ffffff">{$val.l1}% {$val.l1_bonus}</td>
-					<td bgcolor="#ffffff">{$val.l2}%</td>
-					<td bgcolor="#ffffff">{$val.l3}%</td>
-				  </tr>
-				  <!-- {/foreach} -->
-				  <tr>
-					<td colspan=6>注意：有效人数指购买产品的会员</td>
+					<td bgcolor="#ffffff" style="height:50px;">{$pc_user.account_xianjinbi}</td>
+					<td bgcolor="#ffffff">{$pc_user.account_xiaofeibi}</td>
+					<td bgcolor="#ffffff">{$pc_user.account_aixinbi}</td>
+					<td bgcolor="#ffffff">{$pc_user.account_jifenbi}</td>
+					<td bgcolor="#ffffff">{$pc_user.account_jifen}</td>
 				  </tr>
 				</table>
 			  </div>
 			</div>
-			<!-- {/if} --> 
-			<!-- end 规则 --> 
+			<!-- end 资金账户 --> 
 		  
-		   <!-- start 我的推广 --> 
-		   <!-- {if $baseinfo.is_valid_user}-->
-		    <div class="box"> 
-			  <div class="tabmenu">
-				<ul class="tab pngFix">
-				  <li class="first active"><a>我的推广</a></li>
-				</ul>
-			  </div>
-			  <div class="mar_top">
-				<div class="box-inner"> 
-					<div style="width:45%;float:left;">我的推广链接: <br><br><br><a href="{$shopurl}?ucode={$baseinfo.expend_code}" style="color:red;">{$shopurl}?ucode={$baseinfo.expend_code}</a></div>
-					<!--<div>我的推广码: <br>{$baseinfo.expend_code}</div>-->
-					<div style="width:45%;float:left;text-align:center;">推广二维码: <br><img src="erweima_png.php?data={$shopurl}mobile/?ucode={$baseinfo.expend_code}" width=150 height=150></div>
-					<div style="clear:both;"></div>
-				</div>
-			  </div>
-			</div>
-			<!-- 分销信息 -->
+			<!-- 推广信息 -->
 		   <div class="box"> 
 			  <div class="tabmenu">
 				<ul class="tab pngFix">
-				  <li class="first active"><a>我的分销</a></li>
+				  <li class="first active"><a>我的推荐</a></li>
 				</ul>
 			  </div>
 			  <div class="mar_top">
-				<div class="box-inner"> 基本信息 <a href="user.php?act=fenxiao&exec=yongjin_log" style="float:right;color:#E31939;">佣金记录</a></div>
+				<div class="box-inner">基本信息 </div>
 				<table width="100%" border="0" cellpadding="5" cellspacing="1" bgcolor="#eee">
 				  <tr align="center">
 					<td bgcolor="#ffffff">推荐人数[有效人数]</td>
-					<td bgcolor="#ffffff">总佣金</span></td>
-					<td bgcolor="#ffffff">即将到账佣金</td>
-				  </tr>
-				  <tr align="center">
-					<td bgcolor="#ffffff" class="price_format">{$baseinfo.expend_user_amount}人<br><a href="user.php?act=fenxiao&exec=show_expend_users" style="margin-left:10px;margin-top:10px;">[查看]</a></td>
-					<td bgcolor="#ffffff" class="price_format"><i class="newicon jinqian"></i>{$baseinfo.expend_amount}<br></td>
-					<td bgcolor="#ffffff" class="price_format"><i class="newicon jinqian"></i>{$expend_amount_rest}</td>
+					<td bgcolor="#ffffff" class="price_format">{$baseinfo.expend_user_amount}人<a href="account.php?act=show_expend_users" style="margin-left:10px;margin-top:10px;">[查看]</a></td>
 				  </tr>
 				</table>
 			  </div>
 			</div>
-			<!-- {/if} -->
 		   <!-- end 我的推广 -->
 		   <!-- start 我的分红 --> 
-		   <!-- {if $baseinfo.is_bonus}-->
 		   <div class="box"> 
 			  <div class="tabmenu">
 				<ul class="tab pngFix">
@@ -162,7 +132,6 @@
 				</table>
 			  </div>
 			</div>
-			<!-- {/if} -->
 		   <!-- end 我的分红 -->
 		   <div class="box"> 
 				<div class="mar_top">
@@ -346,11 +315,11 @@
 			</div>
    <!-- {/if} -->
    
-   <!-- {if $exec eq 'yongjin_log'}-->
+   <!-- {if $exec eq 'detaillog'}-->
 			<div class="box"> 
 			  <div class="tabmenu">
 				<ul class="tab pngFix">
-				  <li class="first active"><a>佣金记录</a></li>
+				  <li class="first active"><a>明细记录</a></li>
 				</ul>
 			  </div>
 			  <div class="mar_top">
@@ -358,15 +327,17 @@
 				<table width="100%" border="0" cellpadding="5" cellspacing="1" bgcolor="#eee">
 						<tr align="center">
 							<td bgcolor="#ffffff">记录ID</td>
-							<td bgcolor="#ffffff">佣金</td>
-							<td bgcolor="#ffffff">状态</td>
+							<td bgcolor="#ffffff">币种</td>
+							<td bgcolor="#ffffff">变动</td>
+							<td bgcolor="#ffffff">备注</td>
 							<td bgcolor="#ffffff">时间</td>
 						</tr>
-						 <!-- {foreach from=$yongjinlist key=level item=val name=fx} -->
+						 <!-- {foreach from=$detaillog item=val} -->
 						<tr align="center">
 							<td bgcolor="#ffffff">{$val.id}</td>
-							<td bgcolor="#ffffff">{$val.expend_amount}</td>
-							<td bgcolor="#ffffff">{$val.status_label}</td>
+							<td bgcolor="#ffffff">{$val.type}</td>
+							<td bgcolor="#ffffff">{$val.change_value}</td>
+							<td bgcolor="#ffffff">{$val.note}</td>
 							<td bgcolor="#ffffff">{$val.ctime}</td>
 						</tr>
 						<!-- {/foreach} -->

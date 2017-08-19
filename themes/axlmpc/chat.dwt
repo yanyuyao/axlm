@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>在线客服</title>
-<link rel="stylesheet" type="text/css" href="themes/68ecshopcom_360buy/css/chat.css" />
+<link rel="stylesheet" type="text/css" href="themes/axlmpc//css/chat.css" />
 <!-- 客服消息HTML模板 -->
 <script id="to_html" type="text">
 <div id="script_to_id" class="msg_others">

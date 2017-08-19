@@ -13,9 +13,9 @@
 <link rel="shortcut icon" href="favicon.ico" />
 <link rel="icon" href="animated_favicon.gif" type="image/gif" />
 <link href="{$ecs_css_path}" rel="stylesheet" type="text/css" />
-<link type="text/css" rel="stylesheet" href="themes/68ecshopcom_360buy/css/auction.css">
-<script type="text/javascript" src="themes/68ecshopcom_360buy/js/jquery-1.9.1.min.js" ></script>
-<script type="text/javascript" src="themes/68ecshopcom_360buy/js/auction.js"></script>
+<link type="text/css" rel="stylesheet" href="themes/axlmpc//css/auction.css">
+<script type="text/javascript" src="themes/axlmpc//js/jquery-1.9.1.min.js" ></script>
+<script type="text/javascript" src="themes/axlmpc//js/auction.js"></script>
 <script type="text/javascript">
 	    var charset=document.charset||document.characterSet;
 	    if(charset=="utf-8"||charset=="UTF-8"){
@@ -178,7 +178,7 @@
 	});
 	})
 </script>
-﻿<script type="text/javascript" src="themes/68ecshopcom_360buy/js/lib-v1.js" ></script> 
+﻿<script type="text/javascript" src="themes/axlmpc//js/lib-v1.js" ></script> 
 <script type="text/javascript">
 var gmt_end_time = "{$auction.gmt_end_time|default:0}";
 {foreach from=$lang.goods_js item=item key=key}

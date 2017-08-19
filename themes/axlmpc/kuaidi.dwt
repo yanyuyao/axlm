@@ -4,9 +4,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>同城快递</title>
 <link href="{$ecs_css_path}" rel="stylesheet" type="text/css" />
-<link href="themes/68ecshopcom_360buy/css/wuliu.css" rel="stylesheet" type="text/css">
+<link href="themes/axlmpc/css/wuliu.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="js/My97DatePicker/WdatePicker.js"></script>
-<script type="text/javascript" src="themes/68ecshopcom_360buy/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="themes/axlmpc/js/jquery-1.9.1.min.js"></script>
 {insert_scripts files='jquery.json.js,transport.js'}
 </head>
 <body>

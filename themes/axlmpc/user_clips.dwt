@@ -12,8 +12,8 @@
 <!-- TemplateEndEditable -->
 <link rel="shortcut icon" href="favicon.ico" />
 <link rel="icon" href="animated_favicon.gif" type="image/gif" />
-<link rel="stylesheet" type="text/css" href="themes/68ecshopcom_360buy/css/user.css" />
-<script type="text/javascript" src="themes/68ecshopcom_360buy/js/jquery-1.9.1.min.js"></script>
+<link rel="stylesheet" type="text/css" href="themes/axlmpc/css/user.css" />
+<script type="text/javascript" src="themes/axlmpc/js/jquery-1.9.1.min.js"></script>
 {insert_scripts files='jquery.json.js,transport.js,json2.js'}
 {* 包含脚本文件 *}
 {insert_scripts files='common.js,user.js'}
@@ -115,7 +115,7 @@
                   <!-- {if $jiao.goods_id gt 0 && $jiao.extension_code neq 'package_buy'} 商品 --> 
                   <img src="{$jiao.goods_thumb}" alt="{$jiao.goods_name}" /> 
                   <!-- {elseif $jiao.goods_id gt 0 && $jiao.extension_code eq 'package_buy'} --> 
-                  <img src="themes/68ecshopcom_360buy/images/cart-package.gif" border="0" title="{$jiao.goods_name|escape:html}" /> 
+                  <img src="themes/axlmpc/images/cart-package.gif" border="0" title="{$jiao.goods_name|escape:html}" /> 
                   <!-- {/if} --> 
                   </a> <span class="order-num">{$jiao.shu}</span> </li>
               </ul>
@@ -139,7 +139,7 @@
         {else} 
         <!-- *购物车内数量为0时 end--> 
         <!-- *购物车内数量不为0时 start--> 
-        <script type="text/javascript" charset="utf-8" src="themes/68ecshopcom_360buy/js/easyscroll.js"></script>
+        <script type="text/javascript" charset="utf-8" src="themes/axlmpc/js/easyscroll.js"></script>
         <div class="proListUc_cart">
           <div class="div_scroll">
             <div style="float:left; height:auto; width:auto">
@@ -205,77 +205,8 @@
         {/if} 
         <!-- *浏览历史不为0时 end--> 
       </div>
-      <script>
-		/*第一种形式 第二种形式 更换显示样式*/
-		function setTabCatGoods(name,cursel,n){
-		for(i=1;i<=n;i++){
-		var menu=document.getElementById(name+i);
-		var con=document.getElementById("con_"+name+"_"+i);
-		con.style.display=i==cursel?"block":"none";
-		menu.className=i==cursel?"line1":"line2";
-		}
-		}
-		</script>
-      <div class="middle collect">
-        <div class="line1" id="tab1" onmouseover="setTabCatGoods('tab',1,2)">
-          <div class="title"><i></i><span>商品收藏</span></div>
-        </div>
-        <div class="line2" id="tab2" onmouseover="setTabCatGoods('tab',2,2)">
-          <div class="title"><i></i><span>店铺关注</span></div>
-        </div>
-        <div style="height:0px;line-height:0px;clear:both"></div>
-        <div class="tab_con" style="width:100%">
-          <div class=""  id="con_tab_1"> {if $collection eq array() } 
-            <!-- *商品收藏数量为0时 start-->
-            <div class="emptyFrame_collect"> <i class="user_bg"></i><span>您的收藏空空的，赶快去购物吧！</span> </div>
-            <!-- *商品收藏数量为0时 end--> 
-            <!-- *商品收藏数量不为0时 start--> 
-            {else}
-            <div class="colList clearfix">
-              <div class="colFrame">
-                <ul style="left: 0px;" class="clearfix">
-                  {foreach from=$collection item=coll name=coll} 
-                  <!--{if $smarty.foreach.coll.iteration < 7}-->
-                  <li class="first"> <a href="goods.php?id={$coll.goods_id}" title="{$coll.goods_name}" target="_blank" class="img"> <img src="{$coll.goods_thumb}" alt="{$coll.goods_name}" /> <span>￥{$coll.shop_price}</span> </a> <a href="goods.php?id={$coll.goods_id}" title="{$coll.goods_name}" target="_blank" class="name">{$coll.goods_name}</a> </li>
-                  <!--{/if}--> 
-                  {/foreach}
-                </ul>
-              </div>
-              <p class="more"> <a href="user.php?act=collection_list" title="查看收藏的所有商品">查看收藏的所有商品 &gt;</a> </p>
-            </div>
-            {/if} 
-            <!-- *商品收藏数量不为0时 end--> 
-          </div>
-          <div id="con_tab_2" style="display:none"> {if $guanzhu eq array()} 
-            <!-- *店铺收藏数量为0时 start-->
-            <div class="emptyFrame_shop"  > <i class="user_bg"></i><span>您的店铺收藏空空的，赶快去收藏店铺吧！</span> </div>
-            <!-- *店铺收藏数量为0时 end--> 
-            <!-- *店铺收藏数量不为0时 start--> 
-            {else}
-            <div class="shopList clearfix">
-              <div class="colFrame">
-                <ul style="left: 0px;" class="clearfix">
-                  {foreach from=$guanzhu item=guan name=guan} 
-                  <!--{if $smarty.foreach.guan.iteration < 7}-->
-                  <li class="first"> <a href="supplier.php?go=index&suppId={$guan.supplier_id}&id=0" title="{$guan.supplier_name}" target="_blank" class="img">
-                    <div class="mask"></div>
-                    <!--{if $guan.logo}--> 
-                    <img src="{$guan.logo}" alt="{$guan.supplier_name}" /> 
-		    <!--{else}--> 
-		    <img src="themes/68ecshopcom_360buy/images/user-store.jpg" alt="{$guan.supplier_name}" /> 
-		    <!--{/if}--> 
-		    </a> 
-		    <a href="supplier.php?go=index&suppId={$guan.supplier_id}&id=0" title="{$guan.supplier_name}" target="_blank" class="name">{$guan.supplier_name}</a> </li>
-                  <!--{/if}--> 
-                  {/foreach}
-                </ul>
-              </div>
-              <p class="more"> <a href="user.php?act=follow_shop" title="查看收藏的所有店铺">查看收藏的所有店铺 &gt;</a> </p>
-            </div>
-            <!-- *店铺收藏数量不为0时 end--> 
-            {/if} </div>
-        </div>
-      </div>
+     
+     
     </div>
     <!-- {/if} --> 
     <!--*收藏商品列表页面 start--> 

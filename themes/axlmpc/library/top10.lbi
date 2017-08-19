@@ -6,7 +6,7 @@
 		<!-- {foreach from=$top_goods item=goods name=top_goods}-->
 		<li>
         	<div class="p-img">
-            	<a target="_blank" title="{$goods.name|escape:html}" href="{$goods.url}"><img alt="{$goods.goods_name|escape:html}" data-original="{$goods.thumb}" src="themes/68ecshopcom_360buy/images/loading.gif" /></a> 
+            	<a target="_blank" title="{$goods.name|escape:html}" href="{$goods.url}"><img alt="{$goods.goods_name|escape:html}" data-original="{$goods.thumb}" src="themes/axlmpc/images/loading.gif" /></a> 
             </div>
             <div class="p-name">
                 <a target="_blank" title="{$goods.name|escape:html}" href="{$goods.url}">{$goods.goods_name}</a>

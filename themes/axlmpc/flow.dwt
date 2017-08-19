@@ -13,8 +13,8 @@
 <link rel="shortcut icon" href="favicon.ico" />
 <link rel="icon" href="animated_favicon.gif" type="image/gif" />
 <link href="{$ecs_css_path}" rel="stylesheet" type="text/css" />
-<link rel="stylesheet" type="text/css" href="themes/68ecshopcom_360buy/css/68ecshop_common.css" />
-<link rel="stylesheet" type="text/css" href="themes/68ecshopcom_360buy/css/flow.css" />
+<link rel="stylesheet" type="text/css" href="themes/axlmpc//css/68ecshop_common.css" />
+<link rel="stylesheet" type="text/css" href="themes/axlmpc//css/flow.css" />
 {insert_scripts files='jquery-1.6.2.min.js '}
 {insert_scripts files='jquery.json.js,transport.js'}
 {insert_scripts files='common.js,shopping_flow.js'}
@@ -22,7 +22,7 @@
 <body>
 <!-- #BeginLibraryItem "/library/user_header.lbi" --><!-- #EndLibraryItem -->
 <div class="header w990">
-  <div class="mall-logo"><a href="./"><img src="../images/logo.gif?v-98" /></a> </div>
+  <div class="mall-logo"><a href="./"><img src="/logo.png" /></a> </div>
 </div>
 <div class="block"> 
   <!-- {if $step eq "cart"} -->
@@ -1201,7 +1201,7 @@ data-widget="tab-item">
 		<!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
 	</div>
 </div>
-<script type="text/javascript" src="themes/68ecshopcom_360buy/js/lib-v1.js"></script> 
+<script type="text/javascript" src="themes/axlmpc//js/lib-v1.js"></script> 
 <script type="text/javascript">$("#store-selector").Jdropdown();</script> 
 <script type="text/javascript">$.jdCalcul([537]);</script> 
 <script type="text/javascript">pageConfig.FN_InitContrast();</script>

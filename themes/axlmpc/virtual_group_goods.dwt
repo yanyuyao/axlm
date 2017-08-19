@@ -12,15 +12,15 @@
 <!-- TemplateEndEditable -->
 <link rel="shortcut icon" href="favicon.ico" />
 <link rel="icon" href="animated_favicon.gif" type="image/gif" />
-<link rel="stylesheet" href="themes/68ecshopcom_360buy/css/goods.css">
-<link rel="stylesheet" href="themes/68ecshopcom_360buy/css/virtual_group.css">
-<script type="text/javascript" src="themes/68ecshopcom_360buy/js/jquery-1.9.1.min.js" ></script>
-<script type="text/javascript" src="themes/68ecshopcom_360buy/js/magiczoom.js" ></script>
-<script type="text/javascript" src="themes/68ecshopcom_360buy/js/magiczoom_plus.js" ></script>
-<script type="text/javascript" src="themes/68ecshopcom_360buy/js/common_www_ecshop68_com.js" ></script>
-<script type="text/javascript" src="themes/68ecshopcom_360buy/js/script.js" ></script>
-<script type="text/javascript" src="themes/68ecshopcom_360buy/js/scrollpic.js"></script>
-<script type="text/javascript" src="themes/68ecshopcom_360buy/js/gw_totop.js" ></script>
+<link rel="stylesheet" href="themes/axlmpc/css/goods.css">
+<link rel="stylesheet" href="themes/axlmpc/css/virtual_group.css">
+<script type="text/javascript" src="themes/axlmpc/js/jquery-1.9.1.min.js" ></script>
+<script type="text/javascript" src="themes/axlmpc/js/magiczoom.js" ></script>
+<script type="text/javascript" src="themes/axlmpc/js/magiczoom_plus.js" ></script>
+<script type="text/javascript" src="themes/axlmpc/js/common_www_ecshop68_com.js" ></script>
+<script type="text/javascript" src="themes/axlmpc/js/script.js" ></script>
+<script type="text/javascript" src="themes/axlmpc/js/scrollpic.js"></script>
+<script type="text/javascript" src="themes/axlmpc/js/gw_totop.js" ></script>
 {insert_scripts files='jquery.json.js,transport.js'}
 {insert_scripts files='common.js'}
 <style type="text/css">
@@ -63,7 +63,7 @@
         <!-- {if $cfg.show_goodssn} 显示商品货号 -->
         <div class="goods-sn fl"> <span class="goods-sn-color">商品货号</span> <span>{$goods.goods_sn}</span> </div>
         <!-- {/if} -->
-        <div class="bdsharebuttonbox fr"> <a class="bds_more" data-cmd="more" style="background: transparent url(themes/68ecshopcom_360buy/images/goods-icon.png) no-repeat -110px -166px;color: #999;line-height: 25px;height: 25px; margin: 0px 10px; padding-left:20px; display: block;">分享</a> </div>
+        <div class="bdsharebuttonbox fr"> <a class="bds_more" data-cmd="more" style="background: transparent url(themes/axlmpc/images/goods-icon.png) no-repeat -110px -166px;color: #999;line-height: 25px;height: 25px; margin: 0px 10px; padding-left:20px; display: block;">分享</a> </div>
       </div>
       <script type="text/javascript">
         	window._bd_share_config = {

@@ -12,13 +12,13 @@
 <!-- TemplateEndEditable -->
 <link rel="shortcut icon" href="favicon.ico" />
 <link rel="icon" href="animated_favicon.gif" type="image/gif" />
-<link rel="stylesheet" type="text/css" href="themes/68ecshopcom_360buy/css/pre_sale.css" />
-<script type="text/javascript" src="themes/68ecshopcom_360buy/js/jquery-1.9.1.min.js" ></script>
-<script type="text/javascript" src="themes/68ecshopcom_360buy/js/magiczoom.js" ></script>
-<script type="text/javascript" src="themes/68ecshopcom_360buy/js/magiczoom_plus.js" ></script>
-<script type="text/javascript" src="themes/68ecshopcom_360buy/js/scrollpic.js"></script>
-<script type="text/javascript" src="themes/68ecshopcom_360buy/js/gw_totop.js" ></script>
-<script type="text/javascript" src="themes/68ecshopcom_360buy/js/pre_sale.js" ></script>
+<link rel="stylesheet" type="text/css" href="themes/axlmpc/css/pre_sale.css" />
+<script type="text/javascript" src="themes/axlmpc/js/jquery-1.9.1.min.js" ></script>
+<script type="text/javascript" src="themes/axlmpc/js/magiczoom.js" ></script>
+<script type="text/javascript" src="themes/axlmpc/js/magiczoom_plus.js" ></script>
+<script type="text/javascript" src="themes/axlmpc/js/scrollpic.js"></script>
+<script type="text/javascript" src="themes/axlmpc/js/gw_totop.js" ></script>
+<script type="text/javascript" src="themes/axlmpc/js/pre_sale.js" ></script>
 <script type="text/javascript">
 function $id(element) {
   return document.getElementById(element);
@@ -79,7 +79,7 @@ function reg(str){
             	<b></b><i>{if $goods.is_collet eq 1}已{/if}收藏 ({if $collect_num neq 0}{$collect_num}{else}0{/if})</i>
             </a>   
             <div class="bdsharebuttonbox fr">
-        		<a class="bds_more" href="#" data-cmd="more" style="background: transparent url(themes/68ecshopcom_360buy/images/goods-icon.png) no-repeat -110px -166px;color: #999;line-height: 25px;height: 25px; margin: 0px 10px; padding-left:20px; display: block;">分享</a>
+        		<a class="bds_more" href="#" data-cmd="more" style="background: transparent url(themes/axlmpc/images/goods-icon.png) no-repeat -110px -166px;color: #999;line-height: 25px;height: 25px; margin: 0px 10px; padding-left:20px; display: block;">分享</a>
             </div>
         </div>
 		<script type="text/javascript">

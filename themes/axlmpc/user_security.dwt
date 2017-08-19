@@ -12,10 +12,10 @@
 <!-- TemplateEndEditable -->
 <link rel="shortcut icon" href="favicon.ico" />
 <link rel="icon" href="animated_favicon.gif" type="image/gif" />
-<link rel="stylesheet" type="text/css" href="themes/68ecshopcom_360buy/css/user.css" />
-<script type="text/javascript" src="themes/68ecshopcom_360buy/js/jquery-1.9.1.min.js"></script>
-<script type="text/javascript" src="themes/68ecshopcom_360buy/js/jquery.validate.js"></script>
-<script type="text/javascript" src="themes/68ecshopcom_360buy/js/messages_zh.js"></script>
+<link rel="stylesheet" type="text/css" href="themes/axlmpc/css/user.css" />
+<script type="text/javascript" src="themes/axlmpc/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="themes/axlmpc/js/jquery.validate.js"></script>
+<script type="text/javascript" src="themes/axlmpc/js/messages_zh.js"></script>
 {insert_scripts files='jquery.json.js,transport.js'} 
 {insert_scripts files='common.js,user.js'}
 <script type="text/javascript">
@@ -74,7 +74,7 @@ function countdown(obj, msg) {
             <input type="button" value="修改" onclick="window.location.href='security.php?act=password_reset'" class="main-btn main-btn-large" />
           </div>
         </div>
-        <div class="mc">
+        <div class="mc" style="display:none;">
           <div class="fore1"> <s class="{if $info.is_validated eq 0}fore1_1{else}fore1_3{/if}"></s> <strong>邮箱验证</strong> </div>
           <div class="fore2"> 
             <!-- {if $info.is_validated eq 0} --> 
@@ -94,7 +94,7 @@ function countdown(obj, msg) {
             <!-- {/if}  --> 
           </div>
         </div>
-        <div class="mc">
+        <div class="mc" style="display:none;">
           <div class="fore1"> <s class="{if $info.validated eq 0}fore1_1{else}fore1_3{/if}"></s> <strong>手机验证</strong> </div>
           <div class="fore2"> 
             <!-- {if $info.validated eq 0} --> 
@@ -103,7 +103,7 @@ function countdown(obj, msg) {
             <span class="ftx-03">您验证的手机：{$info.mobile_phone},若已丢失或停用，请立即更换，避免账户被盗</span> 
             <!-- {/if} --> 
           </div>
-          <div class="fore3"> 
+          <div class="fore3" style="display:none;"> 
             <!-- {if $info.mobile_phone eq ''} --> 
             <a href="security.php?act=mobile_binding" class="btn btn-7">绑定手机</a> 
             <!-- {elseif $info.validated eq 0} -->
@@ -119,22 +119,30 @@ function countdown(obj, msg) {
           <div class="fore1"> <s class="{if $info.is_surplus_open eq 0}fore1_1{else}fore1_3{/if}"></s> <strong>余额支付</strong> </div>
           <div class="fore2"> 
             <!-- {if $info.is_surplus_open eq 0} --> 
-            <span style="color: #E31939;">开启后，可保障您账户余额支付的安全</span> 
+            <span style="color: #E31939;">可保障您账户余额支付的安全</span> 
             <!-- {else} --> 
             <span class="ftx-03">您已开启账户余额支付密码功能</span> 
             <!-- {/if} --> 
           </div>
           <div class="fore3"> 
             <!-- {if $info.is_surplus_open eq 0} -->
-            <input type="button" value="开启支付密码" onclick="window.location.href='security.php?act=payment_password_reset'" class="main-btn main-btn-large" />
+            <input type="button" value="修改支付密码" onclick="window.location.href='security.php?act=payment_password_reset'" class="main-btn main-btn-large" />
             <!-- {else} -->
             <input type="button" value="关闭支付密码" onclick="window.location.href='security.php?act=payment_password_close'" class="main-btn main-btn-large" />
             <!-- {/if} --> 
           </div>
-          <div class="fore4">
-            <p> <a href="security.php?act=payment_password_reset">忘记支付密码？</a> </p>
-            <p> <a href="security.php?act=payment_password_reset">修改支付密码</a> </p>
+          
+        </div>
+		<!--余额额支付密码_添加_START_www.68ecshop.com-->
+        <div class="mc" id="shengji-mc">
+          <div class="fore1"> <s class="fore1_1"></s> <strong>升级账户</strong> </div>
+          <div class="fore2"> 
+           
           </div>
+          <div class="fore3"> 
+            <input type="button" value="设置" onclick="window.location.href='security.php?act=shengji_setup'" class="main-btn main-btn-large" />
+          </div>
+          
         </div>
         <!--余额额支付密码_添加_END_www.68ecshop.com--> 
         <!-- 会员用户信息同步给商家 START --> 
@@ -176,37 +184,7 @@ function countdown(obj, msg) {
           <div id="find-box" class="uc_box">
             <form action="security.php" method="post" id="fpForm" name="fpForm">
               <div id="error_container"></div>
-              <div class="item">
-                <label class="con_un">请选择验证身份方式：</label>
-                <select id="validate_type" name="validate_type">
-                  <!-- {foreach from=$validate_types item=item} -->
-                  <option id="validate_type_{$item.type}" value="{$item.type}" val="{$item.value}">{$item.name}</option>
-                  <!-- {/foreach} -->
-                </select>
-              </div>
-              <div class="item v_mobile_phone v_item" style="display: none">
-                <label class="con_un">手机号：</label>
-                <span id="l_mobile_phone"></span> </div>
-              <div id="c_mobile_code" class="item v_mobile_phone v_item" style="display: none">
-                <label class="con_un">请输入手机验证码：</label>
-                <input type="text" id="mobile_code" name="mobile_code" class="text text_te2" value="" />
-                <input id="zphone" type="button" value="获取手机验证码" class="code" />
-              </div>
-              <div class="item v_email v_item" style="display: none">
-                <label class="con_un">邮箱地址：</label>
-                <span id="l_email"></span> </div>
-              <div id="c_email" class="item v_email v_item" style="display: none">
-                <label class="con_un">请输入邮箱验证码：</label>
-                <input type="text" id="email_code" name="email_code" class="text text_te2" value="" />
-                <input id="zemail" type="button" value="获取邮箱验证码" class="code" />
-              </div>
-              <div class="item v_password v_item" style="display: none">
-                <label class="con_un">用户名：</label>
-                <span id="l_password"></span> </div>
-              <div id="c_password" class="item v_password v_item" style="display: none">
-                <label class="con_un">请输入登录密码：</label>
-                <input type="password" id="password" name="password" class="text text_te2" value="" />
-              </div>
+             
               <div class="item">
                 <label class="con_un">请输入验证码：</label>
                 <input type="text" id="captcha" name="captcha" class="text text_te" placeholder="{$lang.comment_captcha}" style="ime-mode: disabled" autocomplete="off" MaxLength="6" />
@@ -221,7 +199,8 @@ function countdown(obj, msg) {
           </div>
         </div>
         <script type="text/javascript">
-                                    function show_validate_type(validate_type_obj){
+                                    function show_validate_type(validate_type_obj){ return 1;
+									return 1;
                                         var type = $(validate_type_obj).val();
                                         var value = $("#validate_type_"+type).attr("val");
                                         $("#l_"+type).html(value);
@@ -229,7 +208,8 @@ function countdown(obj, msg) {
                                         $(".v_"+type).show();
                                     }
                                     
-                                    function send_email_code(emailCodeObj, sendButton){
+                                    function send_email_code(emailCodeObj, sendButton){ return 1;
+									return 1;
                                         // 发送邮件
                                         var url = 'validate.php';
                                         $.post(url, {
@@ -244,7 +224,8 @@ function countdown(obj, msg) {
                                         }, 'text');
                                     }
                                     
-                                    function send_mobile_code(mobileCodeObj, sendButton) {
+                                    function send_mobile_code(mobileCodeObj, sendButton) { return 1;
+									return 1;
                                         // 发送邮件
                                         var url = 'validate.php';
                                         $.post(url, {
@@ -266,23 +247,11 @@ function countdown(obj, msg) {
                                         var validator = $("#fpForm").validate({
                                             debug: false,
                                             rules: {
-                                                mobile_code: {
-                                                    required: true
-                                                },
-                                                email_code: {
-                                                    required: true
-                                                },
                                                 captcha: {
                                                     required: true
                                                 }
                                             },
                                             messages: {
-                                                mobile_code: {
-                                                    required: "请输入手机验证码"
-                                                },
-                                                email_code: {
-                                                    required: "请输入邮箱验证码"
-                                                },
                                                 captcha: {
                                                     required: "请输入验证码"
                                                 }
@@ -471,38 +440,6 @@ function countdown(obj, msg) {
           </div>
           <div id="find-box" class="uc_box">
             <form action="security.php" method="post" id="fpForm" name="fpForm">
-              <div id="error_container"></div>
-              <div class="item">
-                <label class="con_un">请选择验证身份方式：</label>
-                <select id="validate_type" name="validate_type">
-                  <!-- {foreach from=$validate_types item=item} -->
-                  <option id="validate_type_{$item.type}" value="{$item.type}" val="{$item.value}">{$item.name}</option>
-                  <!-- {/foreach} -->
-                </select>
-              </div>
-              <div class="item v_mobile_phone v_item" style="display: none">
-                <label class="con_un">您的手机号：</label>
-                <span id="l_mobile_phone"></span> </div>
-              <div id="c_mobile_code" class="item v_mobile_phone v_item" style="display: none">
-                <label class="con_un">请输入手机验证码：</label>
-                <input type="text" id="mobile_code" name="mobile_code" class="text text_te2" value="" />
-                <input id="zphone" type="button" value="获取手机验证码" class="code" />
-              </div>
-              <div class="item v_email v_item" style="display: none">
-                <label class="con_un">您的邮箱地址：</label>
-                <span id="l_email"></span> </div>
-              <div id="c_email" class="item v_email v_item" style="display: none">
-                <label class="con_un">请输入邮箱验证码：</label>
-                <input type="text" id="email_code" name="email_code" class="text text_te2" value="" />
-                <input id="zemail" type="button" value="获取邮箱验证码" class="code" />
-              </div>
-              <div class="item v_password v_item" style="display: none">
-                <label class="con_un">用户名：</label>
-                <span id="l_password"></span> </div>
-              <div id="c_password" class="item v_password v_item" style="display: none">
-                <label class="con_un">请输入登录密码：</label>
-                <input type="password" id="password" name="password" class="text text_te2" value="" />
-              </div>
               <div class="item">
                 <label class="con_un">请输入验证码：</label>
                 <input type="text" id="captcha" size="8" name="captcha" class="text text_te" placeholder="{$lang.comment_captcha}" style="ime-mode: disabled" autocomplete="off" MaxLength="6" />
@@ -517,7 +454,7 @@ function countdown(obj, msg) {
           </div>
         </div>
         <script type="text/javascript">
-                                    function show_validate_type(validate_type_obj){
+                                    function show_validate_type(validate_type_obj){ return 1;
                                         var type = $(validate_type_obj).val();
                                         var value = $("#validate_type_"+type).attr("val");
                                         $("#l_"+type).html(value);
@@ -525,7 +462,7 @@ function countdown(obj, msg) {
                                         $(".v_"+type).show();
                                     }
                                     
-                                    function send_email_code(emailCodeObj, sendButton){
+                                    function send_email_code(emailCodeObj, sendButton){ return 1;
                                         // 发送邮件
                                         var url = 'validate.php';
                                         $.post(url, {
@@ -540,7 +477,7 @@ function countdown(obj, msg) {
                                         }, 'text');
                                     }
                                     
-                                    function send_mobile_code(mobileCodeObj, sendButton) {
+                                    function send_mobile_code(mobileCodeObj, sendButton) { return 1;
                                         // 发送邮件
                                         var url = 'validate.php';
                                         $.post(url, {
@@ -562,23 +499,13 @@ function countdown(obj, msg) {
                                         var validator = $("#fpForm").validate({
                                             debug: false,
                                             rules: {
-                                                mobile_code: {
-                                                    required: true
-                                                },
-                                                email_code: {
-                                                    required: true
-                                                },
+                                                
                                                 captcha: {
                                                     required: true
                                                 }
                                             },
                                             messages: {
-                                                mobile_code: {
-                                                    required: "请输入手机验证码"
-                                                },
-                                                email_code: {
-                                                    required: "请输入邮箱验证码"
-                                                },
+                                                
                                                 captcha: {
                                                     required: "请输入验证码"
                                                 }
@@ -665,11 +592,6 @@ function countdown(obj, msg) {
                 <input name="email" id="email" type="text" tabindex="1" placeholder="请输入邮箱地址" class="text" />
               </div>
               <div class="item">
-                <label class="con_un">邮箱验证码：</label>
-                <input name="email_code" id="email_code" type="text" tabindex="2" placeholder="请输入邮箱验证码" class="text text_te" />
-                <input id="zemail" type="button" value="获取邮箱验证码" class="code" />
-              </div>
-              <div class="item">
                 <label class="con_un">&nbsp;</label>
                 <input type="hidden" name="act" value="email_binding_success" />
                 <input type="button" id="btn_submit" name="btn_submit" class="main-btn main-btn-large" value="提交" />
@@ -678,7 +600,7 @@ function countdown(obj, msg) {
           </div>
         </div>
         <script type="text/javascript">
-                                    function send_email_code(emailCodeObj, sendButton){
+                                    function send_email_code(emailCodeObj, sendButton){ return 1;
                                         // 发送邮件
                                         var url = 'security.php';
                                         $.post(url, {
@@ -841,7 +763,7 @@ function countdown(obj, msg) {
           </div>
         </div>
         <script type="text/javascript">
-                                    function send_email_code(emailCodeObj, sendButton){
+                                    function send_email_code(emailCodeObj, sendButton){ return 1;
                                         // 发送邮件
                                         var url = 'validate.php';
                                         $.post(url, {
@@ -1037,7 +959,7 @@ function countdown(obj, msg) {
           </div>
         </div>
         <script type="text/javascript">
-                                    function show_validate_type(validate_type_obj){
+                                    function show_validate_type(validate_type_obj){ return 1;
                                         var type = $(validate_type_obj).val();
                                         var value = $("#validate_type_"+type).attr("val");
                                         $("#l_"+type).html(value);
@@ -1045,7 +967,7 @@ function countdown(obj, msg) {
                                         $(".v_"+type).show();
                                     }
                                     
-                                    function send_email_code(emailCodeObj, sendButton){
+                                    function send_email_code(emailCodeObj, sendButton){ return 1;
                                         // 发送邮件
                                         var url = 'validate.php';
                                         $.post(url, {
@@ -1060,7 +982,7 @@ function countdown(obj, msg) {
                                         }, 'text');
                                     }
                                     
-                                    function send_mobile_code(mobileCodeObj, sendButton) {
+                                    function send_mobile_code(mobileCodeObj, sendButton) { return 1;
                                         // 发送邮件
                                         var url = 'validate.php';
                                         $.post(url, {
@@ -1082,23 +1004,13 @@ function countdown(obj, msg) {
                                         var validator = $("#fpForm").validate({
                                             debug: false,
                                             rules: {
-                                                mobile_code: {
-                                                    required: true
-                                                },
-                                                email_code: {
-                                                    required: true
-                                                },
+                                                
                                                 captcha: {
                                                     required: true
                                                 }
                                             },
                                             messages: {
-                                                mobile_code: {
-                                                    required: "请输入手机验证码"
-                                                },
-                                                email_code: {
-                                                    required: "请输入邮箱验证码"
-                                                },
+                                                
                                                 captcha: {
                                                     required: "请输入验证码"
                                                 }
@@ -1484,37 +1396,7 @@ function countdown(obj, msg) {
           <div id="find-box" class="uc_box">
             <form action="security.php" method="post" id="fpForm" name="fpForm">
               <div id="error_container"></div>
-              <div class="item">
-                <label class="con_un">请选择验证身份方式：</label>
-                <select id="validate_type" name="validate_type">
-                  <!-- {foreach from=$validate_types item=item} -->
-                  <option id="validate_type_{$item.type}" value="{$item.type}" val="{$item.value}">{$item.name}</option>
-                  <!-- {/foreach} -->
-                </select>
-              </div>
-              <div class="item v_mobile_phone v_item" style="display: none">
-                <label class="con_un">您的手机号：</label>
-                <span id="l_mobile_phone"></span> </div>
-              <div id="c_mobile_code" class="item v_mobile_phone v_item" style="display: none">
-                <label class="con_un">请输入手机验证码：</label>
-                <input type="text" id="mobile_code" name="mobile_code" class="text text_te2" value="" />
-                <input id="zphone" type="button" value="获取手机验证码" class="code" />
-              </div>
-              <div class="item v_email v_item" style="display: none">
-                <label class="con_un">您的邮箱地址：</label>
-                <span id="l_email"></span> </div>
-              <div id="c_email" class="item v_email v_item" style="display: none">
-                <label class="con_un">请输入邮箱验证码：</label>
-                <input type="text" id="email_code" name="email_code" class="text text_te2" value="" />
-                <input id="zemail" type="button" value="获取邮箱验证码" class="code" />
-              </div>
-              <div class="item v_password v_item" style="display: none">
-                <label class="con_un">用户名：</label>
-                <span id="l_password"></span> </div>
-              <div id="c_password" class="item v_password v_item" style="display: none">
-                <label class="con_un">请输入登录密码：</label>
-                <input type="password" id="password" name="password" class="text text_te2" value="" />
-              </div>
+			  
               <div class="item">
                 <label class="con_un">请输入验证码：</label>
                 <input type="text" id="captcha" size="8" name="captcha" class="text text_te" placeholder="{$lang.comment_captcha}" style="ime-mode: disabled" autocomplete="off" MaxLength="6" />
@@ -1529,7 +1411,7 @@ function countdown(obj, msg) {
           </div>
         </div>
         <script type="text/javascript">
-                                    function show_validate_type(validate_type_obj){
+                                    function show_validate_type(validate_type_obj){ return 1;
                                         var type = $(validate_type_obj).val();
                                         var value = $("#validate_type_"+type).attr("val");
                                         $("#l_"+type).html(value);
@@ -1537,7 +1419,7 @@ function countdown(obj, msg) {
                                         $(".v_"+type).show();
                                     }
                                     
-                                    function send_email_code(emailCodeObj, sendButton){
+                                    function send_email_code(emailCodeObj, sendButton){ return 1;
                                         // 发送邮件
                                         var url = 'validate.php';
                                         $.post(url, {
@@ -1552,7 +1434,7 @@ function countdown(obj, msg) {
                                         }, 'text');
                                     }
                                     
-                                    function send_mobile_code(mobileCodeObj, sendButton) {
+                                    function send_mobile_code(mobileCodeObj, sendButton) { return 1;
                                         // 发送邮件
                                         var url = 'validate.php';
                                         $.post(url, {
@@ -1574,23 +1456,13 @@ function countdown(obj, msg) {
                                         var validator = $("#fpForm").validate({
                                             debug: false,
                                             rules: {
-                                                mobile_code: {
-                                                    required: true
-                                                },
-                                                email_code: {
-                                                    required: true
-                                                },
+                                                
                                                 captcha: {
                                                     required: true
                                                 }
                                             },
                                             messages: {
-                                                mobile_code: {
-                                                    required: "请输入手机验证码"
-                                                },
-                                                email_code: {
-                                                    required: "请输入邮箱验证码"
-                                                },
+                                                
                                                 captcha: {
                                                     required: "请输入验证码"
                                                 }
@@ -1661,12 +1533,13 @@ function countdown(obj, msg) {
               <div id="error_container"></div>
               <div class="item">
                 <label class="con_un">设置支付密码：</label>
-                <input name="password" id="password" type="password" tabindex="1" placeholder="请输入支付密码" class="text" />
+                <input name="pwd2" id="pwd2" type="password" tabindex="1" placeholder="请输入支付密码" class="text" />
               </div>
-              <div class="item">
-                <label class="con_un">重新输入密码：</label>
-                <input name="confirm_password" id="confirm_password" type="password" tabindex="1" placeholder="请输再次输入确认密码" class="text" />
+			  <div class="item">
+                <label class="con_un">设置二级支付密码：</label>
+                <input name="pwd3" id="pwd3" type="password" tabindex="1" placeholder="请输入二级支付密码" class="text" />
               </div>
+             
               <div class="item">
                 <label class="con_un">&nbsp;</label>
                 <input type="hidden" name="act" value="payment_password_reset_success" />
@@ -1680,24 +1553,10 @@ function countdown(obj, msg) {
                                         var validator = $("#fpForm").validate({
                                             debug: false,
                                             rules: {
-                                                password: {
-                                                    required: true,
-                                                    minlength: 6
-                                                },
-                                                confirm_password: {
-                                                    required: true,
-                                                    equalTo: "#password"
-                                                }
+                                                
                                             },
                                             messages: {
-                                                password: {
-                                                    required: "请输入密码",
-                                                    minlength: "登录密码不能少于 6 个字符"
-                                                },
-                                                confirm_password: {
-                                                    required: "请再次输入新密码",
-                                                    equalTo: "两次输入的密码不一致，请重新输入"
-                                                }
+                                               
                                             },
                                             errorPlacement: function(error, element) {
                                                 error.appendTo(element.parent());
@@ -1710,7 +1569,7 @@ function countdown(obj, msg) {
                                             }
                                             
                                             var url = "security.php";
-                                            $.post(url, {act: 'do_payment_password_reset', password: $("#password").val()}, function(data){
+                                            $.post(url, {act: 'do_payment_password_reset', pwd2: $("#pwd2").val(),pwd3: $("#pwd3").val()}, function(data){
                                                 if(data.error == 1){
                                                     alert(data.content);
                                                     if(data.url != undefined && data.url.length > 0){
@@ -1821,7 +1680,7 @@ function countdown(obj, msg) {
           </div>
         </div>
         <script type="text/javascript">
-                                    function show_validate_type(validate_type_obj){
+                                    function show_validate_type(validate_type_obj){ return 1;
                                         var type = $(validate_type_obj).val();
                                         var value = $("#validate_type_"+type).attr("val");
                                         $("#l_"+type).html(value);
@@ -1829,7 +1688,7 @@ function countdown(obj, msg) {
                                         $(".v_"+type).show();
                                     }
                                     
-                                    function send_email_code(emailCodeObj, sendButton){
+                                    function send_email_code(emailCodeObj, sendButton){ return 1;
                                         // 发送邮件
                                         var url = 'validate.php';
                                         $.post(url, {
@@ -1844,7 +1703,7 @@ function countdown(obj, msg) {
                                         }, 'text');
                                     }
                                     
-                                    function send_mobile_code(mobileCodeObj, sendButton) {
+                                    function send_mobile_code(mobileCodeObj, sendButton) { return 1;
                                         // 发送邮件
                                         var url = 'validate.php';
                                         $.post(url, {
@@ -1866,23 +1725,13 @@ function countdown(obj, msg) {
                                         var validator = $("#fpForm").validate({
                                             debug: false,
                                             rules: {
-                                                mobile_code: {
-                                                    required: true
-                                                },
-                                                email_code: {
-                                                    required: true
-                                                },
+                                                
                                                 captcha: {
                                                     required: true
                                                 }
                                             },
                                             messages: {
-                                                mobile_code: {
-                                                    required: "请输入手机验证码"
-                                                },
-                                                email_code: {
-                                                    required: "请输入邮箱验证码"
-                                                },
+                                                
                                                 captcha: {
                                                     required: "请输入验证码"
                                                 }
@@ -2023,7 +1872,7 @@ function countdown(obj, msg) {
           </div>
         </div>
         <script type="text/javascript">
-                                    function show_validate_type(validate_type_obj){
+                                    function show_validate_type(validate_type_obj){ return 1;
                                         var type = $(validate_type_obj).val();
                                         var value = $("#validate_type_"+type).attr("val");
                                         $("#l_"+type).html(value);
@@ -2031,7 +1880,7 @@ function countdown(obj, msg) {
                                         $(".v_"+type).show();
                                     }
                                     
-                                    function send_email_code(emailCodeObj, sendButton){
+                                    function send_email_code(emailCodeObj, sendButton){ return 1;
                                         // 发送邮件
                                         var url = 'validate.php';
                                         $.post(url, {
@@ -2046,7 +1895,7 @@ function countdown(obj, msg) {
                                         }, 'text');
                                     }
                                     
-                                    function send_mobile_code(mobileCodeObj, sendButton) {
+                                    function send_mobile_code(mobileCodeObj, sendButton) { return 1;
                                         // 发送邮件
                                         var url = 'validate.php';
                                         $.post(url, {
@@ -2068,23 +1917,13 @@ function countdown(obj, msg) {
                                         var validator = $("#fpForm").validate({
                                             debug: false,
                                             rules: {
-                                                mobile_code: {
-                                                    required: true
-                                                },
-                                                email_code: {
-                                                    required: true
-                                                },
+                                                
                                                 captcha: {
                                                     required: true
                                                 }
                                             },
                                             messages: {
-                                                mobile_code: {
-                                                    required: "请输入手机验证码"
-                                                },
-                                                email_code: {
-                                                    required: "请输入邮箱验证码"
-                                                },
+                                                
                                                 captcha: {
                                                     required: "请输入验证码"
                                                 }
@@ -2234,6 +2073,66 @@ function countdown(obj, msg) {
       </div>
       <!--{/if}--> 
       <!-- {/if} --> 
+	  
+	  <!--{if $action eq 'shengji_setup'}--> 
+	  <h5 title="升级账户" class="user-title user-title-t"> <span>升级账户</span> </h5>
+		  <div class="blank" ></div>
+		  <div id="find_pw" class="find_pw2">
+				<div class="find_con">
+				<!--{if $step eq 'setpup'}--> 
+				  <div id="find-box" class="uc_box">
+					<form action="security.php" method="post" id="fpForm" name="fpForm">
+					  <div id="error_container"></div>
+					 
+					  <div class="item">
+						<label class="con_un">推荐人账户：</label>
+						<input type="text" id="tuijianren_user_id" name="tuijianren_user_id" class="text text_te" placeholder="" autocomplete="off" MaxLength="6" value="{$pc_user.tuijianren_user_id}"/>
+					  </div>
+					  <div class="item">
+						<label class="con_un">接点人账户：</label>
+						<input type="text" id="jiedianren_user_id" name="jiedianren_user_id" class="text text_te" placeholder="" autocomplete="off" value="{$pc_user.jiedianren_user_id}" />
+					  </div>
+					  <div class="item">
+						<label class="con_un">接点区域：</label>
+						<select id="leftright" name="leftright" autocomplete="off" />
+							<option value="left" <!--{if $pc_user.leftright eq 'left'}-->selected<!--{/if}-->>左区</option>
+							<option value="right" <!--{if $pc_user.leftright eq 'right'}-->selected<!--{/if}-->>右区</option>
+						</select>
+					  </div>
+					  <div class="item">
+						<label class="con_un">服务中心：</label>
+						<select name="fuwuzhongxin_user_id" id="fuwuzhongxin_user_id">
+							<option value="0">--请选择--</option>
+							<!-- {foreach from=$fuwuzhongxinlist item=item} -->
+							<option value="{$item.uid}" <!--{if $item.uid eq $pc_user.fuwuzhongxin_user_id}-->selected<!--{/if}-->>{$item.name}</option>
+							<!-- {/foreach} -->
+						</select>
+					  </div>
+					  <!-- {if $pc_user.tuijianren_user_id} -->
+						<div class="find_box_end">
+						  <p class="on_go"> <a href="security.php"  class="back">返回账户安全中心&gt;&gt;</a> </p>
+						</div>
+					  <!-- {else}-->
+					  <div class="item">
+						<label class="con_un">&nbsp;</label>
+						<input type="hidden" name="act" value="shengji" />
+						<input type="submit" name="button" id="btn_submit" class="main-btn main-btn-large" value="提交" />
+					  </div>
+					  <!-- {/if} -->
+					</form>
+				  </div>
+				<!-- {/if} -->
+				<!--{if $step eq 'success'}-->
+					<div id="find-box" class="uc_box">
+						<div class="find_box_end">
+						  <p> <i></i> 设置成功！ </p>
+						  <p class="on_go"> <a href="security.php"  class="back">返回账户安全中心&gt;&gt;</a> </p>
+						</div>
+					</div>
+				<!-- {/if} -->
+				</div>
+			  </div>
+	  <!-- {/if} --> 
     </div>
   </div>
 </div>
@@ -2243,7 +2142,7 @@ function countdown(obj, msg) {
 	<!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem --> 
   </div>
 </div>
-{* start Add By www.68ecshop.com ecshop开发中心 企业QQ800007396 *} 
+{* start Add By *} 
 <script language="javascript">
 	document.getElementById("retData").innerHTML="<center>正在查询物流信息，请稍后...</center>";
 	var expressid = document.getElementById("shipping_name").innerHTML.replace(/(^\s*)|(\s*$)/g, "");

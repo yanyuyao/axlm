@@ -11,7 +11,7 @@
 								</dt>
 								<dd class="goods-thumb">
 									<a target="_blank" href="{$goods.url}" title="{$goods.name|escape:html}">
-										<img data-original="{$goods.thumb}" src="themes/68ecshopcom_360buy/images/loading.gif" alt="{$goods.name|escape:html}">
+										<img data-original="{$goods.thumb}" src="themes/axlmpc/images/loading.gif" alt="{$goods.name|escape:html}">
 									</a>
 								</dd>
 								<dd class="goods-price">

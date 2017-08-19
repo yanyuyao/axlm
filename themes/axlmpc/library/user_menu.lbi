@@ -6,8 +6,8 @@
         <a href="user.php?act=profile" class="item {if $action eq 'profile'}curs{/if}"><span>{$lang.label_profile}</span><i></i></a>
         <a href="security.php" class="item {if $is_security eq 'true'}curs{/if}"><span>账户安全</span><i></i></a>    
         <a href="user.php?act=address_list" class="item {if $action eq 'address_list'}curs{/if}"><span>{$lang.label_address}</span><i></i></a>
-        <a href="user.php?act=account_log" class="item {if $action eq 'account_log'}curs{/if}"><span>{$lang.label_user_surplus}</span><i></i></a>
-        
+        <!--<a href="user.php?act=account_log" class="item {if $action eq 'account_log'}curs{/if}"><span>{$lang.label_user_surplus}</span><i></i></a>-->
+        <a href="account.php" class="item {if $is_account eq 1}curs{/if}"><span>资金账户</span><i></i></a>  
 		<!--<a href="user.php?act=bonus" class="item {if $action eq 'bonus'}curs{/if}"><span>{$lang.label_bonus}红包</span><i></i></a>-->
         <!--{if $show_transform_points}--> 
         <a href="user.php?act=transform_points" class="item {if $action eq 'transform_points'}curs{/if}"><span>{$lang.label_transform_points}</span><i></i></a>
@@ -36,7 +36,7 @@
         <!-- {if $affiliate.on eq 1} -->
         <!--<a href="user.php?act=affiliate" class="item {if $action eq 'affiliate'}curs{/if}"><span>{$lang.label_affiliate}</span><i></i></a>-->
         <!--{/if}--> 
-	
+		<a href="user.php?act=tuiguang" class="item {if $action eq 'tuiguang'}curs{/if}"><span>推荐中心</span><i></i></a>
 		<!-- {if $fenxiao.on eq 1} -->
         <a href="user.php?act=fenxiao" class="item {if $action eq 'fenxiao'}curs{/if}"><span>分销中心</span><i></i></a>
         <!--{/if}--> 

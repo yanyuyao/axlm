@@ -28,7 +28,7 @@
 	width: 209px;
 	height: 40px;
 	line-height: 40px;
-	background-color: #E31939;
+	background-color: #f28202;
 	font-size: 14px;
 	color: #fff;
 }
@@ -109,7 +109,7 @@ margin-top:
 	color: #999;
 }
 .sideNav .myInfo .info-op ul li a:hover {
-	color: #E31939
+	color: #f28202
 }
 .sideNav .userInfo .cost {
 	width:200px;
@@ -177,10 +177,10 @@ margin-top:
 	background: #f0f0f0;
 }
 .navList .func .item.curs {
-	color: #E31939;
+	color: #f28202;
 }
 .navList .func .item span:hover {
-	color: #E31939;
+	color: #f28202;
 }
 .navList .func .item i {
 	width: 5px;
@@ -324,7 +324,7 @@ margin-top:
 	font-size: 14px
 }
 .account .security .improve span.improve-name {
-	color: #E31939;
+	color: #f28202;
 	margin-right: 10px;
 	vertical-align: middle
 }
@@ -439,7 +439,7 @@ margin-top:
 	height: 18px;
 	line-height: 35px;
 	display: inline-block;
-	background-color: #E31939;
+	background-color: #f28202;
 	margin-left: 13px;
 	margin-right: 8px;
 	vertical-align: middle;
@@ -475,7 +475,7 @@ margin-top:
 	_height: 8px;
 }
 .order .status li span {
-	color: #E31939;
+	color: #f28202;
 	padding-left: 7px;
 	padding-right: 10px;
 }
@@ -541,7 +541,7 @@ margin-top:
 	top: 0px;
 	right: 0px;
 	z-index: 10;
-	background: #E31939;
+	background: #f28202;
 	color: #fff;
 	padding: 0px 3px;
 }
@@ -635,7 +635,7 @@ margin-top:
 	display: inline-block;
 }
 .proListUc_cart .listLine_cart li a:hover {
-	color: #E31939
+	color: #f28202
 }
 .proListUc_cart .listLine_cart li a.pic {
 	width: 60px;
@@ -750,7 +750,7 @@ margin-top:
 	position: absolute;
 	top: 100px;
 	right: 0px;
-	background: #E31939;
+	background: #f28202;
 	color: #ffffff;
 	height: 20px;
 	line-height: 20px;
@@ -831,7 +831,7 @@ margin-top:
 	position: absolute;
 	top: 100px;
 	right: 0px;
-	background: #E31939;
+	background: #f28202;
 	color: #ffffff;
 	height: 20px;
 	line-height: 20px;
@@ -979,7 +979,7 @@ margin-top:
 	position: absolute;
 	top: 100px;
 	right: 0px;
-	background: #E31939;
+	background: #f28202;
 	color: #ffffff;
 	height: 20px;
 	line-height: 20px;
@@ -1057,7 +1057,7 @@ margin-top:
 	position: absolute;
 	top: 100px;
 	right: 0px;
-	background: #E31939;
+	background: #f28202;
 	color: #ffffff;
 	height: 20px;
 	line-height: 20px;
@@ -1231,7 +1231,7 @@ h5.user-title-t span i.validated5{
 	line-height: 25px;
 }
 #safe05 .fore4 p a {
-	color: #E31939;
+	color: #f28202;
 }
 #safe05 .fore1 {
 	width: 175px;
@@ -1599,7 +1599,7 @@ h5.user-title-t span i.validated5{
 	padding: 0px 5px;
 }
 .tabmenu span.ncm-btn .bnt_blue_b {
-  background: #E31939;
+  background: #f28202;
   width: 67px;
   height: 26px;
   text-align: center;
@@ -1686,7 +1686,7 @@ h5.user-title-t span i.validated5{
 	padding:0px 15px;
 }
 .user-right .box .remide-box .num {
-	color: #E31939;
+	color: #f28202;
 	position: relative;
 	margin: 0px 3px;
 }
@@ -1827,8 +1827,8 @@ h5.user-title-t span i.validated5{
 }
 .item_list .send-comment .tags dt.cur {
 	background-position: -110px -307px;
-	border: solid #E31939 1px;
-	color:#E31939;
+	border: solid #f28202 1px;
+	color:#f28202;
 }
 .item_list .send-comment .tags dd.zdy {
 	float: left;
@@ -1864,7 +1864,7 @@ h5.user-title-t span i.validated5{
 }
 .item_list .send-comment .tags_zi li {
 	padding:2px 24px 2px 6px;
-	border:1px solid #E31939;
+	border:1px solid #f28202;
 	margin: 0 5px 5px 0;
 	float: left;
 	width: auto;
@@ -2273,7 +2273,7 @@ filter:progid:DXImageTransform.Microsoft.gradient(enabled='true', startColorstr=
     font-size: 12px;
     display: inline-block;
     color: #fff;
-    background-color: #E31939;
+    background-color: #f28202;
     overflow: visible;
     outline: 0;
     cursor: pointer;

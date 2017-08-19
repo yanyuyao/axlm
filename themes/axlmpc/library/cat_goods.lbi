@@ -88,7 +88,7 @@ $GLOBALS['smarty']->assign('cat_recommend_type',get_cat_recommend_type($GLOBALS[
                         	<ul>
                             {foreach from=$index_image item=ad name=index_image}
                             	<li>
-                                	<a href="{$ad.url}" target="_blank"><img data-original="{$ad.image}" src="themes/68ecshopcom_360buy/images/loading.gif" width="270" height="475" /></a>
+                                	<a href="{$ad.url}" target="_blank"><img data-original="{$ad.image}" src="themes/axlmpc/images/loading.gif" width="270" height="475" /></a>
                                 </li>
                             {/foreach}
                             </ul>
@@ -97,7 +97,7 @@ $GLOBALS['smarty']->assign('cat_recommend_type',get_cat_recommend_type($GLOBALS[
                         <div id="focus_{$goods_cat.id}" class="floor-banner">
                         	<ul>
                             	<li>
-                                	<a href="javascript:;" target="_self"><img data-original="themes/68ecshopcom_360buy/images/default-img.jpg" src="themes/68ecshopcom_360buy/images/loading.gif" width="270" height="475" /></a>
+                                	<a href="javascript:;" target="_self"><img data-original="themes/axlmpc/images/default-img.jpg" src="themes/axlmpc/images/loading.gif" width="270" height="475" /></a>
                                 </li>
                             </ul>
                         </div>
@@ -135,7 +135,7 @@ $GLOBALS['smarty']->assign('cat_recommend_type',get_cat_recommend_type($GLOBALS[
 								<div class="goods" id="li_{$goods.id}" {if $smarty.foreach.cat_item_goods.iteration % 4 == 0}style="width: 234px"{/if}>
 									<div class="wrap">
 										<a target="_blank" href="{$goods.url}" title="{$goods.name|escape:html}">
-											<img data-original="{$goods.thumb}" src="themes/68ecshopcom_360buy/images/loading.gif" alt="{$goods.name|escape:html}" height="140" width="140" class="pic_img_{$goods.id}">
+											<img data-original="{$goods.thumb}" src="themes/axlmpc/images/loading.gif" alt="{$goods.name|escape:html}" height="140" width="140" class="pic_img_{$goods.id}">
 										</a>
 										<p class="title">
 											<a target="_blank" href="{$goods.url}" title="{$goods.name|escape:html}">{$goods.short_style_name}</a>
@@ -169,7 +169,7 @@ $GLOBALS['smarty']->assign('cat_recommend_type',get_cat_recommend_type($GLOBALS[
 									<div class="goods" id="li_{$goods.id}" {if $smarty.foreach.goods.iteration % 4 == 0}style="width: 234px"{/if}>
 										<div class="wrap">
 											<a target="_blank" href="{$goods.url}" title="{$goods.name|escape:html}">
-												<img data-original="{$goods.thumb}" src="themes/68ecshopcom_360buy/images/loading.gif" alt="{$goods.name|escape:html}" height="140" width="140" class="pic_img_{$goods.id}">
+												<img data-original="{$goods.thumb}" src="themes/axlmpc/images/loading.gif" alt="{$goods.name|escape:html}" height="140" width="140" class="pic_img_{$goods.id}">
 											</a>
 											<p class="title">
 												<a target="_blank" href="{$goods.url}" title="{$goods.name|escape:html}">{$goods.short_style_name}</a>
@@ -204,7 +204,7 @@ $GLOBALS['smarty']->assign('cat_recommend_type',get_cat_recommend_type($GLOBALS[
 										{foreach from=$catbrand item=item name=catbrand}
 										<li {if $smarty.foreach.catbrand.first}class="fore1"{/if}>
 											<a href="{$item.url}" target="_blank" title="{$item.name|escape:html}">
-												<img width="100" height="40" src="themes/68ecshopcom_360buy/images/loading.gif"  data-original="data/brandlogo/{$item.logo}" alt="{$item.name|escape:html}">
+												<img width="100" height="40" src="themes/axlmpc/images/loading.gif"  data-original="data/brandlogo/{$item.logo}" alt="{$item.name|escape:html}">
 											</a>
 										</li>
 										{/foreach}

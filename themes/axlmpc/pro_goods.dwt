@@ -12,11 +12,11 @@
 <!-- TemplateEndEditable -->
 <link rel="shortcut icon" href="favicon.ico" />
 <link rel="icon" href="animated_favicon.gif" type="image/gif" />
-<link rel="stylesheet" type="text/css" href="themes/68ecshopcom_360buy/css/pro_goods.css" />
-<link rel="stylesheet" type="text/css" href="themes/68ecshopcom_360buy/css/pshow.css" />
-<script type="text/javascript" src="themes/68ecshopcom_360buy/js/script.js" ></script>
-<script type="text/javascript" src="themes/68ecshopcom_360buy/js/common_www_ecshop68_com.js" ></script>
-<script type="text/javascript" src="themes/68ecshopcom_360buy/js/jquery-1.9.1.min.js"></script>
+<link rel="stylesheet" type="text/css" href="themes/axlmpc/css/pro_goods.css" />
+<link rel="stylesheet" type="text/css" href="themes/axlmpc/css/pshow.css" />
+<script type="text/javascript" src="themes/axlmpc/js/script.js" ></script>
+<script type="text/javascript" src="themes/axlmpc/js/common_www_ecshop68_com.js" ></script>
+<script type="text/javascript" src="themes/axlmpc/js/jquery-1.9.1.min.js"></script>
 {insert_scripts files='common.js',global.js,compare.js'}
 {insert_scripts files='jquery.json.js,transport.js,json2.js'}
 </head>
@@ -37,7 +37,7 @@
 .my-comment-list dt{width:100px}
 .my-comment-list dl{
 
-	background: transparent url("themes/68ecshopcom_360buy/images/my-comment-list_bg.gif") no-repeat scroll 130px top;
+	background: transparent url("themes/axlmpc/images/my-comment-list_bg.gif") no-repeat scroll 130px top;
 }
 .my-comment-list dt{
 	width:122px;

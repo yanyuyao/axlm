@@ -12,8 +12,8 @@
 <!-- TemplateEndEditable -->
 <link rel="shortcut icon" href="favicon.ico" />
 <link rel="icon" href="animated_favicon.gif" type="image/gif" />
-<link rel="stylesheet" type="text/css" href="themes/68ecshopcom_360buy/css/alltree.css" />
-<script type="text/javascript" src="themes/68ecshopcom_360buy/js/jquery-1.9.1.min.js"></script>
+<link rel="stylesheet" type="text/css" href="themes/axlmpc//css/alltree.css" />
+<script type="text/javascript" src="themes/axlmpc//js/jquery-1.9.1.min.js"></script>
 {insert_scripts files='jquery.json.js,transport.js'}
 {insert_scripts files='common.js'}
 </head>

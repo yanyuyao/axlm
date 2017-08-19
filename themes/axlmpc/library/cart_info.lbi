@@ -13,7 +13,7 @@
                     {foreach from=$goods item=goods name=goods}
                     <div class="cart-item">
                         <div class="item-goods">
-                            <span class="p-img"><a href="{$goods.url}"><img src="{if $goods.goods_thumb eq 'package_img'}themes/68ecshopcom_360buy/images/jmpic/ico_cart_package.gif{else}{$goods.goods_thumb}{/if}" width="50" height="50" alt="{$goods.short_name}"></a></span>
+                            <span class="p-img"><a href="{$goods.url}"><img src="{if $goods.goods_thumb eq 'package_img'}themes/axlmpc/images/jmpic/ico_cart_package.gif{else}{$goods.goods_thumb}{/if}" width="50" height="50" alt="{$goods.short_name}"></a></span>
                         <div class="p-name"><a href="{$goods.url}" title="{$goods.short_name}">{$goods.short_name}</a></div>
                         <div class="p-price"><strong>{$goods.goods_price}</strong>×{$goods.goods_number}</div>
                         <a href="javascript:;" class="p-del" onClick="deleteCartGoods({$goods.rec_id})">删除</a>

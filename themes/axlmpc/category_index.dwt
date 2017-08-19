@@ -12,9 +12,9 @@
 <!-- TemplateEndEditable -->
 <link rel="shortcut icon" href="favicon.ico" />
 <link rel="icon" href="animated_favicon.gif" type="image/gif" />
-<link rel="stylesheet" type="text/css" href="themes/68ecshopcom_360buy/css/{$cat_style}" />
-<script type="text/javascript" src="themes/68ecshopcom_360buy/js/jquery-1.9.1.min.js"></script>
-<script type="text/javascript" src="themes/68ecshopcom_360buy/js/jquery-lazyload.js" ></script>
+<link rel="stylesheet" type="text/css" href="themes/axlmpc//css/{$cat_style}" />
+<script type="text/javascript" src="themes/axlmpc//js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="themes/axlmpc//js/jquery-lazyload.js" ></script>
 {insert_scripts files='jquery.json.js,transport.js'}
 {insert_scripts files='common.js'}
 </head>
@@ -59,9 +59,9 @@
              $GLOBALS['smarty']->assign('index_image2',get_advlist('频道页-分类ID'.$GLOBALS['smarty']->_var['category'].'-图片2', 1));
              $GLOBALS['smarty']->assign('index_image3',get_advlist('频道页-分类ID'.$GLOBALS['smarty']->_var['category'].'-图片3', 1));
 		?>
-    {foreach from=$index_image1 item=ad name=index_image}<a href="{$ad.url}" target="_blank"> <img src="themes/68ecshopcom_360buy/images/loading.gif" data-original="{$ad.image}"  height="187" width="510"></a>{/foreach}
-    {foreach from=$index_image2 item=ad name=index_image}<a href="{$ad.url}" target="_blank"><img src="themes/68ecshopcom_360buy/images/loading.gif" data-original="{$ad.image}" height="187" width="340"></a>{/foreach}
-    {foreach from=$index_image3 item=ad name=index_image}<a href="{$ad.url}" target="_blank" class="last"> <img src="themes/68ecshopcom_360buy/images/loading.gif" data-original="{$ad.image}"  height="187" width="340"></a>{/foreach} </div>
+    {foreach from=$index_image1 item=ad name=index_image}<a href="{$ad.url}" target="_blank"> <img src="themes/axlmpc//images/loading.gif" data-original="{$ad.image}"  height="187" width="510"></a>{/foreach}
+    {foreach from=$index_image2 item=ad name=index_image}<a href="{$ad.url}" target="_blank"><img src="themes/axlmpc//images/loading.gif" data-original="{$ad.image}" height="187" width="340"></a>{/foreach}
+    {foreach from=$index_image3 item=ad name=index_image}<a href="{$ad.url}" target="_blank" class="last"> <img src="themes/axlmpc//images/loading.gif" data-original="{$ad.image}"  height="187" width="340"></a>{/foreach} </div>
 </div>
 {foreach  from=$childcat_goods item=cat name=name}
 <div class="floor-wrapper">
@@ -85,7 +85,7 @@ $(this).removeClass("itemWrapper_hover");
       <div class="item-inner">
       	<a class="add-cart" href="javascript:addToCart({$catgoods.goods_id})" title="加入购物车"></a>
         <a href="{$catgoods.url}" title='{$catgoods.goods_name|escape:html}' target="_blank" class="item-img">
-        	<img data-original="{$catgoods.goods_thumb}" src="themes/68ecshopcom_360buy/images/loading.gif"  class="pic_img_{$catgoods.goods_id}" height="160" width="160">
+        	<img data-original="{$catgoods.goods_thumb}" src="themes/axlmpc//images/loading.gif"  class="pic_img_{$catgoods.goods_id}" height="160" width="160">
         </a>
         <p class="item-name"><a href="{$catgoods.url}" title="{$catgoods.goods_name|escape:html}" target="_blank">{$catgoods.goods_name}</a></p>
       	<div class="item-price">

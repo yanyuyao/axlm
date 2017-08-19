@@ -11,8 +11,8 @@
 <!-- TemplateEndEditable -->
 <link rel="shortcut icon" href="favicon.ico" />
 <link rel="icon" href="animated_favicon.gif" type="image/gif" />
-<link rel="stylesheet" type="text/css" href="themes/68ecshopcom_360buy/css/article.css" />
-<script type="text/javascript" src="themes/68ecshopcom_360buy/js/jquery-1.9.1.min.js"></script>
+<link rel="stylesheet" type="text/css" href="themes/axlmpc//css/article.css" />
+<script type="text/javascript" src="themes/axlmpc//js/jquery-1.9.1.min.js"></script>
 {insert_scripts files='jquery.json.js,transport.js'}
 {insert_scripts files='common.js'}
 </head>
@@ -136,7 +136,7 @@
             <!--{foreach from=$article_img1 item=articleimg name=name}--> 
             <!--{if $smarty.foreach.name.iteration <=1 }-->
             <li class="focus">
-              <p><a href="{$articleimg.url}"><img class="view" alt="{$articleimg.title}" src="{if $articleimg.img.0}{$articleimg.img.0}{else}themes/68ecshopcom_360buy/images/article_img.jpg{/if}"></a></p>
+              <p><a href="{$articleimg.url}"><img class="view" alt="{$articleimg.title}" src="{if $articleimg.img.0}{$articleimg.img.0}{else}themes/axlmpc//images/article_img.jpg{/if}"></a></p>
               <p><a class="txt" title="{$articleimg.title}" target="_blank"
           href="{$articleimg.url}">{$articleimg.title|truncate:10}</A></P>
             </li>
@@ -145,7 +145,7 @@
             <!--{foreach from=$article_img1 item=articleimg name=name}--> 
             <!-- {if $smarty.foreach.name.iteration>1}-->
             <li>
-              <p><a href="{$articleimg.url}" target="_blank"><img class="view" alt="{$articleimg.title}" src="{if $articleimg.img.0}{$articleimg.img.0}{else}themes/68ecshopcom_360buy/images/article_img.jpg{/if}"></a></p>
+              <p><a href="{$articleimg.url}" target="_blank"><img class="view" alt="{$articleimg.title}" src="{if $articleimg.img.0}{$articleimg.img.0}{else}themes/axlmpc//images/article_img.jpg{/if}"></a></p>
               <p><a class="txt" title="{$articleimg.title}" target="_blank"
           href="{$articleimg.url}">{$articleimg.title|truncate:10}</a></p>
             </li>
@@ -217,7 +217,7 @@
     <!--{foreach from=$article_img2 item=articleimg name=name}-->
     <li <!--{if $smarty.foreach.name.first}-->class="first"<!--{/if}-->>
       <p><a href="{$articleimg.url}" target="_blank"><img class="view" 
-  alt="{$articleimg.title}" src="{if $articleimg.img.0}{$articleimg.img.0}{else}themes/68ecshopcom_360buy/images/article_img.jpg{/if}"></a></p>
+  alt="{$articleimg.title}" src="{if $articleimg.img.0}{$articleimg.img.0}{else}themes/axlmpc//images/article_img.jpg{/if}"></a></p>
       <p><a class="txt" title="{$articleimg.title}" target="_blank" href="{$articleimg.url}">{$articleimg.title|truncate:10}</a></p>
     </li>
     <!-- {/foreach} -->
@@ -285,7 +285,7 @@
   <ul>
     <!--{foreach from=$article_img3 item=articleimg name=name}-->
     <li <!--{if $smarty.foreach.name.first}-->class="first"<!--{/if}-->>
-      <p><a href="{$articleimg.url}" target="_blank"><img class="view" alt="{$articleimg.title}" src="{if $articleimg.img.0}{$articleimg.img.0}{else}themes/68ecshopcom_360buy/images/article_img.jpg{/if}"></a></p>
+      <p><a href="{$articleimg.url}" target="_blank"><img class="view" alt="{$articleimg.title}" src="{if $articleimg.img.0}{$articleimg.img.0}{else}themes/axlmpc//images/article_img.jpg{/if}"></a></p>
       <p><a class="txt" title="{$articleimg.title}" target="_blank" href="{$articleimg.url}">{$articleimg.title|truncate:10}</a></p>
     </li>
     <!-- {/foreach} -->

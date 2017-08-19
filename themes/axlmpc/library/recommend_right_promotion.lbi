@@ -16,7 +16,7 @@
             </span> 
         </p>
         <p class="goods-thumb"> 
-        	<a href="{$goods.url}" title="{$goods.name|escape:html}"><img data-original="{$goods.thumb}" src="themes/68ecshopcom_360buy/images/loading.gif" alt="{$goods.name|escape:html}"></a>
+        	<a href="{$goods.url}" title="{$goods.name|escape:html}"><img data-original="{$goods.thumb}" src="themes/axlmpc/images/loading.gif" alt="{$goods.name|escape:html}"></a>
         </p>
         <p class="goods-name"> <a href="{$goods.url}" title="{$goods.name|escape:html}">{$goods.short_style_name}</a> </p>
         <p class="goods-price"> 

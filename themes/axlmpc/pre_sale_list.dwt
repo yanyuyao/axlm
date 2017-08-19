@@ -12,9 +12,9 @@
 <!-- TemplateEndEditable -->
 <link rel="shortcut icon" href="favicon.ico" />
 <link rel="icon" href="animated_favicon.gif" type="image/gif" />
-<link rel="stylesheet" type="text/css" href="themes/68ecshopcom_360buy/css/pre_sale.css" />
-<script type="text/javascript" src="themes/68ecshopcom_360buy/js/jquery-1.9.1.min.js" ></script>
-<script type="text/javascript" src="themes/68ecshopcom_360buy/js/jquery-lazyload.js"></script>
+<link rel="stylesheet" type="text/css" href="themes/axlmpc/css/pre_sale.css" />
+<script type="text/javascript" src="themes/axlmpc/js/jquery-1.9.1.min.js" ></script>
+<script type="text/javascript" src="themes/axlmpc/js/jquery-lazyload.js"></script>
 {insert_scripts files='jquery.json.js,transport.js'}
 {insert_scripts files='utils.js,common.js,jquery.countdown-2.5.3.min.js'}
 </head>
@@ -28,7 +28,7 @@
     <div class="product" id="shijian_{$key}" onmouseover="this.className='product hover1'" onmouseout="this.className='product'" {if $smarty.foreach.name.iteration %4 ==0 }style="margin-right: 0px;"{/if}>
       <div class="pic" id="li_{$pre_sale.goods_id}"> 
       	<a href="{$pre_sale.url}" target="_blank"> 
-        	<img title="{$pre_sale.goods_name|escape:html}" alt="{$pre_sale.goods_name|escape:html}" width=220 height=220 data-original="{$pre_sale.goods_thumb}" src="themes/68ecshopcom_360buy/images/loading.gif" class="pic_img_{$pre_sale.goods_id}">
+        	<img title="{$pre_sale.goods_name|escape:html}" alt="{$pre_sale.goods_name|escape:html}" width=220 height=220 data-original="{$pre_sale.goods_thumb}" src="themes/axlmpc/images/loading.gif" class="pic_img_{$pre_sale.goods_id}">
         </a> 
         {if $pre_sale.is_best}
         <div class=t_icon_st></div>

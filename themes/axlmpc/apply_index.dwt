@@ -11,16 +11,16 @@
 <!-- TemplateEndEditable -->
 <link rel="shortcut icon" href="favicon.ico" />
 <link rel="icon" href="animated_favicon.gif" type="image/gif" />
-<link rel="stylesheet" type="text/css" href="themes/68ecshopcom_360buy/css/68ecshop_common.css" />
-<link rel="stylesheet" type="text/css" href="themes/68ecshopcom_360buy/css/store_joinin.css" />
-<script type="text/javascript" src="themes/68ecshopcom_360buy/js/jquery-1.9.1.min.js" ></script>
-<script type="text/javascript" src="themes/68ecshopcom_360buy/js/jq4.js" ></script>
+<link rel="stylesheet" type="text/css" href="themes/axlmpc//css/68ecshop_common.css" />
+<link rel="stylesheet" type="text/css" href="themes/axlmpc//css/store_joinin.css" />
+<script type="text/javascript" src="themes/axlmpc//js/jquery-1.9.1.min.js" ></script>
+<script type="text/javascript" src="themes/axlmpc//js/jq4.js" ></script>
 {insert_scripts files='jquery.json.js,transport.js'}
 {insert_scripts files='common.js,user.js'}
 </head>
 <body>
 <div class="header">
-  <h2 class="header-logo"><a href="index.php"><img src="../images/logo.gif" /></a></h2>
+  <h2 class="header-logo"><a href="index.php"><img src="/logo.png" /></a></h2>
   <ul class="header-menu">
     <li class="current"><a href="apply.php" class="joinin"><i></i>商家入驻申请</a></li>
     <li class=""><a href="{$mydomain}supplier/" class="login"><i></i>商家管理中心</a></li>
@@ -47,5 +47,5 @@
   </div>
 </div>
 </body>
-<script type="text/javascript" src="themes/68ecshopcom_360buy/js/home_index.js"></script>
+<script type="text/javascript" src="themes/axlmpc//js/home_index.js"></script>
 </html>

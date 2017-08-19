@@ -96,7 +96,7 @@
           </div>
           <div class="item-pic">
           	<a href="{$goods.url}" title="{$goods.name|escape:html}" target="_blank">
-            	<img data-original="{$goods.goods_thumb}" src="themes/68ecshopcom_360buy/images/loading.gif" title="{$goods.name|escape:html}" class="pic_img_{$goods.goods_id}"/>
+            	<img data-original="{$goods.goods_thumb}" src="themes/axlmpc/images/loading.gif" title="{$goods.name|escape:html}" class="pic_img_{$goods.goods_id}"/>
             </a>
           </div>
           <!--{if $goods.goods_number eq 0}--><a href="{$goods.url}" target="_blank" class="shop-over"></a><!-- {/if} -->

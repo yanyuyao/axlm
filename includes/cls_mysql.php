@@ -28,7 +28,8 @@ class cls_mysql
     var $queryTime  = '';
     var $queryLog   = array();
 
-    var $max_cache_time = 300; // 最大的缓存时间，以秒为单位
+    //var $max_cache_time = 300; // 最大的缓存时间，以秒为单位
+    var $max_cache_time = 0; // 最大的缓存时间，以秒为单位
 
     var $cache_data_dir = 'temp/query_caches/';
     var $root_path      = '';

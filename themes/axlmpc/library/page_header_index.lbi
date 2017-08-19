@@ -1,5 +1,5 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<link rel="stylesheet" type="text/css" href="themes/68ecshopcom_360buy/css/68ecshop_common.css" />
+<link rel="stylesheet" type="text/css" href="themes/axlmpc/css/68ecshop_common.css" />
 <script language="javascript"> 
 <!--
 /*屏蔽所有的js错误*/
@@ -9,8 +9,8 @@ return true;
 window.onerror = killerrors; 
 //-->
 </script>
-<script type="text/javascript" src="themes/68ecshopcom_360buy/js/page.js"></script>
-<script type="text/javascript" src="themes/68ecshopcom_360buy/js/bubbleup.js"></script>
+<script type="text/javascript" src="themes/axlmpc/js/page.js"></script>
+<script type="text/javascript" src="themes/axlmpc/js/bubbleup.js"></script>
 {include file='library/user_header.lbi'}
 <div class="header">
 	<div class="w1210">
@@ -157,4 +157,4 @@ $(function(){
 	
 });
 </script> 
-<script type="text/javascript" src="themes/68ecshopcom_360buy/js/nav.js"></script>
+<script type="text/javascript" src="themes/axlmpc/js/nav.js"></script>

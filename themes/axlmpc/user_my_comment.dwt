@@ -12,8 +12,8 @@
 <!-- TemplateEndEditable -->
 <link rel="shortcut icon" href="favicon.ico" />
 <link rel="icon" href="animated_favicon.gif" type="image/gif" />
-<link rel="stylesheet" type="text/css" href="themes/68ecshopcom_360buy/css/user.css" />
-<script type="text/javascript" src="themes/68ecshopcom_360buy/js/jquery-1.9.1.min.js"></script>
+<link rel="stylesheet" type="text/css" href="themes/axlmpc/css/user.css" />
+<script type="text/javascript" src="themes/axlmpc/js/jquery-1.9.1.min.js"></script>
 {insert_scripts files='jquery.json.js,transport.js'}
 {insert_scripts files='common.js,user.js'}
 <script>
@@ -218,7 +218,7 @@ $(document).ready(function(e) {
 </script>
 </head>
 <body>
-<script type="text/javascript" src="themes/68ecshopcom_360buy/js/base-2011.js"></script> 
+<script type="text/javascript" src="themes/axlmpc/js/base-2011.js"></script> 
 <!-- #BeginLibraryItem "/library/page_header.lbi" --><!-- #EndLibraryItem -->
 <div class="margin-w1210 clearfix"> 
   <!-- #BeginLibraryItem "/library/ur_here.lbi" --><!-- #EndLibraryItem -->
@@ -249,7 +249,7 @@ $(document).ready(function(e) {
                 <!-- {if $value.goods_id gt 0 && $value.extension_code neq 'package_buy'} 商品 --> 
                 <img height="50" width="50" src="{$value.thumb}" /> 
                 <!-- {elseif $value.goods_id gt 0 && $value.extension_code eq 'package_buy'} --> 
-                <img src="themes/68ecshopcom_360buy/images/jmpic/cart-package.gif" height="50" width="50"/> 
+                <img src="themes/axlmpc/images/jmpic/cart-package.gif" height="50" width="50"/> 
                 <!-- {/if} --> 
                 </a></td>
               <td><a href="{$value.url}" target="_blank">{$value.goods_name}</a></td>
@@ -303,7 +303,7 @@ $(document).ready(function(e) {
                     <input type="hidden" name="goods_id" value="{$value.goods_id}" />
                     <input type="hidden" name="rec_id" value="{$value.rec_id}" />
                     <table width="70%" border="0" cellspacing="1" cellpadding="5" style="float:left">
-                      <script src="themes/68ecshopcom_360buy/js/jquery.raty.js" type="text/javascript"></script>
+                      <script src="themes/axlmpc/js/jquery.raty.js" type="text/javascript"></script>
                       <tr>
                         <th>描述：</th>
                         <td class="stars_box">
@@ -384,7 +384,7 @@ $(document).ready(function(e) {
 						
 							$(star).raty({
 								hints: ['1','2', '3', '4', '5'],
-								path: "themes/68ecshopcom_360buy/images",
+								path: "themes/axlmpc/images",
 								starOff: 'star-off-big.png',
 								starOn: 'star-on-big.png',
 								size: 24,

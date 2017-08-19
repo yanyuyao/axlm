@@ -356,37 +356,37 @@ function action_validate ()
 	$ecs = $GLOBALS['ecs'];
 	
 	/* 开启验证码检查 */
-	if(((intval($_CFG['captcha']) & CAPTCHA_REGISTER) && gd_version() > 0) || TRUE)
-	{
-		if(empty($_POST['captcha']))
-		{
-			exit(json_encode(array(
-				'error' => 1, 'content' => $_LANG['invalid_captcha'], 'url' => ''
-			)));
-		}
-		
-		/* 检查验证码 */
-		include_once ('includes/cls_captcha.php');
-		
-		$captcha = new captcha();
-		
-		if(! $captcha->check_word(trim($_POST['captcha'])))
-		{
-			exit(json_encode(array(
-				'error' => 1, 'content' => $_LANG['invalid_captcha'], 'url' => ''
-			)));
-		}
-	}
+//	if(((intval($_CFG['captcha']) & CAPTCHA_REGISTER) && gd_version() > 0) || TRUE)
+//	{
+//		if(empty($_POST['captcha']))
+//		{
+//			exit(json_encode(array(
+//				'error' => 1, 'content' => $_LANG['invalid_captcha'], 'url' => ''
+//			)));
+//		}
+//		
+//		/* 检查验证码 */
+//		include_once ('includes/cls_captcha.php');
+//		
+//		$captcha = new captcha();
+//		
+//		if(! $captcha->check_word(trim($_POST['captcha'])))
+//		{
+//			exit(json_encode(array(
+//				'error' => 1, 'content' => $_LANG['invalid_captcha'], 'url' => ''
+//			)));
+//		}
+//	}
 	
 	$validate_type = $_POST['validate_type'];
-	
+	/*
 	if(! isset($_POST['validate_type']) || empty($_POST['validate_type']))
 	{
 		exit(json_encode(array(
 			'error' => 1, 'content' => '验证类型不能为空', 'url' => 'security.php'
 		)));
 	}
-	
+	*/
 	require_once (ROOT_PATH . 'includes/lib_passport.php');
 	
 	if($validate_type == 'email')
@@ -482,9 +482,9 @@ function action_validate ()
 	else
 	{
 		/* 无效的注册类型 */
-		exit(json_encode(array(
-			'error' => 1, 'content' => '非法验证参数', 'url' => ''
-		)));
+	//	exit(json_encode(array(
+	//		'error' => 1, 'content' => '非法验证参数', 'url' => ''
+	//	)));
 	}
 	
 	// 设置为第二步
@@ -664,12 +664,12 @@ function action_do_email_binding ()
 	$ecs = $GLOBALS['ecs'];
 	
 	// 检查是否通过安全验证
-	if($_SESSION['security_validate'] != true)
-	{
-		exit(json_encode(array(
-			'error' => 1, 'content' => '非法操作', 'url' => ''
-		)));
-	}
+	//if($_SESSION['security_validate'] != true)
+	//{
+	//	exit(json_encode(array(
+	//		'error' => 1, 'content' => '非法操作', 'url' => ''
+	//	)));
+	//}
 	
 	require_once (ROOT_PATH . 'includes/lib_passport.php');
 	
@@ -681,51 +681,6 @@ function action_do_email_binding ()
 	{
 		exit(json_encode(array(
 			'error' => 1, 'content' => $_LANG['msg_email_blank'], 'url' => ''
-		)));
-	}
-	else if(! isset($email) || empty($email))
-	{
-		exit(json_encode(array(
-			'error' => 1, 'content' => $_LANG['invalid_email_code'], 'url' => ''
-		)));
-	}
-	else if($_POST['email'] != $email)
-	{
-		exit(json_encode(array(
-			'error' => 1, 'content' => $_LANG['email_changed'], 'url' => ''
-		)));
-	}
-	
-	$result = validate_email_code($email, $email_code);
-	
-	if($result == 1)
-	{
-		exit(json_encode(array(
-			'error' => 1, 'content' => $_LANG['msg_email_blank'], 'url' => ''
-		)));
-	}
-	else if($result == 2)
-	{
-		exit(json_encode(array(
-			'error' => 1, 'content' => $_LANG['msg_email_format'], 'url' => ''
-		)));
-	}
-	else if($result == 3)
-	{
-		exit(json_encode(array(
-			'error' => 1, 'content' => $_LANG['msg_email_code_blank'], 'url' => ''
-		)));
-	}
-	else if($result == 4)
-	{
-		exit(json_encode(array(
-			'error' => 1, 'content' => $_LANG['invalid_email_code'], 'url' => ''
-		)));
-	}
-	else if($result == 5)
-	{
-		exit(json_encode(array(
-			'error' => 1, 'content' => $_LANG['invalid_email_code'], 'url' => ''
 		)));
 	}
 	
@@ -1397,12 +1352,14 @@ function action_do_payment_password_reset ()
 		)));
 	}
 	
-	$surplus_password = empty($_POST['password']) ? '' : $_POST['password'];
+	$pwd2 = empty($_POST['pwd2']) ? '' : $_POST['pwd2'];
+	$pwd3 = empty($_POST['pwd3']) ? '' : $_POST['pwd3'];
 	
-	if(! empty($surplus_password))
+	if(!empty($pwd2) && !empty($pwd3))
 	{
-		$surplus_password = md5($surplus_password);
-		$sql = 'UPDATE ' . $ecs->table('users') . ' SET `surplus_password`=\'' . $surplus_password . '\',`is_surplus_open`=\'1\' WHERE `user_id`=\'' . $user_id . '\'';
+		$pwd2 = md5($pwd2);
+		$pwd3 = md5($pwd3);
+		$sql = 'UPDATE ' . $ecs->table('pc_user') . ' SET `pwd2`=\'' . $pwd2 . '\',`pwd3`=\'' . $pwd3 . '\' WHERE `uid`=\'' . $user_id . '\'';
 		$db->query($sql);
 		$affected_rows = $db->affected_rows();
 		if($affected_rows == 1)
@@ -1574,6 +1531,82 @@ function action_to_sync_supplier ()
 	// 获取验证方式
 	$smarty->assign('step', 'step_2');
 	$smarty->assign('action', 'sync_supplier');
+	
+	$smarty->display('user_security.dwt');
+}
+
+function action_shengji(){
+
+	// 获取全局变量
+	$user = $GLOBALS['user'];
+	$_CFG = $GLOBALS['_CFG'];
+	$_LANG = $GLOBALS['_LANG'];
+	$smarty = $GLOBALS['smarty'];
+	$db = $GLOBALS['db'];
+	$ecs = $GLOBALS['ecs'];
+	$user_id = $GLOBALS['user_id'];
+	
+
+	//{{{
+	$tuijianren_user_id = isset($_POST['tuijianren_user_id'])?$_POST['tuijianren_user_id']:0;
+	$jiedianren_user_id = isset($_POST['jiedianren_user_id'])?$_POST['jiedianren_user_id']:0;
+	$leftright = isset($_POST['leftright'])?$_POST['leftright']:0;
+	$fuwuzhongxin_user_id = isset($_POST['fuwuzhongxin_user_id'])?$_POST['fuwuzhongxin_user_id']:0;
+	
+	$sql = "UPDATE " . $ecs->table('pc_user') . " SET `tuijianren_user_id`='" . $tuijianren_user_id . "',`jiedianren_user_id`='" . $jiedianren_user_id . "',`leftright`='" . $leftright . "',`fuwuzhongxin_user_id`='" . $fuwuzhongxin_user_id . "' WHERE `uid`='" . $user_id . "'";
+	$db->query($sql);
+	$affected_rows = $db->affected_rows();
+	if($affected_rows == 1)
+	{
+		//echo "success";
+	}
+	
+	$smarty->assign('step', 'success');
+	$smarty->assign('action', 'shengji_setup');
+	//}}}
+	$smarty->display('user_security.dwt');
+	
+}
+function action_shengji_setup ()
+{
+	// 获取全局变量
+	$user = $GLOBALS['user'];
+	$_CFG = $GLOBALS['_CFG'];
+	$_LANG = $GLOBALS['_LANG'];
+	$smarty = $GLOBALS['smarty'];
+	$db = $GLOBALS['db'];
+	$ecs = $GLOBALS['ecs'];
+	$user_id = $GLOBALS['user_id'];
+
+	//服务中心
+	$sql = "select uid from " . $ecs->table('pc_user') . " where identity = 4 ";
+	//echo $sql;
+	$fuwuzhongxinlist = $db->getAll($sql);
+	if($fuwuzhongxinlist){
+		foreach($fuwuzhongxinlist as $k=>&$v){
+			$v['name'] = $db->getOne("select user_name from ".$ecs->table('users')." where user_id = ".$v['uid']);
+		}
+	}
+	//var_dump($fuwuzhongxinlist);
+	$smarty->assign('fuwuzhongxinlist', $fuwuzhongxinlist);
+	
+	$user_info = $user->get_profile_by_id($user_id);
+	$user_name = $user_info['user_name'];
+	$email = $user_info['email'];
+	$mobile_phone = $user_info['mobile_phone'];
+	
+	$smarty->assign('user_name', $user_name);
+	$smarty->assign('email', encrypt_email($email));
+	$smarty->assign('mobile_phone', encrypt_mobile($mobile_phone));
+	
+	//当前用户信息
+	$sql = "select * from ".$ecs->table('pc_user')." where uid = ".$user_id;
+	//echo $sql;
+	$pc_user = $db->getRow($sql);
+	$smarty->assign('pc_user',$pc_user);
+	//var_dump($pc_user);
+	$smarty->assign('step', 'setpup');
+	$smarty->assign('action', 'shengji_setup');
 	
 	$smarty->display('user_security.dwt');
 }

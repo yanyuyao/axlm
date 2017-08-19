@@ -24,13 +24,13 @@ $topic.css
 }
 </style>
 {/if}
-<script type="text/javascript" src="themes/68ecshopcom_360buy/js/jquery-1.6.2.min.js"></script>
+<script type="text/javascript" src="themes/axlmpc/js/jquery-1.6.2.min.js"></script>
 {* 包含脚本文件 *}
 {insert_scripts files='jquery.json.js,transport.js'}
 {insert_scripts files='common.js'}
 </head>
 <body>
-<script type="text/javascript" src="themes/68ecshopcom_360buy/js/base-2011.js"></script>
+<script type="text/javascript" src="themes/axlmpc/js/base-2011.js"></script>
 <!-- #BeginLibraryItem "/library/page_header.lbi" --><!-- #EndLibraryItem -->
 <style type="text/css">
 body{

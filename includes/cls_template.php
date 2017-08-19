@@ -195,10 +195,12 @@ class cls_template
                         {
                             mkdir($hash_dir);
                         }
+						/*
                         if (file_put_contents($hash_dir . '/' . $cachename . '.php', '<?php exit;?>' . $data . $out, LOCK_EX) === false)
                         {
                             trigger_error('can\'t write:' . $hash_dir . '/' . $cachename . '.php');
                         }
+						*/
                         $this->template = array();
                     }
                 }
@@ -258,12 +260,12 @@ class cls_template
         {
             $this->_current_file = $filename;
             $source = $this->fetch_str(file_get_contents($filename));
-
+/*
             if (file_put_contents($name, $source, LOCK_EX) === false)
             {
                 trigger_error('can\'t write:' . $name);
             }
-
+*/
             $source = $this->_eval($source);
         }
 

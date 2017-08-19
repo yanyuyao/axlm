@@ -13,7 +13,7 @@
                             	{if !$smarty.session.user_id >0 }
                                 <div class="user-pic">
                                 	<div class="user-pic-mask"></div>
-                                    <img src="themes/68ecshopcom_360buy/images/people.gif" />
+                                    <img src="themes/axlmpc/images/people.gif" />
                                 </div>
                                 <p>你好！请<a href="javascript:;" class="quick-login-a main-color">登录</a>|<a href="register.php" class="main-color">注册</a></p>
                                 {else}
@@ -23,7 +23,7 @@
                                         <!--{if $smarty.session.headimg}-->
                                         <img src="{$smarty.session.headimg}" />
                                         <!--{else}-->
-                                        <img src="themes/68ecshopcom_360buy/images/people.gif" />
+                                        <img src="themes/axlmpc/images/people.gif" />
                                         <!--{/if}-->
                                     </div>
                                     <div class="user-info">
@@ -104,7 +104,7 @@
                     	<a class="quick-links-a" href="javascript:;"><i class="qr-code"></i></a>
                         <div class="sidebar-code quick-sidebar">
                         	<i class="arrow-right"></i>
-                            <img src="themes/68ecshopcom_360buy/images/weixin.jpg"/>
+                            <img src="themes/axlmpc/images/weixin.jpg"/>
                         </div>
                     </li>
                     <li class="returnTop">

@@ -12,9 +12,9 @@
 <!-- TemplateEndEditable -->
 <link rel="shortcut icon" href="favicon.ico" />
 <link rel="icon" href="animated_favicon.gif" type="image/gif" />
-<link rel="stylesheet" type="text/css" href="themes/68ecshopcom_360buy/css/chat_passport.css" />
-<script type="text/javascript" src="themes/68ecshopcom_360buy/js/jquery_email.js"></script>
-<script type="text/javascript" src="themes/68ecshopcom_360buy/js/jquery-1.9.1.min.js" ></script>
+<link rel="stylesheet" type="text/css" href="themes/axlmpc//css/chat_passport.css" />
+<script type="text/javascript" src="themes/axlmpc//js/jquery_email.js"></script>
+<script type="text/javascript" src="themes/axlmpc//js/jquery-1.9.1.min.js" ></script>
 {insert_scripts files='jquery.json.js,transport.js'}
 {* 包含脚本文件 *}
 {insert_scripts files='common.js,user.js'}
@@ -22,7 +22,7 @@
 <body>
 <div id="site-nav">
   <div class="headerLayout">
-      <h1 id="mallLogo"> <a href="index.php" class="header-logo"><img src="../images/logo.gif" /></a></h1>
+      <h1 id="mallLogo"> <a href="index.php" class="header-logo"><img src="/logo.png" /></a></h1>
   </div>
   <div class="w" id="entry">
     <div class="mcon">

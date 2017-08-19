@@ -1,6 +1,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 {insert name='add_url_uid'}
-<link rel="stylesheet" type="text/css" href="themes/68ecshopcom_360buy/css/68ecshop_common.css" />
+<link rel="stylesheet" type="text/css" href="themes/axlmpc/css/68ecshop_common.css" />
 <script language="javascript"> 
 <!--
 /*屏蔽所有的js错误*/
@@ -10,12 +10,12 @@ return true;
 window.onerror = killerrors; 
 //-->
 </script>
-<script type="text/javascript" src="themes/68ecshopcom_360buy/js/page.js"></script>
-<script type="text/javascript" src="themes/68ecshopcom_360buy/js/bubbleup.js"></script>
+<script type="text/javascript" src="themes/axlmpc/js/page.js"></script>
+<script type="text/javascript" src="themes/axlmpc/js/bubbleup.js"></script>
 {include file='../../68ecshopcom_360buy/library/user_header.lbi'} 
 <div class="header">
 	<div class="w1210">
-      <div class="mall-logo"> <a href="./"><img src="../themes/68ecshopcom_360buy/images/logo.gif" width="250" /></a> </div>
+      <div class="mall-logo"> <a href="./"><img src="../themes/axlmpc/images/logo.gif" width="250" /></a> </div>
 	<div class="mall-logo-right"> <a href="#" target="_blank"></a> </div>
       <div class="mall-search">
           <div id="search-tips" style="display:none;"></div>

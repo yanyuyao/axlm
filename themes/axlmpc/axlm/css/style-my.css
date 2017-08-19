@@ -4,7 +4,7 @@
  
  .navbar-header{
 	width:450px;
-	background-color:#ff9bc1;
+	background-color:#f28202;
 	text-align:center;
  }
  .navbar-header img{
@@ -26,7 +26,7 @@
  .personal-left h3{
 	width:100px; 
 	margin:0 auto; 
-	border-bottom:2px solid #FF9BC1;
+	border-bottom:2px solid #f28202;
 	color:#000; 
 	font-weight:bold; 
 	line-height:50px; 
@@ -43,7 +43,7 @@
 	color:#000;
  }
  .personal-left ul li:hover,.personal-left ul li.active{
-	background-color:#FF9BC1; 
+	background-color:#f28202; 
 	color:#fff;
  }
  .personal-info p{
@@ -56,29 +56,29 @@
 	width:100px; 
 	line-height:25px; 
 	border-radius:15px; -webkit-border-radius:15px; -moz-border-radius:15px; 
-	background-color:#FF9BC1;
+	background-color:#f28202;
  }
  .personal-info-margin-left{
 	margin-left:2em;
  }
  .personal-case-password-bt{
 	width:150px; 
-	border:1px solid #FF9BC1; 
+	border:1px solid #f28202; 
 	line-height:35px; 
 	text-align:center; 
 	margin-left:30px; 
-	background-color:#FF9BC1; color:#fff; 
+	background-color:#f28202; color:#fff; 
 	border-radius:5px; -webkit-border-radius:5px; -moz-border-radius:5px; 
  }
  .personal-case-password-contain{
 	width:600px; 
 	padding:20px 0; 
 	text-align:center; 
-	border:1px solid #FF9BC1; 
+	border:1px solid #f28202; 
 	margin-top:-15px;
  }
  .personal-case-password-button{
-	background-color:#FF9BC1;
+	background-color:#f28202;
  }
  .personal-table-select{
 	margin:15px auto;
@@ -143,7 +143,7 @@
  
  .personal-zijin-message-more{
 	float:right;
-	color:#FF9BC1;
+	color:#f28202;
  }
  .personal-zijin-message-list,.personal-zijin-message-info{
 	border-radius:10px; -webkit-border-radius:10px; -moz-border-radius:10px; 
@@ -152,7 +152,7 @@
  }
  .personal-zijin-message-list table{
 	width:100%;
-	border-top:2px solid #ff9bc1;
+	border-top:2px solid #f28202;
 	text-align:center;
 	background-color:#f2f2f2;
  }
@@ -168,13 +168,13 @@
  }
  .personal-zijin-message-info-bt{
 	width:100%;
-	border-top:2px solid #ff9bc1;
+	border-top:2px solid #f28202;
 	line-height:100px;
 	padding:0 15px;
  }
  .personal-zijin-message-info-bt-meet{
 	float:right; 
-	color:#ff9bc1; 
+	color:#f28202; 
 	font-weight:bold;
  }
  .personal-zijin-message-info-middle{
@@ -216,7 +216,7 @@
  }
  .personal-zijin-message-info-middle-nav4 input{
 	width:90%; 
-	background-color:#ff9bc1;
+	background-color:#f28202;
 	line-height:35px;
 	color:#fff;
 	border:none;
@@ -255,7 +255,7 @@
 	width:100%;
 	line-height:35px;
 	background-color:#f2f2f2;
-	color:#ff9bc1;
+	color:#f28202;
 	padding:0 20px;
 	text-align:left;
  }
@@ -288,7 +288,7 @@
 	width:150px;
 	line-height:35px;
 	border-radius:20px; -webkit-border-radius:20px; -moz-border-radius:20px;
-	background-color:#ff9bc1;
+	background-color:#f28202;
 	color:#fff;
  }
  
@@ -336,7 +336,7 @@
 	color:#000;
  }
  .news-single h4:hover{
-	color:#ff9bc1;
+	color:#f28202;
  }
  .news-single img{
 	height:200px;
@@ -405,7 +405,7 @@
 	width:24px; 
 	height:24px; 
 	border-radius:12px; -webkit-border-radius:12px; -moz-border-radius:12px; 
-	background-color:#ff9bc1; 
+	background-color:#f28202; 
 	margin:13px; 
 	float:left;
  }
