@@ -68,7 +68,7 @@ $modules['03_promotion']['15_exchange_goods'] = 'exchange_goods.php?act=list'; /
 //$modules['03_promotion']['25_pre_sale_list'] = 'pre_sale.php?act=list'; // 预售
 
 $modules['04_order']['01_order_list'] = 'order.php?act=list';
-//$modules['04_order']['02_supplier_order'] = 'order.php?act=list&supp=1';//订单 入驻商
+$modules['04_order']['02_supplier_order'] = 'order.php?act=list&supp=1';//订单 入驻商
 $modules['04_order']['03_order_query'] = 'order.php?act=order_query';
 //隐藏0114
 //$modules['04_order']['04_merge_order'] = 'order.php?act=merge'; //合并订单
@@ -147,6 +147,7 @@ $modules['08_members']['01_shops'] = 'shops.php?act=list';
 $modules['08_members']['01_shops_goods'] = 'shops_goods.php?act=list';
 
 $modules['08_members']['03_users_list'] = 'users.php?act=list';
+$modules['08_members']['03_users_pc'] = 'pc_users.php?act=list';
 $modules['08_members']['12_users_list_fanxian'] = 'fanxian_user.php?act=list';
 $modules['08_members']['12_trade_list'] = 'trade_list.php?act=list';
 $modules['08_members']['12_trade_cash_list'] = 'trade_cash_list.php?act=list';
@@ -175,6 +176,7 @@ $modules['10_priv_admin']['admin_role'] = 'role.php?act=list';
 
 $modules['11_system']['01_shop_config'] = 'shop_config.php?act=list_edit';
 $modules['11_system']['02_fanxian_config'] = 'fanxian_config.php?act=default';
+$modules['11_system']['02_fanxian_system_config'] = 'pc_config.php?act=default';
 $modules['11_system']['02_payment_list'] = 'payment.php?act=list';
 $modules['11_system']['03_shipping_list'] = 'shipping.php?act=list';
 $modules['11_system']['04_mail_settings'] = 'shop_config.php?act=mail_settings';
@@ -233,8 +235,8 @@ $modules['15_rec']['fenxiao_user_list'] = 'fenyong.php?act=list';
 /* 代码增加_start By www.cfweb2015.com */
 //$modules['02_supplier']['06_supplier_tag'] = 'supplier_tag.php?act=list';
 //$modules['02_supplier']['05_supplier_rank'] = 'supplier_rank.php?act=list';
-//$modules['02_supplier']['01_supplier_reg'] = 'supplier.php?act=list';
-//$modules['02_supplier']['02_supplier_list'] = 'supplier.php?act=list&status=1';
+$modules['02_supplier']['01_supplier_reg'] = 'supplier.php?act=list';
+$modules['02_supplier']['02_supplier_list'] = 'supplier.php?act=list&status=1';
 //$modules['02_supplier']['03_rebate_nopay'] = 'supplier_rebate.php?act=list';
 ////$modules['02_supplier']['03_rebate_pay'] = 'supplier_rebate.php?act=list&is_pay_ok=1';
 //$modules['02_supplier']['04_shop_category'] = 'supplier_street_category.php?act=list';

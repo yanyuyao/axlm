@@ -305,6 +305,7 @@ $_LANG['vote_list'] = '在线调查';
 /* 会员管理 */
 $_LANG['08_unreply_msg'] = '会员留言';
 $_LANG['03_users_list'] = '会员列表';
+$_LANG['03_users_pc'] = '会员明细';
 $_LANG['12_users_list_fanxian'] = '返现会员';
 $_LANG['12_trade_list'] = '日交易额分成';
 $_LANG['12_trade_cash_list'] = '超市现金交易';
@@ -335,6 +336,7 @@ $_LANG['suppliers_list'] = '供货商列表';
 /* 系统设置 */
 $_LANG['01_shop_config'] = '商店设置';
 $_LANG['02_fanxian_config'] = '返现设置';
+$_LANG['02_fanxian_system_config'] = '系统设置';
 $_LANG['shp_webcollect'] = '网罗天下';
 $_LANG['02_payment_list'] = '支付方式';
 $_LANG['03_shipping_list'] = '配送方式';
@@ -427,12 +429,12 @@ $_LANG['alipay_login'] = '<a href="https://www.alipay.com/user/login.htm?goto=ht
 $_LANG['alipay_look'] = '<a href=\"https://www.alipay.com/himalayas/practicality.htm\" target=\"_blank\">请申请成功后登录支付宝账户查看</a>';
 
 /* 代码增加_start By supplier.68ecshop.com */
-$_LANG['02_supplier'] = '入驻商管理';
+$_LANG['02_supplier'] = '联盟商家';
 $_LANG['05_supplier_rank'] = '入驻商等级';
 $_LANG['06_supplier_tag'] = '店铺标签';
 
-$_LANG['01_supplier_reg'] = '入驻商申请列表';
-$_LANG['02_supplier_list'] = '入驻商列表';
+$_LANG['01_supplier_reg'] = '申请列表';
+$_LANG['02_supplier_list'] = '联盟商家列表';
 $_LANG['03_rebate_nopay'] = '平台交易统计';//本期待结';
 //$_LANG['03_rebate_pay'] = '往期结算';
 $_LANG['04_shop_category'] = '店铺街分类';
@@ -440,7 +442,7 @@ $_LANG['05_shop_street'] = '店铺街列表';
 $_LANG['cfg_name']['company_type'] = '入驻商企业类型';
 $_LANG['cfg_desc']['company_type'] = '入驻商申请时会用到，填写时注意每行一个企业类型';
 
-$_LANG['supplier'] = '入驻商管理';
+$_LANG['supplier'] = '联盟商家';
 $_LANG['supplier_manage'] = '供应商编辑与审核';
 $_LANG['supplier_rank'] = '供应商等级';
 $_LANG['supplier_rebate'] = '平台入驻商佣金';
