@@ -181,6 +181,7 @@ class cls_template
 
                     if ($cache_id)
                     {
+						/*
                         $cachename = basename($filename, strrchr($filename, '.')) . '_' . $cache_id;
                         $data = serialize(array('template' => $this->template, 'expires' => $this->_nowtime + $this->cache_lifetime, 'maketime' => $this->_nowtime));
                         $out = str_replace("\r", '', $out);
@@ -195,7 +196,7 @@ class cls_template
                         {
                             mkdir($hash_dir);
                         }
-						/*
+						
                         if (file_put_contents($hash_dir . '/' . $cachename . '.php', '<?php exit;?>' . $data . $out, LOCK_EX) === false)
                         {
                             trigger_error('can\'t write:' . $hash_dir . '/' . $cachename . '.php');
