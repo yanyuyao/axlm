@@ -19,7 +19,6 @@
 <script type="text/javascript" src="themes/axlmpc/js/placeholder.js" ></script>
 {insert_scripts files='jquery.json.js,transport.js'}
 {insert_scripts files='common.js,user.js'}
-<link type="text/css" rel="stylesheet" href="themes/axlmpc/css/short.css" />
 </head>
 <body onclick="ecshop68_onclick();">
 <script> 
@@ -30,7 +29,7 @@ function erweima1(obj, sType) { var oDiv = document.getElementById(obj); if (sTy
   <!--#登录界面 start--> 
   <!-- {if $action eq 'login'} -->
   <div class="login-wrap" id="entry">
-  	<div class="login-banner" style="background:url('themes/axlmpc/images/banner-bg.jpg');">
+  	<div class="login-banner" style="background:url('themes/axlmpc/axlm/images/banner-bg.jpg');">
     	<div class="w990 position-relative">
         	
             <div class="login-form">
