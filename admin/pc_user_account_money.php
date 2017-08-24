@@ -20,7 +20,7 @@ if ($_REQUEST['act'] == 'default')
 	$pcconfig = $db->getAll($sql);
 	
 	$uid = isset($_REQUEST['uid'])?$_REQUEST['uid']:14;
-	$sql = "select pu.uid , tuijianren_user_id, jiedianren_user_id, leftright, level,role,identity, account_xianjinbi, account_xiaofeibi, account_jifenbi,account_jifen, u.user_name,u.reg_time , u.mobile_phone,from_unixtime(u.reg_time,'%Y-%m-%d %H-%i-%s') as reg_time_format from ".$ecs->table('pc_user')." pu left join ".$ecs->table('users')." u on pu.uid = u.user_id where pu.uid = ".$uid;
+	$sql = "select pu.uid , tuijianren_user_id, jiedianren_user_id, leftright, level,role,identity, account_xianjinbi, account_xiaofeibi, account_aixinbi,account_jifenbi,account_jifen, u.user_name,u.reg_time , u.mobile_phone,from_unixtime(u.reg_time,'%Y-%m-%d %H-%i-%s') as reg_time_format from ".$ecs->table('pc_user')." pu left join ".$ecs->table('users')." u on pu.uid = u.user_id where pu.uid = ".$uid;
 	//echo $sql;
 	//echo $uid;
 	$userinfo = $db->getRow($sql);

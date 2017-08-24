@@ -15,6 +15,7 @@ a.btn.green{
   <!-- tab bar -->
   <div id="tabbar-div">
     <p>
+	 <a href="pc_user_account_money.php?act=default&uid={$userinfo.uid}"><input name="button" type="button" value="< 返回" class="button" /></a>
      <span class="tab-front" id="tab">用户金融账号调整</span>
     </p>
   </div>
@@ -42,7 +43,7 @@ a.btn.green{
 				<tr>
 					<td class="label" valign="top">现金币</td>
 					<td style="width:170px;">
-						<input name="oldvalue" type="text" value="{$userinfo.account_xianjinbi}" style="min-width:150px;width:150px;" disabled>
+						<input name="oldvalue" type="text" value="{$userinfo.account_xianjinbi}" style="min-width:150px;width:150px;" readonly>
 					</td>
 					<td style="text-align:left;padding-left:10px;">
 						
@@ -52,7 +53,7 @@ a.btn.green{
 				<tr>
 					<td class="label" valign="top">消费币</td>
 					<td style="width:170px;">
-						<input name="oldvalue" type="text" value="{$userinfo.account_xioafeibi}" style="min-width:150px;width:150px;" disabled>
+						<input name="oldvalue" type="text" value="{$userinfo.account_xiaofeibi}" style="min-width:150px;width:150px;" readonly>
 					</td>
 					<td style="text-align:left;padding-left:10px;">
 						
@@ -62,7 +63,7 @@ a.btn.green{
 				<tr>
 					<td class="label" valign="top">爱心币</td>
 					<td style="width:170px;">
-						<input name="oldvalue" type="text" value="{$userinfo.account_aixinbi}" style="min-width:150px;width:150px;" disabled>
+						<input name="oldvalue" type="text" value="{$userinfo.account_aixinbi}" style="min-width:150px;width:150px;" readonly>
 					</td>
 					<td style="text-align:left;padding-left:10px;">
 						
@@ -72,7 +73,7 @@ a.btn.green{
 				<tr>
 					<td class="label" valign="top">积分币</td>
 					<td style="width:170px;">
-						<input name="oldvalue" type="text" value="{$userinfo.account_jifenbi}" style="min-width:150px;width:150px;" disabled>
+						<input name="oldvalue" type="text" value="{$userinfo.account_jifenbi}" style="min-width:150px;width:150px;" readonly>
 					</td>
 					<td style="text-align:left;padding-left:10px;">
 						
@@ -82,7 +83,7 @@ a.btn.green{
 				<tr>
 					<td class="label" valign="top">积分</td>
 					<td style="width:170px;">
-						<input name="oldvalue" type="text" value="{$userinfo.account_jifen}" style="min-width:150px;width:150px;" disabled>
+						<input name="oldvalue" type="text" value="{$userinfo.account_jifen}" style="min-width:150px;width:150px;" readonly>
 					</td>
 					<td style="text-align:left;padding-left:10px;">
 						
