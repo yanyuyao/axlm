@@ -133,6 +133,12 @@ function action_add ()
 	$extend_info_list = $db->getAll($sql);
 	$smarty->assign('extend_info_list', $extend_info_list);
 	
+	$fuwucenter = "select u.user_id,u.user_name, u.mobile_phone from ".$ecs->table('users')." u left join ".
+			$ecs->table('pc_user')." pu on u.user_id = pu.uid where pu.identity = 4 ";
+	
+	$fuwucenterlist = $db->getAll($fuwucenter);
+	$smarty->assign('fuwucenterlist', $fuwucenterlist);
+	
 	$smarty->assign('ur_here', $_LANG['04_users_add']);
 	$smarty->assign('action_link', array(
 		'text' => $_LANG['03_users_list'],'href' => 'users.php?act=list'
@@ -192,6 +198,14 @@ function action_insert ()
 	$address = empty($_POST['address']) ? '' : trim($_POST['address']);
 	$huiyuanka = empty($_POST['huiyuanka']) ? '' : trim($_POST['huiyuanka']);
 	$status = $_POST['status'];
+	
+	$tuijianren_user_id = $_POST['tuijianren_user_id'];
+	$jiedianren_user_id = $_POST['jiedianren_user_id'];
+	$identity = $_POST['identity'];
+	$fuwuzhongxin_user_id = $_POST['fuwuzhongxin_user_id'];
+	$pwd2 = $_POST['pwd2'];
+	$pwd3 = $_POST['pwd3'];
+	
 	/* 代码增加2014-12-23 by www.cfweb2015.com _end */
 	$users = & init_users();
 	
@@ -228,6 +242,33 @@ function action_insert ()
 		}
 		sys_msg($msg, 1);
 	}
+	
+	//{{{ added pc user 插入到双sdd轨会员
+	$user_baseinfo = $users->get_profile_by_name($username);
+	$pc_user_id = $user_baseinfo['user_id'];
+	
+	$tuijianren_user_id = $_POST['tuijianren_user_id']?$_POST['tuijianren_user_id']:0;
+	$jiedianren_user_id = $_POST['jiedianren_user_id']?$_POST['jiedianren_user_id']:0;
+	$identity = $_POST['identity']?$_POST['identity']:0;
+	$fuwuzhongxin_user_id = $_POST['fuwuzhongxin_user_id']?$_POST['fuwuzhongxin_user_id']:0;
+	$pwd2 = $_POST['pwd2'];
+	$pwd3 = $_POST['pwd3'];
+	$leftright = $_POST['leftright']?$_POST['leftright']:'left';
+	$level = $_POST['level']?$_POST['level']:'0';
+	
+	$pc_user_sql = "insert into ".$ecs->table('pc_user')."(uid,pwd2,pwd3,tuijianren_user_id,jiedianren_user_id,leftright,level,identity,fuwuzhongxin_user_id) values(".
+		"'".$pc_user_id."',".
+		"'".md5($pwd2)."',".
+		"'".md5($pwd3)."',".
+		"'".$tuijianren_user_id."',".
+		"'".$jiedianren_user_id."',".
+		"'".$leftright."',".
+		"'".$level."',".
+		"'".$identity."',".
+		"'".$fuwuzhongxin_user_id."'".
+	")";
+	$db->query($pc_user_sql);
+	//}}}
 	
 	/* 注册送积分 */
 	if(! empty($GLOBALS['_CFG']['register_points']))
