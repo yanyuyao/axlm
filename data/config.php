@@ -1,6 +1,7 @@
 <?php
 // database host
-$db_host   = "47.88.227.140:3306";
+//$db_host   = "47.88.227.140:3306";
+$db_host   = "127.0.0.1:3306";
 
 // database name
 $db_name   = "axlm365";
@@ -9,7 +10,7 @@ $db_name   = "axlm365";
 $db_user   = "root";
 
 // database password
-$db_pass   = "rootran";
+$db_pass   = "root";
 
 // table prefix
 $prefix    = "ecs_";

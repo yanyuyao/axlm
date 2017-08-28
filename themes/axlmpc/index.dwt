@@ -45,7 +45,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		    $(function () {
 			      // Slideshow 1
 			      $("#slider1").responsiveSlides({
-			        maxwidth: 1600,
 			        speed: 600
 			      });
 			});
@@ -53,16 +52,18 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 </head>
 	
 <body>
-<!-- #BeginLibraryItem "/library/page_header_common.lbi" --><!-- #EndLibraryItem -->
+<div class="w"> 
+<!-- #BeginLibraryItem "/library/page_header_short.lbi" --><!-- #EndLibraryItem -->
+</div>
 <!-- //navigation -->
 <!-- banner -->
 	<div class="slider">
 		<div class="image-slider">
 			<!-- Slideshow 1 -->
-			<ul class="rslides" id="slider1" style="max-width:1920px;">
-				<li><img class="img-responsive" src="themes/axlmpc/images/banner_1.png" alt=""></li>
-				<li><img class="img-responsive" src="themes/axlmpc/images/banner_2.png" alt=""></li>
-				<li><img class="img-responsive" src="themes/axlmpc/images/banner_3.png" alt=""></li>
+			<ul class="rslides" id="slider1">
+				<li><img class="img-responsive" src="themes/axlmpc/axlm/images/banner_1.png" alt=""></li>
+				<li><img class="img-responsive" src="themes/axlmpc/axlm/images/banner_2.png" alt=""></li>
+				<li><img class="img-responsive" src="themes/axlmpc/axlm/images/banner_3.png" alt=""></li>
 			</ul>
 		<!-- Slideshow 2 -->
 		</div>

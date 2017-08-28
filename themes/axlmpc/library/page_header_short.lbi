@@ -1,5 +1,5 @@
 <link type="text/css" rel="stylesheet" href="themes/axlmpc/axlm/css/short.css" />
-<div class="logo-r w1210" style="margin:0px auto 15px;">
+<div class="logo-r w1210" style="width:1210px;margin:0px auto 15px;">
                         <div class="logo-info-r"><a href="/index.php" class="logo" style="background:none;"><img src="/logo.png" style="height:80px;"></a> <!-- #BeginLibraryItem "/library/user_right.lbi" --><!-- #EndLibraryItem --> </div>
                         <div class="header-nav" style="float:right;">
 							<nav class="navbar navbar-default">
