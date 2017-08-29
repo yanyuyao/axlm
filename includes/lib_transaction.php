@@ -522,7 +522,7 @@ function cancel_order($order_id, $user_id = 0)
 function affirm_received($order_id, $user_id = 0)
 {
     /* 查询订单信息，检查状态 */
-    $sql = "SELECT user_id, order_sn , order_status, shipping_status, pay_status FROM ".$GLOBALS['ecs']->table('order_info') ." WHERE order_id = '$order_id'";
+    $sql = "SELECT user_id, order_sn , order_status, goods_amount, order_amount,shipping_status, pay_status FROM ".$GLOBALS['ecs']->table('order_info') ." WHERE order_id = '$order_id'";
 
     $order = $GLOBALS['db']->GetRow($sql);
 
@@ -581,9 +581,9 @@ function affirm_received($order_id, $user_id = 0)
             /* 收货，则创建分佣记录 */
             //expend_order_log($order_id,$user_id);
             
-			//收货，分佣计算
-			expend_amount_order_log($order_id, $user_id);
-			
+            //收货，分佣计算
+            //expend_amount_order_log($order_id, $user_id);
+            axlmpc($user_id, $order_id, $order['order_amount'], $order['goods_amount']);
             return true;
         }
         else

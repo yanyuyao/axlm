@@ -298,6 +298,8 @@ function index_get_new_articles()
  */
 function index_get_group_buy()
 {
+    return array();
+    
     $time = gmtime();
     $limit = get_library_number('group_buy', 'index');
 	
@@ -359,6 +361,7 @@ function index_get_group_buy()
  */
 function index_get_auction()
 {
+    return array();
     $now = gmtime();
     $limit = get_library_number('auction', 'index');
     $sql = "SELECT a.act_id, a.goods_id, a.goods_name, a.ext_info, g.goods_thumb ".
@@ -400,6 +403,7 @@ function index_get_auction()
  */
 function index_get_links()
 {
+    return array();
     $sql = 'SELECT link_logo, link_name, link_url FROM ' . $GLOBALS['ecs']->table('friend_link') . ' ORDER BY show_order';
     $res = $GLOBALS['db']->getAll($sql);
 
@@ -426,6 +430,7 @@ function index_get_links()
 
 function get_flash_xml()
 {
+    return array();
     $flashdb = array();
     if (file_exists(ROOT_PATH . DATA_DIR . '/flash_data.xml'))
     {
