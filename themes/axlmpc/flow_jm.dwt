@@ -832,7 +832,7 @@ if(result.error == 1){
 	<!-- {/foreach} -->
         </table>
         <table border=0 cellpadding=0 cellspacing=0 width="100%" class="checkgoods" style="border-top:0;">
-		<!-- {if $inv_content_list} -->
+		<!-- {if 0 && $inv_content_list} -->
           <tr>
             <td colspan=4 class="tdother2">
               <div class="checkout_other" > <a class="jmbag" href="javascript:void(0);" onclick="showCheckoutOther(this);"><span>+</span>开发票</a> 

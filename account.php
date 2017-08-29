@@ -137,6 +137,12 @@ if(! function_exists($function_name))
 call_user_func($function_name);
 /* 路由 */
 
+function action_rantest(){
+    echo 6666;
+    $uid = 18;
+
+    pc_set_fuwu_butie($uid);
+}
 /* 代码增加_start By www.cfweb2015.com */
 function action_default ()
 {
@@ -151,6 +157,8 @@ function action_default ()
 	//echo $sql;
 	$pc_user = $db->getRow($sql);
 	$smarty->assign('pc_user',$pc_user);
+	echo $pc_user;
+	exit;
 	
 	$data = array();
 	getAllUserListByUid($user_id,$data);
@@ -339,8 +347,8 @@ function getAllUserListByUid($uid,&$data){
 	
 	if($nextuser){
 		foreach($nextuser as $k=>$v){
-			$data[] = $v;
-			getAllUserListByUid($v['uid'],$data);
+                    $data[] = $v;
+                    getAllUserListByUid($v['uid'],$data);
 		}
 	}else{
 		return $data;

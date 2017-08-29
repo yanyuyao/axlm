@@ -5283,6 +5283,7 @@ function printsqls($sql, $title=''){
 //step1 : 查看用户总消费金额是否达到了分销级别，并进行设置
 //step2: 对用户[当前订单]进行分佣行为
 function expend_amount_order_log($order_id, $user_id){
+    return 1;
     $fenxiao = unserialize($GLOBALS['_CFG']['fenxiao']);
     //查看消费总金额
 	$sql = "select consume from ".$GLOBALS['ecs']->table('user_backpoint')." where user_id = '$user_id' ";
@@ -5445,4 +5446,5 @@ function set_user_to_fenxiao2($userid){
 }
 
 //}}} 365
+include_once('includes/lib_axlm.php');
 ?>
