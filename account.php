@@ -138,9 +138,14 @@ call_user_func($function_name);
 /* 路由 */
 
 function action_rantest(){
-    echo 6666;
-    $uid = 18;
+    $uid = 23;
 
+    //测试父级array
+    //$parent_array = array();
+    //$parent_array = get_user_parent_array($uid,$parent_array);
+    //var_dump($parent_array);
+    
+    //测试服务补贴
     pc_set_fuwu_butie($uid);
 }
 /* 代码增加_start By www.cfweb2015.com */
