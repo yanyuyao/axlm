@@ -67,7 +67,7 @@ elseif ($_REQUEST['act'] == 'post')
 	$oldvalue = intval(isset($_REQUEST['oldvalue'])?$_REQUEST['oldvalue']:0);
 	$value = intval(isset($_REQUEST['value'])?$_REQUEST['value']:0);
 	$changetype = isset($_REQUEST['changetype'])?$_REQUEST['changetype']:0;
-	$note = isset($_REQUEST['note'])?$_REQUEST['note']:'';
+	$note = isset($_REQUEST['note'])?$_REQUEST['note']:'购物见点奖';
 	$type = isset($_REQUEST['type'])?$_REQUEST['type']:'';
 	
 	if(!$uid){

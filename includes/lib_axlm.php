@@ -86,6 +86,18 @@ function pc_save_user_change_log($uid,$field_name,$new_value,$note,$adminid){
     
 }
 
+function get_user_parent_tuijian_array($uid,&$parent_array){
+    $info = get_pc_user_allinfo($uid);
+    //var_dump($info);
+    if(!$info['tuijianren_user_id']){
+        
+    }else{
+        $parent_array[] = $info['tuijianren_user_id'];
+        get_user_parent_tuijian_array($info['tuijianren_user_id'], $parent_array);
+    }
+    return $parent_array;
+}
+
 function get_user_parent_array($uid,&$parent_array){
     $info = get_pc_user_allinfo($uid);
     //var_dump($info);
@@ -295,7 +307,7 @@ function pc_log($body,$title=''){
 
 //{{{ 服务补贴
 
-//服务补贴计算
+//{{{服务补贴计算
 function pc_set_fuwu_butie($uid){
     $ecs = $GLOBALS['ecs'];
     $db = $GLOBALS['db'];
@@ -389,6 +401,188 @@ function save_fuwu_fanli($uid,$userinfo){
 		"'0',".
 		"'".time()."' ".
 	")";
+	$db->query($sql);
+}
+//}}} 服务补贴
+//{{{见点补贴
+function pc_set_jiandian_butie($uid){
+    $db = $GLOBALS['db'];
+    $ecs = $GLOBALS['ecs'];
+    $checksql = "select uid,is_jiandian from ".$ecs->table('pc_user_status_log')." where uid = $uid ";
+    //echo $checksql;
+    $checksql = $db->getRow($checksql);
+    if($checksql && $checksql['is_jiandian'] == 'yes'){
+        return 1;
+    }
+   
+    $parent_array = array();
+    $parent_array = get_user_parent_array($uid,$parent_array);
+    $pcuserinfo = get_pc_user_allinfo($uid);
+     
+    $jiandian_config = $db->getAll("select sname,svalue from ".$ecs->table('pc_config')." where sname in ('jiandian_limit_ceng','jiandian_left_danwei','jiandian_bili_left','jiandian_right_danwei','jiandian_bili_right')");
+    $jiandain_config_array = array();
+    if($jiandian_config){
+       foreach($jiandian_config as $k=>$v){
+           $jiandain_config_array[$v['sname']] = $v['svalue'];
+       }
+    }
+    
+    $parent_array = array_reverse($parent_array);
+    $type = '';
+    if(count($parent_array) == 1){
+        return 1;
+    }elseif(count($parent_array)>=2){
+        $ceng2user = $parent_array[1];
+        $ceng2userinfo = get_pc_user_allinfo($ceng2user);
+        if($ceng2userinfo['leftright'] == 'left'){
+            $type = 'left';
+        }else{
+            $type = 'right';
+        }
+    }
+    
+    $jiandian_bili_left = $jiandain_config_array['jiandian_bili_left'];
+    $jiandian_bili_right = $jiandain_config_array['jiandian_bili_right'];
+    
+    $return_bili = "";
+    if($type == 'left'){
+        $return_bili = $jiandian_bili_left;
+    }elseif($type == 'right'){
+        $return_bili = $jiandian_bili_right;
+    }
+    
+    if($return_bili){
+        
+        if($checksql){
+            $sql = "update ".$ecs->table('pc_user_status_log')." set is_jiandian = 'yes', jiandian_used_time = '".time()."' where uid = $uid";
+        }else{
+            $sql = "insert into ".$ecs->table('pc_user_status_log')."(uid,is_jiandian, jiandian_used_time)values('".$uid."','yes','".time()."')";
+        }
+        $db->query($sql);
+        foreach($parent_array as $k=>$u){
+            $check_level_sql = "select level from ".$ecs->table('pc_user')." where uid = $u ";
+            $u_level = $db->getRow($check_level_sql);
+            if($u_level && $u_level['level']>2){
+                save_jiandian_fanli($u,$type,$return_bili);
+            }else{
+                continue;
+            }
+            $check_level_sql = "";
+        }
+    }
+}
+function save_jiandian_fanli($uid,$type,$return_bili){
+	$db = $GLOBALS['db'];
+        $ecs = $GLOBALS['ecs'];
+       
+        $userinfo = get_pc_user_allinfo($uid);
+        
+        $change_value = intval($return_bili);
+        if($type == "left"){
+            $original_value = intval($userinfo['account_xiaofeibi']);
+        }else{
+            $original_value = intval($userinfo['account_xiaofeibi_zhuanqu']);
+        }
+        $new_value = $original_value + $change_value;
+        if($type == "left"){
+                $sql = "update ".$ecs->table('pc_user')." set account_xiaofeibi = ".$new_value." where uid = ".$uid;
+                $db->query($sql);
+                 pc_log($sql,'save jiandain fanli');
+                $sql = "insert into ".$ecs->table('pc_user_account_log')."(uid,type,original_value,change_value,new_value,note,adminid,ctime) values(".
+                        "'".$uid."',".
+                        "'account_xiaofeibi',".
+                        "'".$original_value."',".
+                        "'".$change_value."',".
+                        "'".$new_value."',".
+                        "'购物',".
+                        "'0',".
+                        "'".time()."' ".
+                ")";
+                 pc_log($sql,'save jiandain fanli');
+        }else{
+                $sql = "update ".$ecs->table('pc_user')." set account_xiaofeibi_zhuanqu = ".$new_value." where uid = ".$uid;
+                $db->query($sql);
+                 pc_log($sql,'save jiandain fanli');
+                $sql = "insert into ".$ecs->table('pc_user_account_log')."(uid,type,original_value,change_value,new_value,note,adminid,ctime) values(".
+                        "'".$uid."',".
+                        "'account_xiaofeibi_zhuanqu',".
+                        "'".$original_value."',".
+                        "'".$change_value."',".
+                        "'".$new_value."',".
+                        "'购物',".
+                        "'0',".
+                        "'".time()."' ".
+                ")";
+                 pc_log($sql,'save jiandain fanli');
+        } 
+	$db->query($sql);
+}
+//}}}见点补贴
+
+//{{{ 管理补贴
+//消费满6000，折合3000pv
+//发展下线，1.3w,折合3000pv
+function pc_set_guanli_butie($uid,$type){
+    $db = $GLOBALS['db'];
+    $ecs = $GLOBALS['ecs'];
+    pc_log('','pc_set_guanli_butie');
+    $userinfo = get_pc_user_allinfo($uid);
+    $tuijian_parent_array = array();
+    $tuijian_parent_array = get_user_parent_tuijian_array($uid);
+    
+    pc_log($tuijian_parent_array,'tuijian_paretn_array');
+    
+    
+    
+    //给直推线上的人返积分
+    if($tuijian_parent_array){
+        $sql = "select uid, role,level from ".$ecs->table('pc_user')." where uid in (".implode(",",$tuijian_parent_array).")";
+        $ulist = $db->getAll($sql);
+        if($ulist){
+            foreach($ulist as $k=>$v){
+                echo "<br>".$v['uid']."-----".$v['role']."------".$v['level']."<br>";
+                $level = $v['level'];
+                if($level > 2){ //只给高级会员返
+                    //echo "9999";
+                    if($type == "goods"){
+                        $pv = 3000;
+                        save_pv_fanli($v['uid'], $pv, '购物返积分');
+                    }elseif($type == 'expends'){
+                        $pv = 3000;
+                        save_pv_fanli($v['uid'], $pv, '发展下线返积分');
+                    }
+                }
+            }
+        }
+    }
+    
+}
+
+function save_pv_fanli($uid,$pv,$note){
+        $db = $GLOBALS['db'];
+        $ecs = $GLOBALS['ecs'];
+       
+        $userinfo = get_pc_user_allinfo($uid);
+        
+        $change_value = intval($pv);
+        $original_value = intval($userinfo['account_jifen']);
+        
+        $new_value = $original_value + $change_value;
+        
+        $sql = "update ".$ecs->table('pc_user')." set account_jifen = ".$new_value." where uid = ".$uid;
+        $db->query($sql);
+        pc_log($sql,'save pv fanli');
+        $sql = "insert into ".$ecs->table('pc_user_account_log')."(uid,type,original_value,change_value,new_value,note,adminid,ctime) values(".
+                "'".$uid."',".
+                "'account_jifen',".
+                "'".$original_value."',".
+                "'".$change_value."',".
+                "'".$new_value."',".
+                "'".$note."',".
+                "'0',".
+                "'".time()."' ".
+        ")";
+
 	$db->query($sql);
 }
 //}}}
