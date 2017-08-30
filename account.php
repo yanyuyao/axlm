@@ -152,7 +152,11 @@ function action_rantest(){
     //pc_set_jiandian_butie($uid);
     
     //管理补贴
-    pc_set_guanli_butie($uid,"expends");
+    //pc_set_guanli_butie($uid,"expends");
+    //shengji_pv_account($uid); //pv更新后升级账户，只判断了积分，还没判断左右市场身份站位
+    
+    //推广补贴
+    pc_set_tuiguang_butie($uid);
     
 }
 /* 代码增加_start By www.cfweb2015.com */

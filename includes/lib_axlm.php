@@ -532,30 +532,41 @@ function pc_set_guanli_butie($uid,$type){
     
     pc_log($tuijian_parent_array,'tuijian_paretn_array');
     
-    
-    
-    //给直推线上的人返积分
-    if($tuijian_parent_array){
-        $sql = "select uid, role,level from ".$ecs->table('pc_user')." where uid in (".implode(",",$tuijian_parent_array).")";
-        $ulist = $db->getAll($sql);
-        if($ulist){
-            foreach($ulist as $k=>$v){
-                echo "<br>".$v['uid']."-----".$v['role']."------".$v['level']."<br>";
-                $level = $v['level'];
-                if($level > 2){ //只给高级会员返
-                    //echo "9999";
-                    if($type == "goods"){
-                        $pv = 3000;
-                        save_pv_fanli($v['uid'], $pv, '购物返积分');
-                    }elseif($type == 'expends'){
-                        $pv = 3000;
-                        save_pv_fanli($v['uid'], $pv, '发展下线返积分');
+    $pv = 3000;
+     //echo "9999";
+    if($type == "goods"){
+        //购物只给自己返积分,并且已经是高级会员及以上了
+        if($userinfo['level']>2){
+            save_pv_fanli($uid, $pv, '购物返积分');
+        }
+    }elseif($type == 'expends'){
+        //给直推线上的人返积分
+        if($tuijian_parent_array){
+            $sql = "select uid, role,level from ".$ecs->table('pc_user')." where uid in (".implode(",",$tuijian_parent_array).") order by uid desc ";
+            $ulist = $db->getAll($sql);
+            if($ulist){
+                
+            //{{{给直推人返积分    
+                foreach($ulist as $k=>$v){
+//                  echo "<br>".$v['uid']."-----".$v['role']."------".$v['level']."<br>";
+                    $level = $v['level'];
+                    if($level > 2){ //只给高级会员及以上返
+                        
+                            $pv = 3000;
+                            save_pv_fanli($v['uid'], $pv, '发展下线返积分');
+                        
                     }
                 }
+            //}}} end 直推人返积分
+                
+            //{{{ 返现金币
+                save_pv_fanli_xianjinbi($tuijian_parent_array,$pv);
+            //}}} 返现金币
+                
+                
             }
         }
     }
-    
 }
 
 function save_pv_fanli($uid,$pv,$note){
@@ -584,5 +595,143 @@ function save_pv_fanli($uid,$pv,$note){
         ")";
 
 	$db->query($sql);
+        
+        //每次保存完积分后，更新下积分用户状态
+        shengji_pv_account($uid);
 }
+
+function shengji_pv_account($uid){
+        $db = $GLOBALS['db'];
+        $ecs = $GLOBALS['ecs'];
+       
+        $userinfo = get_pc_user_allinfo($uid);
+        $user_pv = $userinfo['account_jifen'];
+        
+        $role_sql = "select id,role_name,role_pv, role_limit from ".$ecs->table('pc_user_role')." where role_pv <= ".$user_pv." order by id desc";
+        pc_log($role_sql,"shengji_pv_account");
+        $nextrole = $db->getRow($role_sql);
+        
+        
+        if($nextrole && $nextrole['id'] != $userinfo['role']){
+            $sql = "update ".$ecs->table('pc_user')." set role = ".$nextrole['id']." where uid = $uid ";
+            $db->query($sql);
+            
+            $sql = "insert into ".$ecs->table('pc_user_change_log')."(uid,name,type,original_value,new_value,note,ctime)values(".
+                        "'".$uid."',".
+                        "'baseinfo',".
+                        "'role',".
+                        "'".$userinfo['role']."',".
+                        "'".$nextrole['id']."',".
+                        "'pv积分升级',".
+                        "'".time()."'"
+                    .")";
+            $db->query($sql);
+        }
+    
+}
+
+function save_pv_fanli_xianjinbi($tuijian_parent_array, $pv){
+    $db = $GLOBALS['db'];
+    $ecs = $GLOBALS['ecs'];
+    //查询有身份的pv用户,倒序排放， 从下级向上,高级用户才返现金币
+    $sql = "select uid, role,level from ".$ecs->table('pc_user')." where uid in (".implode(",",$tuijian_parent_array).") and role>0 and level>2 order by uid desc";
+    pc_log($sql,"== fanli array ==");
+    $ulist = $db->getAll($sql);
+    $data = array();
+    foreach($ulist as $k=>$v){
+        $data[] = $v;
+    }
+
+    //如果上级只有一个人
+    $fanli_array = array();
+    foreach($data as $k=>$v){
+        if($fanli_array){
+            //如果上级和上上级身份一样
+            $flag = true;
+            foreach($fanli_array as $kk=>$vv){
+                //echo "<br>$kk ==>role ==> ".$v['uid']."==".$vv['role']."====".$v['role']."<br>";
+                if($vv['role'] == $v['role']){
+                    $flag = false;
+                   break;
+                }
+            }
+            if($flag){
+                $fanli_array[] = $v;
+            }
+        }else{
+            $fanli_array[] = $v;
+        }
+    }
+  
+    pc_log($fanli_array,"== fanli array ==");
+    $role_sql = "select * from ".$ecs->table('pc_user_role')." ";
+    $role = $db->getAll($role_sql);
+    $role_array = array();
+    if($role){
+        foreach($role as $k=>$v){
+            $role_array[$v['id']] = $v['fanli'];
+        }
+    }
+    
+    foreach($fanli_array as $k=>$v){
+        if($k == 0){
+            $v['fanli'] = $role_array[$v['role']];
+        }else{
+            $v['fanli'] = $role_array[$v['role']] - $role_array[$fanli_array[$k-1]['role']];
+        }
+        $fanli_array[$k] = $v;
+    }
+    
+ 
+    //返现金币
+    if($fanli_array){
+        pc_log($fanli_array,"save_pv_fanli_xianjinbi");
+        foreach($fanli_array as $k=>$v){
+            //echo "<br>".$v['uid']."===".(float)$v['fanli']."===".(int)$pv;
+            $fanli = (float)$v['fanli']* (int)$pv;
+            save_pv_xianjianbi_fanli($v['uid'], $fanli);
+        }
+    }
+}
+
+
+function save_pv_xianjianbi_fanli($uid,$fanli){
+	$db = $GLOBALS['db'];
+        $ecs = $GLOBALS['ecs'];
+        pc_log($fanli,'save_pv_xianjianbi_fanli');
+        $userinfo = get_pc_user_allinfo($uid);
+        if(!$fanli){ return 0;}
+	$original_value = intval($userinfo['account_xianjinbi']);
+        $change_value = floatval($fanli);
+        $new_value = $original_value + $change_value;
+        
+        $sql = "update ".$ecs->table('pc_user')." set account_xianjinbi = ".$new_value." where uid = ".$uid;
+	$db->query($sql);
+        pc_log($sql,'save_pv_xianjianbi_fanli');
+	$sql = "insert into ".$ecs->table('pc_user_account_log')."(uid,type,original_value,change_value,new_value,note,adminid,ctime) values(".
+		"'".$uid."',".
+		"'account_xianjinbi',".
+		"'".$original_value."',".
+		"'".$change_value."',".
+		"'".$new_value."',".
+		"'管理奖返现',".
+		"'0',".
+		"'".time()."' ".
+	")";
+	$db->query($sql);
+}
+//}}}
+
+//{{{补贴奖计算
+function pc_set_tuiguang_butie($uid){
+    $alluser = getCengData($uid);
+    pc_log($alluser,"pc_set_tuiguang_butie");
+    
+    if($alluser){
+        foreach($alluser as $k=>$v){
+            
+        }
+    }
+}
+
 //}}}

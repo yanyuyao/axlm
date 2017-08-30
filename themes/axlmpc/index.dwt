@@ -53,7 +53,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	
 <body>
 <div class="w"> 
-<!-- #BeginLibraryItem "/library/page_header_short.lbi" --><!-- #EndLibraryItem -->
+
+<!-- #BeginLibraryItem "/library/page_header.lbi" --><!-- #EndLibraryItem -->
 </div>
 <!-- //navigation -->
 <!-- banner -->
