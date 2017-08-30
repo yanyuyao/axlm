@@ -24,7 +24,6 @@
   <ul class="header-menu">
     <li class="current"><a href="apply.php" class="joinin"><i></i>商家入驻申请</a></li>
     <li class=""><a href="{$mydomain}supplier/" class="login"><i></i>商家管理中心</a></li>
-    <li class=""><a href="#" class="faq"><i></i>商家帮助指南</a></li>
   </ul>
 </div>
 <div class="header-line"><span></span></div>

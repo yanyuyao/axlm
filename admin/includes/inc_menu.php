@@ -18,7 +18,7 @@ if(! defined('IN_ECS'))
 }
 
 $modules['02_cat_and_goods']['01_goods_list'] = 'goods.php?act=list'; // 商品列表
-//$modules['02_cat_and_goods']['02_supplier_goods_list'] = 'goods.php?act=list&supp=1'; // 供货商商品列表
+$modules['02_cat_and_goods']['02_supplier_goods_list'] = 'goods.php?act=list&supp=1'; // 供货商商品列表
 $modules['02_cat_and_goods']['03_goods_add'] = 'goods.php?act=add'; // 添加商品
 $modules['02_cat_and_goods']['04_category_list'] = 'category.php?act=list';
 $modules['02_cat_and_goods']['05_comment_manage'] = 'comment_manage.php?act=list';
@@ -239,8 +239,8 @@ $modules['02_supplier']['01_supplier_reg'] = 'supplier.php?act=list';
 $modules['02_supplier']['02_supplier_list'] = 'supplier.php?act=list&status=1';
 //$modules['02_supplier']['03_rebate_nopay'] = 'supplier_rebate.php?act=list';
 ////$modules['02_supplier']['03_rebate_pay'] = 'supplier_rebate.php?act=list&is_pay_ok=1';
-//$modules['02_supplier']['04_shop_category'] = 'supplier_street_category.php?act=list';
-//$modules['02_supplier']['05_shop_street'] = 'supplier_street.php?act=list';
+$modules['02_supplier']['04_shop_category'] = 'supplier_street_category.php?act=list';
+$modules['02_supplier']['05_shop_street'] = 'supplier_street.php?act=list';
 /* 代码增加_end By www.cfweb2015.com */
 
 // 微信权限

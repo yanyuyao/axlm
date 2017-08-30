@@ -2,7 +2,7 @@
 <div class="user-box">
   <div class="user-joinin"> {insert name='member_info1'}
     <dl>
-      <dt>欢迎来到 B2B2C 商城</dt>
+      <dt>欢迎来到 爱心联盟 商城</dt>
       <dd> 若您还没有填写入驻申请资料<br>
         请点击“<a href="{if !$smarty.session.user_id >0}javascript:;{else}apply.php{/if}">我要入驻</a>”进行入驻资料填写</dd>
       <dd>若您的店铺还未开通<br>
@@ -56,12 +56,14 @@
               <input type="hidden" name="back_act"  value=''/>
               <input type="submit" name="submit" class="btn-img" id="loginsubmit" value="立即登录" />
             </div>
+			<!--
             <div class="item-coagent">
 		    	<a href="user.php?act=oath&type=weixin"><i class="weixin"></i>微信</a>
             	<a href="user.php?act=oath&type=qq"><i class="qq"></i>QQ</a>
             	<a href="user.php?act=oath&type=weibo"><i class="sina"></i>新浪</a>
             	<a href="user.php?act=oath&type=alipay" class="last"><i class="alipay"></i>支付宝</a>
             </div>
+			-->
         </div>
       </div>
     </form>

@@ -132,8 +132,8 @@ $data = array (
     ),
     'enable' => 
     array (
-      0 => '1',
-      1 => '1',
+      0 => '0',
+      1 => '0',
     ),
   ),
   'stock_dec_time' => '1',

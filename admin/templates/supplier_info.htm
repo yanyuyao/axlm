@@ -256,18 +256,19 @@
 		</tr>
 		-->
         {* 代码删除 By www.68ecshop.com End *}
-		<tr>
+		<tr style="display:none;">
 			<td class="label">平台使用费：</td>
 			<td><input type="text" name="system_fee" value="{if $supplier.system_fee>0.00}{$supplier.system_fee}{/if}"></td>
 		</tr>
-		<tr>
+		<tr style="display:none;">
 		<td class="label">商家保证金：</td>
 		<td><input type="text" name="supplier_bond" value="{if $supplier.supplier_bond}{$supplier.supplier_bond}{/if}"></td>
 		</tr>
-		<tr>
+		<tr style="display:none;">
 		<td class="label">分成百分比：</td>
 		<td><input type="text" name="supplier_rebate" value="{if $supplier.supplier_rebate}{$supplier.supplier_rebate}{/if}">%</td>
 		</tr>
+                
 		<tr>
 		<td class="label">审核意见：</td><td><textarea name="supplier_remark" rows=4 cols=50>{$supplier.supplier_remark}</textarea></td>
 		</tr>
@@ -407,7 +408,7 @@
           <td class="label">供货商名称：</td>
           <td><input type="text" name="supplier_name" value="{$supplier.supplier_name|escape}" style="float:left;" size="30" /></td>
         </tr>
-        <tr>
+        <tr style="display:none;">
             <td class="label">店铺等级：</td>
             <td>
                 <!--
@@ -438,19 +439,19 @@
 		</tr>
         -->
         {* 代码删除 By www.68ecshop.com End *}
-		<tr>
+		<tr style="display:none;">
 			<td class="label">平台使用费：</td>
 			<td><input type="text" name="system_fee" value="{if $supplier.system_fee>0.00}{$supplier.system_fee}{/if}"></td>
 		</tr>
-		<tr>
+		<tr style="display:none;">
 		<td class="label">商家保证金：</td>
 		<td><input type="text" name="supplier_bond" value="{if $supplier.supplier_bond}{$supplier.supplier_bond}{/if}"></td>
 		</tr>
-		<tr>
+		<tr style="display:none;">
 		<td class="label">分成百分比：</td>
 		<td><input type="text" name="supplier_rebate" value="{if $supplier.supplier_rebate}{$supplier.supplier_rebate}{/if}">%</td>
 		</tr>
-		<tr>
+		<tr >
 		<td class="label">审核意见：</td><td><textarea name="supplier_remark" rows=4 cols=50>{$supplier.supplier_remark}</textarea></td>
 		</tr>
 		<tr>
@@ -492,6 +493,7 @@ onload = function()
  */
 function validate()
 {
+    return 1;
 	var theForm=document.forms['theForm'];
     validator = new Validator("theForm");
     validator.isNumber("system_fee",  "平台使用费需为整数！");

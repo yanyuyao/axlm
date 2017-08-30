@@ -161,7 +161,7 @@ $_LANG['18_virtual'] = '虚拟团购管理';
 /* 商品管理 */
 /* 代码增加_start By supplier.68ecshop.com */
 $_LANG['01_goods_list'] = '商品列表';
-$_LANG['02_supplier_goods_list'] = '入驻商商品列表';
+$_LANG['02_supplier_goods_list'] = '联盟商家商品列表';
 $_LANG['03_goods_add'] = '添加新商品';
 $_LANG['04_category_list'] = '商品分类';
 /* 代码增加_end By supplier.68ecshop.com */
@@ -239,7 +239,7 @@ $_LANG['25_pre_sale_list'] = '预售管理';
 /* 订单管理 */
 /* 代码增加_start By supplier.68ecshop.com */
 $_LANG['01_order_list'] = '订单列表';
-$_LANG['02_supplier_order'] = '入驻商订单列表';
+$_LANG['02_supplier_order'] = '联盟商家订单列表';
 /* 代码增加_end By supplier.68ecshop.com */
 $_LANG['03_order_query'] = '订单查询';
 $_LANG['04_merge_order'] = '合并订单';

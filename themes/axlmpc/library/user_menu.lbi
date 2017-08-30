@@ -39,6 +39,7 @@
         <!--<a href="user.php?act=affiliate" class="item {if $action eq 'affiliate'}curs{/if}"><span>{$lang.label_affiliate}</span><i></i></a>-->
         <!--{/if}--> 
 		<a href="account.php?act=show_expend_users" class="item {if $action eq 'show_expend_users'}curs{/if}"><span>推荐中心</span><i></i></a>
+		<a href="apply_index.php" class="item"><span>商家联盟</span><i></i></a>
 		<a href="account.php?act=show_expend_users" class="item {if $action eq 'zhuanzhang'}curs{/if}"><span>转账</span><i></i></a>
 		<!-- {if $fenxiao.on eq 1} -->
         <!--<a href="user.php?act=fenxiao" class="item {if $action eq 'fenxiao'}curs{/if}"><span>分销中心</span><i></i></a>-->
