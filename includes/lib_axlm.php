@@ -25,17 +25,19 @@ function axlmpc($user_id,$order_id,$order_amount,$good_amount){
             }
         }
         pc_set_user_status($user_id, $status, $level,'购物');
-        //step 2: 设置金融账户变更
-        
+        //step 2: 设置金融账户变更，见3,4,5,6,7,8
+    
         //step 3: 推广
-        //pc_set_fuwu_butie($user_id);
-        //
+        pc_set_tuiguang_butie($user_id);
+
         //step 4: 服务
         pc_set_fuwu_butie($user_id);
-    
+        
         //step 5: 见点
         pc_set_jiandian_butie($user_id);
+        
         //step 6: 管理补贴
+        pc_set_tuiguang_butie($uid);
         
         //step 7: 联盟商家补贴
         
@@ -222,8 +224,6 @@ function getAllUserList($uid,&$data){
 	}else{
 		return $data;
 	}
-	
-	
 }
 function getUserCentNum($uid){
     $data = array();
@@ -290,7 +290,7 @@ function getCengData($uid){
     return $ceng_data;
 }
 function pc_log($body,$title=''){
-    $test = 1;
+    $test = 0;
     if($test){
         echo "<br>===== {{{ $title ==========<br>";
         if(is_array($body)){
@@ -724,14 +724,168 @@ function save_pv_xianjianbi_fanli($uid,$fanli){
 
 //{{{补贴奖计算
 function pc_set_tuiguang_butie($uid){
-    $alluser = getCengData($uid);
-    pc_log($alluser,"pc_set_tuiguang_butie");
+    $db = $GLOBALS['db'];
+    $ecs = $GLOBALS['ecs'];
+ 
+    //$userinfo = get_pc_user_allinfo($uid);
+    //var_dump($userinfo);
+    //$jiedianren_user_id = $userinfo['jiedianren_user_id'];
     
-    if($alluser){
-        foreach($alluser as $k=>$v){
+    //先获得所有的接点人直线数组，每一层循环判断
+    $jiedianren_user_array = get_user_parent_array($uid);
+    
+//    var_dump($jiedianren_user_array);
+//    $where = "";
+//    if($userinfo['leftright'] == 'left'){
+//        $where .=" And leftright = 'right'";
+//    }else{
+//        $where .= " And leftright = 'left'";
+//    }
+    if(!$jiedianren_user_array){return 0;}
+    
+    foreach($jiedianren_user_array as $jiedian_k=>$jiedian_uid){
+        echo "<br><br><br>";
+        $jiedian_info = getLeftRightUserList($jiedian_uid);
+        if($jiedian_info['status']){ //左右区必须都有才有可能碰对，如果没有，则status = 0
+            $pengdui_success = false;
             
+            $leftuid = $jiedian_info['leftuid'];
+            $rightuid = $jiedian_info['rightuid'];
+            
+            $leftqu_array = array();
+            getAllUserListByUidNotUsedTuiguang($leftuid,$leftqu_array);
+//            pc_log($leftqu_array," left qu array {".$leftuid."}");
+            
+            $rightqu_array = array();
+            getAllUserListByUidNotUsedTuiguang($rightuid,$rightqu_array);
+//            pc_log($rightqu_array," right qu array {".$rightuid."}");
+            
+            $bili = intval(count($leftqu_array))/intval(count($rightqu_array));
+            pc_log($bili," 对碰比例 [left: ".count($leftqu_array)."] [right: ".count($rightqu_array)."]");
+            if($bili == 0.5 || $bili == 2){
+                save_tuiguang_fanli($jiedian_uid,$leftqu_array,$rightqu_array);
+                $pengdui_success = true;
+            }else{
+                $pengdui_success = false;
+            }
+            if($pengdui_success){ //碰对成功即跳出
+                break;
+            }
+        }else{
+            continue;
         }
+        
+        echo "<br><br><br>";
     }
+    
+ 
+       
+    
 }
 
+function getLeftRightUserList($uid){
+    $db = $GLOBALS['db'];
+    $ecs = $GLOBALS['ecs'];
+        
+    $sql = "select uid,leftright from ".$ecs->table('pc_user')." where jiedianren_user_id = ".$uid;
+    $data = $db->getAll($sql);
+    $leftuid = 0;
+    $rightuid = 0;
+    if($data){
+        foreach($data as $k=>$v){
+            if($v['leftright'] == 'left'){ $leftuid = $v['uid'];}
+            if($v['leftright'] == 'right'){ $rightuid = $v['uid'];}
+        }
+    }
+//    左右区必须都有才有可能碰对，如果没有，则status = 0
+    if($leftuid && $rightuid){
+        return array("status"=>1,"leftuid"=>$leftuid,"rightuid"=>$rightuid);
+    }else{
+        return array("status"=>0);
+    }
+    
+}
+//获得推广用户所以下线列表,且是未碰过对的
+function getAllUserListByUidNotUsedTuiguang($uid,&$data){
+	$db = $GLOBALS['db'];
+	$ecs = $GLOBALS['ecs'];
+        $sql = "select pu.uid , tuijianren_user_id, jiedianren_user_id, leftright,log.is_tuiguang,log.is_fuwu,log.is_jiandian, log.is_guanli  from ".
+                $ecs->table('pc_user')." pu left join ".$ecs->table('pc_user_status_log')." log on pu.uid = log.uid ".
+                " where jiedianren_user_id = ".$uid." and is_tuiguang <> 'yes'";
+        
+//        echo "<br>".$sql;
+	$nextuser = $db->getAll($sql);
+	
+	if($nextuser){
+		foreach($nextuser as $k=>$v){
+                    $data[] = $v;
+                    getAllUserListByUidNotUsedTuiguang($v['uid'],$data);
+		}
+	}else{
+		return $data;
+	}
+}
+
+function save_tuiguang_fanli($uid,$leftqu_array,$rightqu_array){
+    $bili = 0.26;
+    $basenum = 5000;
+    //不区分高级，初级会员，都返利
+    $fanli = $basenum * $bili;
+    
+    $db = $GLOBALS['db'];
+    $ecs = $GLOBALS['ecs'];
+   // pc_log($fanli,'save_tuiguang_fanli');
+    $userinfo = get_pc_user_allinfo($uid);
+    if(!$fanli){ return 0;}
+
+    $original_value = intval($userinfo['account_xianjinbi']);
+    $change_value = floatval($fanli);
+    $new_value = $original_value + $change_value;
+
+    $sql = "update ".$ecs->table('pc_user')." set account_xianjinbi = ".$new_value." where uid = ".$uid;
+    $db->query($sql);
+    pc_log($sql,'save_pv_xianjianbi_fanli');
+    $sql = "insert into ".$ecs->table('pc_user_account_log')."(uid,type,original_value,change_value,new_value,note,adminid,ctime) values(".
+            "'".$uid."',".
+            "'account_xianjinbi',".
+            "'".$original_value."',".
+            "'".$change_value."',".
+            "'".$new_value."',".
+            "'推广奖返现',".
+            "'0',".
+            "'".time()."' ".
+    ")";
+    $db->query($sql);
+    
+    foreach($leftqu_array as $k=>$v){
+        $sql = "select * from ".$ecs->table('pc_user_status_log')." where uid =  ".$v['uid'];
+        $check = $db->getRow($sql);
+        if($check){
+            $sql = "update ".$ecs->table('pc_user_status_log')." set is_tuiguang = 'yes' where uid = ".$v['uid'];
+        }else{
+            $sql = "insert into ".$ecs->table('pc_user_status_log')."(uid,is_tuiguang,tuiguang_used_time)values(".
+                    "'".$v['uid']."',".
+                    "'yes',".
+                    "'".time()."'".
+                    ")";
+        }
+        $db->query($sql);
+    }
+    
+    foreach($rightqu_array as $k=>$v){
+        $sql = "select * from ".$ecs->table('pc_user_status_log')." where uid =  ".$v['uid'];
+        $check = $db->getRow($sql);
+        if($check){
+            $sql = "update ".$ecs->table('pc_user_status_log')." set is_tuiguang = 'yes' where uid = ".$v['uid'];
+        }else{
+            $sql = "insert into ".$ecs->table('pc_user_status_log')."(uid,is_tuiguang,tuiguang_used_time)values(".
+                    "'".$v['uid']."',".
+                    "'yes',".
+                    "'".time()."'".
+                    ")";
+        }
+        $db->query($sql);
+    }
+}
+        
 //}}}

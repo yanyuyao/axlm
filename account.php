@@ -49,7 +49,7 @@ $not_login_arr = array(
 
 /* 显示页面的action列表 */
 $ui_arr = array(
-	'default', 'detaillog','show_expend_users','zhuanzhang'
+	'default', 'detaillog','show_expend_users','zhuanzhang','shenqingshop'
 ); // 代码修改
 
 /* 未登录处理 */
@@ -138,7 +138,7 @@ call_user_func($function_name);
 /* 路由 */
 
 function action_rantest(){
-    $uid = 21;
+    $uid =18;
 
     //测试父级array
     //$parent_array = array();
@@ -173,8 +173,6 @@ function action_default ()
 	//echo $sql;
 	$pc_user = $db->getRow($sql);
 	$smarty->assign('pc_user',$pc_user);
-	echo $pc_user;
-	exit;
 	
 	$data = array();
 	getAllUserListByUid($user_id,$data);
@@ -354,11 +352,12 @@ function save_user_account_log($uid,$type,$amount_type,$amount){
 }		
 //获得用户所以下线列表
 function getAllUserListByUid($uid,&$data){
+   
 	$db = $GLOBALS['db'];
 	$ecs = $GLOBALS['ecs'];
 
-	$sql = "select uid , tuijianren_user_id, jiedianren_user_id, leftright, u.user_name,u.reg_time , from_unixtime(u.reg_time,'%Y-%m-%d %H-%i-%s') as reg_time_format from ".$ecs->table('pc_user')." pu left join ".$ecs->table('users')." u on pu.uid = u.user_id where tuijianren_user_id = ".$uid;
-	//echo "<br>".$sql;
+	$sql = "select uid , tuijianren_user_id, jiedianren_user_id, leftright, u.user_name,u.reg_time , from_unixtime(u.reg_time,'%Y-%m-%d %H-%i-%s') as reg_time_format from ".$ecs->table('pc_user')." pu left join ".$ecs->table('users')." u on pu.uid = u.user_id where jiedianren_user_id = ".$uid;
+//	echo "<br>".$sql;
 	$nextuser = $db->getAll($sql);
 	
 	if($nextuser){
