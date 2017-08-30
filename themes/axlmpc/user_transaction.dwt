@@ -1058,17 +1058,31 @@ function submit_surplus_form(){
                 <td width="10%" align="right">{$lang.repay_money}:</td>
                 <td align="left"><input type="text" name="amount" value="{$order.amount|escape}" class="inputBg" size="30" /></td>
               </tr>
-			  <tr>
-                <td width="10%" align="right">账号名:</td>
+			 
+                <tr>
+                <td width="10%" align="right">类型:</td>
+                <td align="left">
+                    <input type="radio" name="tixian_account_type" value="zhifubao" class=""  />支付宝&nbsp;&nbsp;&nbsp;&nbsp;
+                    <input type="radio" name="tixian_account_type" value="yinhang" class=""  />银行
+		</td>
+              </tr>
+             <tr>
+                <td width="10%" align="right">真实姓名:</td>
                 <td align="left">
                 <input type="text" name="tixian_account_realname" value="" class="inputBg"  />
 				</td>
               </tr>
-			  <tr>
-                <td width="10%" align="right">支付宝账号:</td>
+            <tr>
+                <td width="10%" align="right">银行名:</td>
                 <td align="left">
-                <input type="text" name="tixian_account_info" value="" class="inputBg"  />
+                <input type="text" name="tixian_account_yinhang" value="" class="inputBg"  />
 				</td>
+              </tr>
+             <tr>
+                <td width="10%" align="right">账号:</td>
+                <td align="left">
+                <input type="text" name="tixian_account_info" value="" class="inputBg"  /> 请填入银行卡号或支付宝账户
+		</td>
               </tr>
               <tr>
                 <td align="right">{$lang.process_notic}:</td>
@@ -1077,7 +1091,7 @@ function submit_surplus_form(){
               <tr>
                 <td colspan="2" align="center"><input type="hidden" name="surplus_type" value="1" />
                   <input type="hidden" name="act" value="act_account" />
-				  <input type="hidden" name="tixian_account_type" value="zhifubao"/>
+				  <!--<input type="hidden" name="tixian_account_type" value="zhifubao"/>-->
                   <input type="submit" name="submit"  class="main-btn main-btn-large" value="{$lang.submit_request}" />
                   <input type="reset" name="reset" class="main-btn main-btn-large" value="{$lang.button_reset}" /></td>
               </tr>

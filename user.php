@@ -3737,6 +3737,8 @@ function action_act_account ()
 	$tixian_account_type = isset($_POST['tixian_account_type']) ? $_POST['tixian_account_type'] : 0;
 	$tixian_account_info = isset($_POST['tixian_account_info']) ? $_POST['tixian_account_info'] : 0;
 	$tixian_account_realname = isset($_POST['tixian_account_realname']) ? $_POST['tixian_account_realname'] : 0;
+	$tixian_account_yinhang = isset($_POST['tixian_account_yinhang']) ? $_POST['tixian_account_yinhang'] : 0;
+        
 	$user_note = isset($_POST['user_note']) ? $_POST['user_note'] : '';
 	
 	$tixian_kouchu_xiaofei = $db->getOne('select svalue from '.$ecs->table('pc_config').' where sname = "tixian_kouchu_xiaofei"');
@@ -3748,10 +3750,12 @@ function action_act_account ()
 	
 	$daozhang = $amount * floatval(1-$tixian_kouchu_xiaofei-$tixian_kouchu_shuishou-$tixian_kouchu_guanlifei);
 	
-	$sql = "insert into ".$ecs->table('pc_user_tixian')."(uid,realname,alipay_account,money,zhuanqu_xiaofeibi,shuishou,guanlifei,daozhang_money,note,status,ctime)values(".
+	$sql = "insert into ".$ecs->table('pc_user_tixian')."(uid,realname,tixian_type,account,yinghainame,money,zhuanqu_xiaofeibi,shuishou,guanlifei,daozhang_money,note,status,ctime)values(".
 			"'".$user_id."',".
 			"'".$tixian_account_realname."',".
+			"'".$tixian_account_type."',".
 			"'".$tixian_account_info."',".
+			"'".$tixian_account_yinhang."',".
 			"'".$amount."',".
 			"'".$amount*$tixian_kouchu_xiaofei."',".
 			"'".$amount*$tixian_kouchu_shuishou."',".
