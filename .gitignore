@@ -2,3 +2,13 @@
 /nbproject/private/
 /temp/*
 temp/
+temp
+temp/*
+images/*
+images
+/images/
+images/
+*.jpg
+admin/images/login_dl-heyu.jpg
+*.jpg
+*.json
