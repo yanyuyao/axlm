@@ -6,9 +6,9 @@ temp
 temp/*
 images/*
 images
-*.jpg
-*.jpg
-*.jpg
+/images/
+images/
 *.jpg
 admin/images/login_dl-heyu.jpg
 *.jpg
+*.json
