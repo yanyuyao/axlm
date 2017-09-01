@@ -152,9 +152,9 @@ if (!$smarty->is_cached('index.dwt', $cache_id))
 		$smarty->assign('goods_2',      get_pc_goods_info(292));
 		$smarty->assign('goods_3',      get_pc_goods_info(294));
 		
-		$smarty->assign('goods_4',      get_pc_goods_info(294));
-		$smarty->assign('goods_5',      get_pc_goods_info(301));
-		$smarty->assign('goods_6',      get_pc_goods_info(302));
+		$smarty->assign('goods_4',      get_pc_goods_info(304));
+		$smarty->assign('goods_5',      get_pc_goods_info(303));
+		$smarty->assign('goods_6',      get_pc_goods_info(305));
 		
 		$smarty->assign('tabgoods_1',      get_pc_goods_info(301));
 		$smarty->assign('tabgoods_2',      get_pc_goods_info(302));
