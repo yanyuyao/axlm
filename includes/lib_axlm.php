@@ -1,6 +1,12 @@
 <?php
-
-
+function get_pc_goods_info($gid){
+    $ecs = $GLOBALS['ecs'];
+    $db = $GLOBALS['db'];
+    $sql = "SELECT goods_id,goods_sn,goods_name,shop_price,goods_brief,goods_thumb,goods_img FROM " . $ecs->table('goods')."WHERE goods_id = '$gid'";
+//    echo $sql;
+    $data = $db->getRow($sql);
+    return $data;
+}
 //{{{ axlm
 //购物激活账户      
 function axlmpc($user_id,$order_id,$order_amount,$good_amount){

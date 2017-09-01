@@ -1211,7 +1211,7 @@ if(result.error == 1){
 <!-- #BeginLibraryItem "/library/arrive_notice.lbi" --><!-- #EndLibraryItem -->
 <!-- #BeginLibraryItem "/library/right_sidebar.lbi" --><!-- #EndLibraryItem -->
 <div class="site-footer">
-    <div class="footer-related">
+    <div class="footer-related" style="background:#fff;">
 		<!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
 	</div>
 </div>

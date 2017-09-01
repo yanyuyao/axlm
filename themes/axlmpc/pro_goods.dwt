@@ -163,7 +163,7 @@ document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static
   </div>
   <!-- #BeginLibraryItem "/library/right_sidebar.lbi" --><!-- #EndLibraryItem --> 
   <div class="site-footer">
-    <div class="footer-related">
+    <div class="footer-related" style="background:#fff;">
   		<!-- #BeginLibraryItem "/library/help.lbi" --><!-- #EndLibraryItem -->
   		<!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
   </div>

@@ -1197,7 +1197,7 @@ data-widget="tab-item">
   <!-- {/if} --> 
 </div>
 <div class="site-footer">
-    <div class="footer-related">
+    <div class="footer-related" style="background:#fff;">
 		<!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
 	</div>
 </div>

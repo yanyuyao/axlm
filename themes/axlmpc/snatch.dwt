@@ -86,7 +86,7 @@
     <div style="height:0px; line-height:0px; clear:both;"></div>
   </div>
  <div class="site-footer">
-    <div class="footer-related">
+    <div class="footer-related" style="background:#fff;">
   		<!-- #BeginLibraryItem "/library/help.lbi" --><!-- #EndLibraryItem -->
   		<!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
   </div>

@@ -77,17 +77,17 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			<div class="banner-bottom-left">
 				<div class="banner-bottom-left-grids">
 					<div class="banner-bottom-left-grid iusto">
-						<img src="themes/axlmpc/axlm/images/g1.png" alt=" " class="img-responsive" />
+						<img src="{$goods_1.goods_thumb}" alt=" " class="img-responsive" style="width:269;height:299px;" />
 						<div class="cap1">
 							<span> </span>
 						</div>
 					</div>
 					<div class="banner-bottom-left-grid txt">
-						<h3>三八妇乐“福乐优享”组合套装</h3>
-						<p>“福乐优享”组合套装是三八妇乐为优惠回馈广大家人，从公司全套产品系列中精心优选出围绕生殖健康、日常护理、私密美容的12件优势产品组合，全程呵护您和家人的健康，由内而外焕发活力，全家尽享快乐幸福。</p>
+						<h3>{$goods_2.goods_name}</h3>
+						<p>{$goods_2.goods_brief}</p>
 					</div>
 					<div class="banner-bottom-left-grid iusto">
-						<img src="themes/axlmpc/axlm/images/g2.png" alt=" " class="img-responsive" />
+						<img src="{$goods_3.goods_thumb}" alt=" " class="img-responsive" style="width:269;height:299px;" />
 						<div class="cap">
 							<span> </span>
 						</div>
@@ -96,18 +96,18 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				</div>
 				<div class="banner-bottom-left-grids">
 					<div class="banner-bottom-left-grid txt">
-						<h3>三八妇乐爱她爱他胶原蛋白果汁饮品</h3>
-						<p>胶原蛋白流失的过程，就是肌肤衰老的过程，然而，留住时光，如此不易，高分子难吸收，改善难深入，美白难持久。<br>三八妇乐专属配方，升级吸收率和更佳口感，胶原蛋白吸收利用率高达40%以上，深入帮助延缓肌肤老化过程</p>
+						<h3>{$goods_1.goods_name}</h3>
+						<p>{$goods_1.goods_brief}</p>
 					</div>
 					<div class="banner-bottom-left-grid iusto">
-						<img src="themes/axlmpc/axlm/images/g3.png" alt=" " class="img-responsive" />
+						<img src="{$goods_2.goods_thumb}" alt=" " class="img-responsive" style="width:269;height:299px;" />
 						<div class="cap3">
 							<span> </span>
 						</div>
 					</div>
 					<div class="banner-bottom-left-grid txt">
-						<h3>山药枸杞固体饮料（木糖醇型）</h3>
-						<p>传承古典膳食配方，结合先进喷雾造粒工艺，保留自然营养成分，精选十余种经典草本植物，讲究中药材的原产地，最大限度发挥功效，补充人体脏腑器官所需营养，强健身体、增强活力，养出好气色，升级配方，采用健康环保公益，香甜可口、回味无穷。</p>
+						<h3>{$goods_3.goods_name}</h3>
+						<p>{$goods_3.goods_brief}</p>
 					</div>
 					<div class="clearfix"></div>
 				</div>
@@ -118,22 +118,22 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						<div class="da-slide">
 							<h2>中国女性生殖健康服务工程公益讲座——衢州站</h2>
 							<p>2017年5月18日，由西安三八妇乐健康产业有限公司大力推广的中国女性生殖健康服务工程第56603场公益讲座在浙江省衢州市东方酒店隆重召开，三八妇乐众生系统众心体系400余人参与其中。</p>
-							<a class="da-link" href="about.html">了解更多</a>
+							<a class="da-link" href="#">了解更多</a>
 						</div>
 						<div class="da-slide">
 							<h2>品质坚如磐石 三八妇乐载誉前行</h2>
 							<p>产品的质量问题关乎消费者的安全，同时也是衡量一个企业基本社会责任的标尺。获得“全国质量信得过产品”这一殊荣，是三八妇乐持续25年坚持为消费者输出放心产品的最好回报。</p>
-							<a class="da-link" href="about.html">了解更多</a>
+							<a class="da-link" href="#">了解更多</a>
 						</div>
 						<div class="da-slide">
 							<h2>中国女性生殖健康服务工程推进会走进龙江</h2>
 							<p>命运被他们改写，人生被他们重新定义。优秀志愿者刘玉江先生、张秀琴女士真情流露，分享了自己的收获和感受。之前每天都在农田中早出晚归、辛勤劳作也无法取得更多的收入，而在这里，他们却拥有了崭新的幸福生活。</p>
-							<a class="da-link" href="about.html">了解更多</a>
+							<a class="da-link" href="#">了解更多</a>
 						</div>
 						<div class="da-slide">
 							<h2>诚信铸千秋| 三八妇乐荣膺中国质量万里行</h2>
 							<p>近期，三八妇乐凭借引领行业的用户口碑、服务模式，以及诚实守信的经营之道通过中国质量万里行市场调查中心调查评估，荣获2017年重质量·讲诚信·树品牌“3·15诚信展示企业”。</p>
-							<a class="da-link" href="about.html">了解更多</a>
+							<a class="da-link" href="#">了解更多</a>
 						</div>			
 						<nav class="da-arrows">
 							<span class="da-arrows-prev"></span>
@@ -159,12 +159,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					<div class="cate">
 						<h2>热销产品</h2>
 						<ul>
-							<li><a href="single.html">三八妇乐牌一品清心参花茶</a></li>
-							<li><a href="single.html">祁美牌 欣欣胶囊</a></li>
-							<li><a href="single.html">三八妇乐妇洁抑菌凝胶（滋润型）</a></li>
-							<li><a href="single.html">三八妇乐妇科护垫礼盒装</a></li>
-							<li><a href="single.html">舒欣卫生巾组合套装</a></li>
-							<li><a href="single.html">山药枸杞固体饮料（木糖醇型）</a></li>
+							<!--{foreach from=$hot_goods item=g}--> 
+							<li><em><a href="{$g.url}">{$g.short_name}</a></em></li>
+							<!--{/foreach}--> 
 						</ul>
 					</div>
 				</div>
@@ -237,62 +234,63 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			<div class="banner-bottom2">
 				<div class="banner-bottom-right1">
 					<div class="banner-bottom-right-info">
-						<h2 class="voluptatum">服务热线：4006-029-038</h2>
+						<h2 class="voluptatum">服务热线：400-617-6169</h2>
 						<p class="quis">
-							三八妇乐，做中国女性生殖健康领导品牌<br>
+							专线: 0534-539-3331<br>
+							Email: <a href="mailto:mdsslm@163.com" target="_blank" style="color:#fff;">mdsslm@163.com</a><br>
+							QQ: <a href="http://wpa.qq.com/msgrd?v=3&uin=647311986&site=qq&menu=yes" target="_blank" style="color:#fff;">647311986</a><br>
 							从不要求消费者忠于我们<br>
 							但是， 我们永远忠于消费者</p>
-						<a href="team.html" class="hvr-rectangle-in">联系我们</a>
+						<a href="#" class="hvr-rectangle-in">联系我们</a>
 					</div>
 					<div class="cate Nam">
 						<h2>新品上市</h2>
 						<ul>
-							<li><a href="single.html">格欧尼亚莹润诱惑花蜜紧致液</a></li>
-							<li><a href="single.html">格欧尼亚青春密码营养原液（滋润型）</a></li>
-							<li><a href="single.html">亲清免洗消毒喷雾</a></li>
-							<li><a href="single.html">三八妇乐爱她爱他护理啫喱</a></li>
-							<li><a href="single.html">桃源境滤网套装</a></li>
+							<!--{foreach from=$new_goods item=g}--> 
+							<li><em><a href="{$g.url}">{$g.short_name}</a></em></li>
+							<!--{/foreach}--> 
 						</ul>
 					</div>
 				</div>
 				<div class="banner-bottom-left1">
-					<div class="banner-bottom-left-grids">
-						<div class="banner-bottom-left-grid iusto">
-							<img src="themes/axlmpc/axlm/images/g1.png" alt=" " class="mnb img-responsive"/>
-							<div class="cap1 cum">
-								<span> </span>
-							</div>
+				<div class="banner-bottom-left-grids">
+					<div class="banner-bottom-left-grid iusto">
+						<img src="{$goods_1.goods_thumb}" alt=" " class="img-responsive" style="width:269;height:299px;" />
+						<div class="cap1">
+							<span> </span>
 						</div>
-						<div class="banner-bottom-left-grid txt1">
-							<h3>三八妇乐“福乐优享”组合套装</h3>
-						<p>“福乐优享”组合套装是三八妇乐为优惠回馈广大家人，从公司全套产品系列中精心优选出围绕生殖健康、日常护理、私密美容的12件优势产品组合，全程呵护您和家人的健康，由内而外焕发活力，全家尽享快乐幸福。</p>
-						</div>
-						<div class="banner-bottom-left-grid iusto">
-							<img src="themes/axlmpc/axlm/images/g2.png" alt=" " class="mnb img-responsive"/>
-							<div class="cap">
-								<span> </span>
-							</div>
-						</div>
-						<div class="clearfix"></div>
 					</div>
-					<div class="banner-bottom-left-grids">
-						<div class="banner-bottom-left-grid txt1">
-							<h3>三八妇乐爱她爱他胶原蛋白果汁饮品</h3>
-						<p>胶原蛋白流失的过程，就是肌肤衰老的过程，然而，留住时光，如此不易，高分子难吸收，改善难深入，美白难持久。<br>三八妇乐专属配方，升级吸收率和更佳口感，胶原蛋白吸收利用率高达40%以上，深入帮助延缓肌肤老化过程</p>
-						</div>
-						<div class="banner-bottom-left-grid iusto">
-							<img src="themes/axlmpc/axlm/images/g3.png" alt=" " class="mnb img-responsive"/>
-							<div class="cap3">
-								<span> </span>
-							</div>
-						</div>
-						<div class="banner-bottom-left-grid txt1">
-							<h3>山药枸杞固体饮料（木糖醇型）</h3>
-						<p>传承古典膳食配方，结合先进喷雾造粒工艺，保留自然营养成分，精选十余种经典草本植物，讲究中药材的原产地，最大限度发挥功效，补充人体脏腑器官所需营养，强健身体、增强活力，养出好气色，升级配方，采用健康环保公益，香甜可口、回味无穷。</p>
-						</div>
-						<div class="clearfix"></div>
+					<div class="banner-bottom-left-grid txt">
+						<h3>{$goods_2.goods_name}</h3>
+						<p>{$goods_2.goods_brief}</p>
 					</div>
+					<div class="banner-bottom-left-grid iusto">
+						<img src="{$goods_3.goods_thumb}" alt=" " class="img-responsive" style="width:269;height:299px;" />
+						<div class="cap">
+							<span> </span>
+						</div>
+					</div>
+					<div class="clearfix"></div>
 				</div>
+				<div class="banner-bottom-left-grids">
+					<div class="banner-bottom-left-grid txt">
+						<h3>{$goods_1.goods_name}</h3>
+						<p>{$goods_1.goods_brief}</p>
+					</div>
+					<div class="banner-bottom-left-grid iusto">
+						<img src="{$goods_2.goods_thumb}" alt=" " class="img-responsive" style="width:269;height:299px;" />
+						<div class="cap3">
+							<span> </span>
+						</div>
+					</div>
+					<div class="banner-bottom-left-grid txt">
+						<h3>{$goods_3.goods_name}</h3>
+						<p>{$goods_3.goods_brief}</p>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+			</div>
+			
 				<div class="clearfix"> </div>
 			</div>
 		</div>

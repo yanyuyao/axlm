@@ -11,7 +11,7 @@
           </ul>
         </div>
     </div>
-    <div class="footer-related">
+    <div class="footer-related" style="background:#fff;">
         <div class="footer-article w1210"> 
           <!-- {foreach from=$helps item=help_cat name=no} -->
           <dl class="col-article {if $smarty.foreach.no.first}col-article-first{/if}">

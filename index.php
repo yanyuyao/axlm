@@ -140,12 +140,19 @@ if (!$smarty->is_cached('index.dwt', $cache_id))
     $smarty->assign('helps',           get_shop_help());       // 网店帮助
     $smarty->assign('top_goods',       get_top10());           // 销售排行
     ///llx添加start
-	$smarty->assign('top_goods1',        get_top10(16));   
-	$smarty->assign('top_goods2',        get_top10(81));   
-	$smarty->assign('top_goods3',        get_top10(17));   
-	$smarty->assign('top_goods4',        get_top10(93));   
+	//$smarty->assign('top_goods1',        get_top10(16));   
+	//$smarty->assign('top_goods2',        get_top10(81));   
+	//$smarty->assign('top_goods3',        get_top10(17));   
+	//$smarty->assign('top_goods4',        get_top10(93));   
 	 ///llx添加end
 
+	//{{{ran added 
+		
+		$smarty->assign('goods_1',      get_pc_goods_info(293));
+		$smarty->assign('goods_2',      get_pc_goods_info(292));
+		$smarty->assign('goods_3',      get_pc_goods_info(294));
+	//}}}
+	var_dump(get_recommend_goods('best'));
     $smarty->assign('best_goods',      get_recommend_goods('best'));    // 推荐商品
     $smarty->assign('new_goods',       get_recommend_goods('new'));     // 最新商品
     $smarty->assign('hot_goods',       get_recommend_goods('hot'));     // 热点文章
@@ -217,6 +224,7 @@ if(($captcha & CAPTCHA_LOGIN) && (! ($captcha & CAPTCHA_LOGIN_FAIL) || (($captch
 
 
 	$smarty->display('index.dwt', $cache_id);
+
 
 /*------------------------------------------------------ */
 //-- PRIVATE FUNCTIONS

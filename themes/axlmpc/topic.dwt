@@ -207,7 +207,7 @@ color:#fff;
   <!-- {/if} --> 
 </div>
 <div class="site-footer">
-  <div class="footer-related"> <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem --> </div>
+  <div class="footer-related" style="background:#fff;"> <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem --> </div>
 </div>
 </body>
 </html>

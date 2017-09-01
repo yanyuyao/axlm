@@ -187,7 +187,7 @@
   <!-- {/if} --> 
 </div>
 <div class="site-footer">
-  <div class="footer-related"> <!-- #BeginLibraryItem "/library/help.lbi" --><!-- #EndLibraryItem --> <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem --> </div>
+  <div class="footer-related" style="background:#fff;"> <!-- #BeginLibraryItem "/library/help.lbi" --><!-- #EndLibraryItem --> <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem --> </div>
 </div>
 </body>
 </html>

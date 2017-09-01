@@ -566,7 +566,7 @@ function erweima1(obj, sType) { var oDiv = document.getElementById(obj); if (sTy
   <!--#找回密码界面 end-->
 </div>
 <div class="site-footer">
-    <div class="footer-related">
+    <div class="footer-related" style="background:#fff;">
   		<!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
   </div>
 </div>

@@ -42,7 +42,7 @@ p a {
   <div class="blank"></div>
   <div class="blank"></div>
   <div class="site-footer">
-    <div class="footer-related">
+    <div class="footer-related" style="background:#fff;">
   		<!-- #BeginLibraryItem "/library/help.lbi" --><!-- #EndLibraryItem -->
   		<!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
   </div>

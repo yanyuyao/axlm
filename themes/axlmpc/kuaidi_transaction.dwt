@@ -206,7 +206,7 @@ function  get_ShippingFee_Response(result)
 <div class="clear pb10"></div>
 <div class="clear pb10"></div>
 <div class="site-footer">
-    <div class="footer-related">
+    <div class="footer-related" style="background:#fff;">
   		<!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
   </div>
 </div>

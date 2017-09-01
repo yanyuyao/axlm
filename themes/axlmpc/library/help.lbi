@@ -1,5 +1,5 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-{if $helps}
+{if 0 && $helps}
 <div class="footer-article w1210"> 
   <!-- {foreach from=$helps item=help_cat name=no} -->
   <dl class="col-article {if $smarty.foreach.no.first}col-article-first{/if}">

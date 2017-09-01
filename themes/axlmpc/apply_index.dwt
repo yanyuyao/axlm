@@ -41,7 +41,7 @@
 <!-- #BeginLibraryItem "/library/apply_prompt.lbi" --><!-- #EndLibraryItem -->
 <!-- #BeginLibraryItem "/library/apply_detail_info.lbi" --><!-- #EndLibraryItem -->
 <div class="site-footer">
-    <div class="footer-related">
+    <div class="footer-related" style="background:#fff;">
   		<!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
   </div>
 </div>

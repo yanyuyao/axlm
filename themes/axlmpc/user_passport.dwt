@@ -88,7 +88,7 @@ function erweima1(obj, sType) { var oDiv = document.getElementById(obj); if (sTy
 </div>
 
 <div class="site-footer">
-    <div class="footer-related">
+    <div class="footer-related" style="background:#fff;">
                 <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
   </div>
 </div>
