@@ -2,6 +2,10 @@
 /nbproject/private/
 /temp/*
 temp/
+temp
+temp/*
+images/*
+images
 *.jpg
 *.jpg
 *.jpg
