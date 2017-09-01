@@ -83,7 +83,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						</div>
 					</div>
 					<div class="banner-bottom-left-grid txt">
-						<h3>{$goods_2.goods_name}</h3>
+						<a href="goods.php/{$goods_2.goods_id}"><h3>{$goods_2.goods_name}</h3></a>
 						<p>{$goods_2.goods_brief}</p>
 					</div>
 					<div class="banner-bottom-left-grid iusto">
@@ -106,7 +106,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						</div>
 					</div>
 					<div class="banner-bottom-left-grid txt">
-						<h3>{$goods_3.goods_name}</h3>
+						<a href="goods.php/{$goods_3.goods_id}"><h3>{$goods_3.goods_name}</h3></a>
 						<p>{$goods_3.goods_brief}</p>
 					</div>
 					<div class="clearfix"></div>
@@ -172,15 +172,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					<div class="cap-hover">
 						<span class="glyphicon glyphicon-star hme" aria-hidden="true"></span>
 					</div>
-					<h3>三八妇乐·女性健康护理系列</h3>
+					<h3>{$goods_1.goods_name}</h3>
 					<p>
-						格欧尼亚莹润诱惑花蜜礼盒（清爽型 / 滋润型）<br>
-						格欧尼亚莹润诱惑花蜜紧致液<br>
-						格欧尼亚青春密码营养原液（清爽型 / 滋润型）<br>
-						格欧尼亚乳木果幻彩嫩滑沐浴礼盒
+						{$goods_1.goods_brief}
 					</p>
 					<div class="more">
-						<a href="single.html" class="hvr-rectangle-in learn">查看详情</a>
+						<a href="goods.php?id={$goods_1.goods_id}" class="hvr-rectangle-in learn">查看详情</a>
 					</div>
 				</div>
 				<div class="banner-btm-grid">
@@ -201,30 +198,24 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					<div class="cap-hover">
 						<span class="glyphicon glyphicon-leaf hme" aria-hidden="true"></span>
 					</div>
-					<h3>妍健·用品系列</h3>
+					<h3>{$tabgoods_1.goods_name}</h3>
 					<p>
-						三八妇乐牌一品清心参花茶<br>
-						三八妇乐骨乐贴<br>
-						桃源境滤网套装<br>
-						祁美牌 欣欣胶囊
+						{$tabgoods_1.goods_brief}
 					</p>
 					<div class="more">
-						<a href="single.html" class="hvr-rectangle-in learn">查看详情</a>
+						<a href="{$tabgoods_1.goods_id}" class="hvr-rectangle-in learn">查看详情</a>
 					</div>
 				</div>
 				<div class="banner-btm-grid">
 					<div class="cap-hover">
 						<span class="glyphicon glyphicon-star hme" aria-hidden="true"></span>
 					</div>
-					<h3>GONIA·私密美容系列</h3>
+					<h3>{$tabgoods_2.goods_name}</h3>
 					<p>
-						格欧尼亚莹润诱惑花蜜礼盒（清爽型 / 滋润型）<br>
-						格欧尼亚莹润诱惑花蜜紧致液<br>
-						格欧尼亚青春密码营养原液（清爽型 / 滋润型）<br>
-						格欧尼亚乳木果幻彩嫩滑沐浴礼盒
+						{$tabgoods_2.goods_brief}
 					</p>
 					<div class="more">
-						<a href="single.html" class="hvr-rectangle-in learn">查看详情</a>
+						<a href="{$tabgoods_2.goods_id}" class="hvr-rectangle-in learn">查看详情</a>
 					</div>
 				</div>
 				<div class="clearfix"> </div>
@@ -255,17 +246,17 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				<div class="banner-bottom-left1">
 				<div class="banner-bottom-left-grids">
 					<div class="banner-bottom-left-grid iusto">
-						<img src="{$goods_1.goods_thumb}" alt=" " class="img-responsive" style="width:269;height:299px;" />
+						<img src="{$goods_4.goods_thumb}" alt=" " class="img-responsive" style="width:269;height:299px;" />
 						<div class="cap1">
 							<span> </span>
 						</div>
 					</div>
 					<div class="banner-bottom-left-grid txt">
-						<h3>{$goods_2.goods_name}</h3>
-						<p>{$goods_2.goods_brief}</p>
+						<a href="goods.php/{$goods_5.goods_id}"><h3>{$goods_5.goods_name}</h3></a>
+						<p>{$goods_5.goods_brief}</p>
 					</div>
 					<div class="banner-bottom-left-grid iusto">
-						<img src="{$goods_3.goods_thumb}" alt=" " class="img-responsive" style="width:269;height:299px;" />
+						<img src="{$goods_6.goods_thumb}" alt=" " class="img-responsive" style="width:269;height:299px;" />
 						<div class="cap">
 							<span> </span>
 						</div>
@@ -274,22 +265,22 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				</div>
 				<div class="banner-bottom-left-grids">
 					<div class="banner-bottom-left-grid txt">
-						<h3>{$goods_1.goods_name}</h3>
-						<p>{$goods_1.goods_brief}</p>
+						<a href="goods.php/{$goods_4.goods_id}"><h3>{$goods_4.goods_name}</h3></a>
+						<p>{$goods_4.goods_brief}</p>
 					</div>
 					<div class="banner-bottom-left-grid iusto">
-						<img src="{$goods_2.goods_thumb}" alt=" " class="img-responsive" style="width:269;height:299px;" />
+						<img src="{$goods_5.goods_thumb}" alt=" " class="img-responsive" style="width:269;height:299px;" />
 						<div class="cap3">
 							<span> </span>
 						</div>
 					</div>
 					<div class="banner-bottom-left-grid txt">
-						<h3>{$goods_3.goods_name}</h3>
-						<p>{$goods_3.goods_brief}</p>
+						<a href="goods.php/{$goods_6.goods_id}"><h3>{$goods_6.goods_name}</h3></a>
+						<p>{$goods_6.goods_brief}</p>
 					</div>
 					<div class="clearfix"></div>
 				</div>
-			</div>
+				</div>
 			
 				<div class="clearfix"> </div>
 			</div>
