@@ -152,7 +152,7 @@ if (!$smarty->is_cached('index.dwt', $cache_id))
 		$smarty->assign('goods_2',      get_pc_goods_info(292));
 		$smarty->assign('goods_3',      get_pc_goods_info(294));
 	//}}}
-	var_dump(get_recommend_goods('best'));
+	//var_dump(get_recommend_goods('best'));
     $smarty->assign('best_goods',      get_recommend_goods('best'));    // 推荐商品
     $smarty->assign('new_goods',       get_recommend_goods('new'));     // 最新商品
     $smarty->assign('hot_goods',       get_recommend_goods('hot'));     // 热点文章
