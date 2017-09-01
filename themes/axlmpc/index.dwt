@@ -116,24 +116,24 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				<!---start-da-slider----->
 					<div id="da-slider" class="da-slider">
 						<div class="da-slide">
-							<h2>中国女性生殖健康服务工程公益讲座——衢州站</h2>
-							<p>2017年5月18日，由西安三八妇乐健康产业有限公司大力推广的中国女性生殖健康服务工程第56603场公益讲座在浙江省衢州市东方酒店隆重召开，三八妇乐众生系统众心体系400余人参与其中。</p>
-							<a class="da-link" href="#">了解更多</a>
+							<h2>{$goods_1.goods_name}</h2>
+							<p>{$goods_1.goods_brief}</p>
+							<a class="da-link" href="goods.php?id={$goods_1.goods_id}">了解更多</a>
 						</div>
 						<div class="da-slide">
-							<h2>品质坚如磐石 三八妇乐载誉前行</h2>
-							<p>产品的质量问题关乎消费者的安全，同时也是衡量一个企业基本社会责任的标尺。获得“全国质量信得过产品”这一殊荣，是三八妇乐持续25年坚持为消费者输出放心产品的最好回报。</p>
-							<a class="da-link" href="#">了解更多</a>
+							<h2>{$goods_2.goods_name}</h2>
+							<p>{$goods_2.goods_brief}</p>
+							<a class="da-link" href="goods.php?id={$goods_2.goods_id}">了解更多</a>
 						</div>
 						<div class="da-slide">
-							<h2>中国女性生殖健康服务工程推进会走进龙江</h2>
-							<p>命运被他们改写，人生被他们重新定义。优秀志愿者刘玉江先生、张秀琴女士真情流露，分享了自己的收获和感受。之前每天都在农田中早出晚归、辛勤劳作也无法取得更多的收入，而在这里，他们却拥有了崭新的幸福生活。</p>
-							<a class="da-link" href="#">了解更多</a>
+							<h2>{$goods_5.goods_name}</h2>
+							<p>{$goods_5.goods_brief}</p>
+							<a class="da-link" href="goods.php?id={$goods_5.goods_id}">了解更多</a>
 						</div>
 						<div class="da-slide">
-							<h2>诚信铸千秋| 三八妇乐荣膺中国质量万里行</h2>
-							<p>近期，三八妇乐凭借引领行业的用户口碑、服务模式，以及诚实守信的经营之道通过中国质量万里行市场调查中心调查评估，荣获2017年重质量·讲诚信·树品牌“3·15诚信展示企业”。</p>
-							<a class="da-link" href="#">了解更多</a>
+							<h2>{$goods_6.goods_brief}</h2>
+							<p>{$goods_6.goods_brief}</p>
+							<a class="da-link" href="goods.php?id={$goods_6.goods_id}">了解更多</a>
 						</div>			
 						<nav class="da-arrows">
 							<span class="da-arrows-prev"></span>
