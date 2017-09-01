@@ -77,7 +77,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			<div class="banner-bottom-left">
 				<div class="banner-bottom-left-grids">
 					<div class="banner-bottom-left-grid iusto">
-						<img src="{$goods_1.goods_img}" alt=" " class="img-responsive" style="width:269;height:299px;" />
+						<img src="{$goods_1.goods_thumb}" alt=" " class="img-responsive" style="width:269;height:299px;" />
 						<div class="cap1">
 							<span> </span>
 						</div>
@@ -87,7 +87,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						<p>{$goods_2.goods_brief}</p>
 					</div>
 					<div class="banner-bottom-left-grid iusto">
-						<img src="{$goods_3.goods_img}" alt=" " class="img-responsive" style="width:269;height:299px;" />
+						<img src="{$goods_3.goods_thumb}" alt=" " class="img-responsive" style="width:269;height:299px;" />
 						<div class="cap">
 							<span> </span>
 						</div>
@@ -100,7 +100,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						<p>{$goods_1.goods_brief}</p>
 					</div>
 					<div class="banner-bottom-left-grid iusto">
-						<img src="{$goods_2.goods_img}" alt=" " class="img-responsive" style="width:269;height:299px;" />
+						<img src="{$goods_2.goods_thumb}" alt=" " class="img-responsive" style="width:269;height:299px;" />
 						<div class="cap3">
 							<span> </span>
 						</div>
@@ -246,7 +246,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				<div class="banner-bottom-left1">
 				<div class="banner-bottom-left-grids">
 					<div class="banner-bottom-left-grid iusto">
-						<img src="{$goods_4.goods_img}" alt=" " class="img-responsive" style="width:269;height:299px;" />
+						<img src="{$goods_4.goods_thumb}" alt=" " class="img-responsive" style="width:269;height:299px;" />
 						<div class="cap1">
 							<span> </span>
 						</div>
@@ -256,7 +256,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						<p>{$goods_5.goods_brief}</p>
 					</div>
 					<div class="banner-bottom-left-grid iusto">
-						<img src="{$goods_6.goods_img}" alt=" " class="img-responsive" style="width:269;height:299px;" />
+						<img src="{$goods_6.goods_thumb}" alt=" " class="img-responsive" style="width:269;height:299px;" />
 						<div class="cap">
 							<span> </span>
 						</div>
@@ -269,7 +269,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						<p>{$goods_4.goods_brief}</p>
 					</div>
 					<div class="banner-bottom-left-grid iusto">
-						<img src="{$goods_5.goods_img}" alt=" " class="img-responsive" style="width:269;height:299px;" />
+						<img src="{$goods_5.goods_thumb}" alt=" " class="img-responsive" style="width:269;height:299px;" />
 						<div class="cap3">
 							<span> </span>
 						</div>
