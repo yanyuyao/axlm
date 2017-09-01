@@ -83,7 +83,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						</div>
 					</div>
 					<div class="banner-bottom-left-grid txt">
-						<a href="goods.php/{$goods_2.goods_id}"><h3>{$goods_2.goods_name}</h3></a>
+						<a href="goods.php?id={$goods_2.goods_id}"><h3>{$goods_2.goods_name}</h3></a>
 						<p>{$goods_2.goods_brief}</p>
 					</div>
 					<div class="banner-bottom-left-grid iusto">
@@ -96,7 +96,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				</div>
 				<div class="banner-bottom-left-grids">
 					<div class="banner-bottom-left-grid txt">
-						<h3>{$goods_1.goods_name}</h3>
+						<a href="goods.php?id={$goods_1.goods_id}"><h3>{$goods_1.goods_name}</h3></a>
 						<p>{$goods_1.goods_brief}</p>
 					</div>
 					<div class="banner-bottom-left-grid iusto">
@@ -106,7 +106,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						</div>
 					</div>
 					<div class="banner-bottom-left-grid txt">
-						<a href="goods.php/{$goods_3.goods_id}"><h3>{$goods_3.goods_name}</h3></a>
+						<a href="goods.php?id={$goods_3.goods_id}"><h3>{$goods_3.goods_name}</h3></a>
 						<p>{$goods_3.goods_brief}</p>
 					</div>
 					<div class="clearfix"></div>
@@ -252,7 +252,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						</div>
 					</div>
 					<div class="banner-bottom-left-grid txt">
-						<a href="goods.php/{$goods_5.goods_id}"><h3>{$goods_5.goods_name}</h3></a>
+						<a href="goods.php?id={$goods_5.goods_id}"><h3>{$goods_5.goods_name}</h3></a>
 						<p>{$goods_5.goods_brief}</p>
 					</div>
 					<div class="banner-bottom-left-grid iusto">
@@ -265,7 +265,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				</div>
 				<div class="banner-bottom-left-grids">
 					<div class="banner-bottom-left-grid txt">
-						<a href="goods.php/{$goods_4.goods_id}"><h3>{$goods_4.goods_name}</h3></a>
+						<a href="goods.php?id={$goods_4.goods_id}"><h3>{$goods_4.goods_name}</h3></a>
 						<p>{$goods_4.goods_brief}</p>
 					</div>
 					<div class="banner-bottom-left-grid iusto">
@@ -275,7 +275,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						</div>
 					</div>
 					<div class="banner-bottom-left-grid txt">
-						<a href="goods.php/{$goods_6.goods_id}"><h3>{$goods_6.goods_name}</h3></a>
+						<a href="goods.php?id={$goods_6.goods_id}"><h3>{$goods_6.goods_name}</h3></a>
 						<p>{$goods_6.goods_brief}</p>
 					</div>
 					<div class="clearfix"></div>
