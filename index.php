@@ -18,10 +18,6 @@ define('IN_ECS', true);
 
 require(dirname(__FILE__) . '/includes/init.php');
 
-//if($is_show_wap){
-//$wap_url = "http://www.365axlm.cn/mobile/";
-//ecs_header("Location: $wap_url\n");
-//}
 
 //var_dump($_COOKIE);
 

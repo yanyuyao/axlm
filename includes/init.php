@@ -18,7 +18,10 @@ if (!defined('IN_ECS'))
     die('Hacking attempt');
 }
 $is_show_wap = false;
-
+//if($is_show_wap){
+//$wap_url = "http://www.365axlm.cn/mobile/";
+//ecs_header("Location: $wap_url\n");
+//}
 
 error_reporting(0);
 
