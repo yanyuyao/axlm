@@ -156,8 +156,10 @@ if (!$smarty->is_cached('index.dwt', $cache_id))
 		$smarty->assign('goods_5',      get_pc_goods_info(303));
 		$smarty->assign('goods_6',      get_pc_goods_info(305));
 		
-		$smarty->assign('tabgoods_1',      get_pc_goods_info(301));
-		$smarty->assign('tabgoods_2',      get_pc_goods_info(302));
+		$smarty->assign('tabgoods_1',      get_pc_goods_info(293));
+		$smarty->assign('tabgoods_2',      get_pc_goods_info(292));
+		$smarty->assign('tabgoods_3',      get_pc_goods_info(304));
+		$smarty->assign('tabgoods_4',      get_pc_goods_info(305));
 	//}}}
 	//var_dump(get_recommend_goods('best'));
     $smarty->assign('best_goods',      get_recommend_goods('best'));    // 推荐商品
