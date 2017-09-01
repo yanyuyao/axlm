@@ -57,13 +57,13 @@ $modules['02_cat_and_goods']['goods_auto'] = 'goods_auto.php?act=list';
 //$modules['03_promotion']['04_bonustype_list'] = 'bonus.php?act=list'; //红包
 //// $modules['03_promotion']['06_pack_list'] = 'pack.php?act=list';
 //// $modules['03_promotion']['07_card_list'] = 'card.php?act=list';
-$modules['03_promotion']['08_group_buy'] = 'group_buy.php?act=list'; //拼团
-$modules['03_promotion']['09_topic'] = 'topic.php?act=list';//专题
- $modules['03_promotion']['10_auction'] = 'auction.php?act=list';//拍卖
-$modules['03_promotion']['12_favourable'] = 'favourable.php?act=list';//优惠
- $modules['03_promotion']['13_wholesale'] = 'wholesale.php?act=list';
-$modules['03_promotion']['14_package_list'] = 'package.php?act=list';//超值礼包
- $modules['03_promotion']['ebao_commend'] = 'ebao_commend.php?act=list';
+//$modules['03_promotion']['08_group_buy'] = 'group_buy.php?act=list'; //拼团
+//$modules['03_promotion']['09_topic'] = 'topic.php?act=list';//专题
+// $modules['03_promotion']['10_auction'] = 'auction.php?act=list';//拍卖
+//$modules['03_promotion']['12_favourable'] = 'favourable.php?act=list';//优惠
+// $modules['03_promotion']['13_wholesale'] = 'wholesale.php?act=list';
+//$modules['03_promotion']['14_package_list'] = 'package.php?act=list';//超值礼包
+// $modules['03_promotion']['ebao_commend'] = 'ebao_commend.php?act=list';
 $modules['03_promotion']['15_exchange_goods'] = 'exchange_goods.php?act=list'; //积分商城
 //$modules['03_promotion']['25_pre_sale_list'] = 'pre_sale.php?act=list'; // 预售
 
