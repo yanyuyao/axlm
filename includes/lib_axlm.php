@@ -24,6 +24,7 @@ function axlmpc($user_id,$order_id,$order_amount,$good_amount){
                 }
             }
         }
+        $status = 1;
         pc_set_user_status($user_id, $status, $level,'购物');
         //step 2: 设置金融账户变更，见3,4,5,6,7,8
     

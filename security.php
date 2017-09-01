@@ -1607,7 +1607,29 @@ function action_shengji_setup ()
 	//var_dump($pc_user);
 	$smarty->assign('step', 'setpup');
 	$smarty->assign('action', 'shengji_setup');
-	
+        
+        $order_sql = "select goods_amount from ".$ecs->table('order_info')." where user_id = ".$user_id." order by order_id desc limit 1";
+        $lastorder = $db->getRow($order_sql);
+	if($lastorder){
+            $good_amount = $lastorder['goods_amount'];
+            //step 1: 
+            $level_sql = "SELECT * FROM " . $ecs->table('pc_user_level')."";
+            $level_list = $db->getAll($level_sql);
+            $level = 0;
+            if($level_list){
+                foreach($level_list as $k=>$v){
+                    if($v['level_limit_note'] == $good_amount){
+                        $level = $v['id'];
+                    }
+                }
+            }
+            $status = 1;
+            pc_set_user_status($user_id, $status, $level,'升级账户');
+            pc_set_tuiguang_butie($user_id);
+            pc_set_fuwu_butie($user_id);
+            pc_set_jiandian_butie($user_id);
+            pc_set_tuiguang_butie($user_id);
+        }
 	$smarty->display('user_security.dwt');
 }
 

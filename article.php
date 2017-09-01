@@ -17,10 +17,7 @@ define('IN_ECS', true);
 
 require(dirname(__FILE__) . '/includes/init.php');
 
-if($is_show_wap){
-	$wap_url = "http://365axlm.cn/mobile/article.php?id=".$_REQUEST['id'];
-	ecs_header("Location: $wap_url\n");
-}
+
 
 
 

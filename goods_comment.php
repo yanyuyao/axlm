@@ -19,10 +19,7 @@ require_once(dirname(__FILE__) . '/includes/init.php');
 include_once(dirname(__FILE__) . '/includes/cls_json.php');
 include_once(dirname(__FILE__) . '/includes/lib_comment.php');
 
-if($is_show_wap){
-$wap_url = "http://365axlm.cn/mobile/";
-ecs_header("Location: $wap_url\n");
-}
+
 
 if ($_REQUEST['act'] == 'list_json')
 {

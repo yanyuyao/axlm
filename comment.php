@@ -16,10 +16,7 @@
 define('IN_ECS', true);
 
 require(dirname(__FILE__) . '/includes/init.php');
-if($is_show_wap){
-$wap_url = "http://365axlm.cn/mobile/";
-ecs_header("Location: $wap_url\n");
-}
+
 require(ROOT_PATH . 'includes/cls_json.php');
 if (!isset($_REQUEST['cmt']) && !isset($_REQUEST['act']))
 {
