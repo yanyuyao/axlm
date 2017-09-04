@@ -230,7 +230,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							QQ: <a href="http://wpa.qq.com/msgrd?v=3&uin=647311986&site=qq&menu=yes" target="_blank" style="color:#fff;">647311986</a><br>
 							从不要求消费者忠于我们<br>
 							但是， 我们永远忠于消费者</p>
-						<a href="#" class="hvr-rectangle-in">联系我们</a>
+						<a href="message.php" class="hvr-rectangle-in">联系我们</a>
 					</div>
 					<div class="cate Nam">
 						<h2>新品上市</h2>
@@ -286,36 +286,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	</div>
 <!-- //banner-bottom -->
 <!-- footer -->
-	<div class="footer">
-		<div class="footer-icons">
-			<ul>
-				<li><a href="#" class="g"></a></li>
-				<li><a href="#" class="in"></a></li>
-				<li><a href="#" class="twitter"></a></li>
-				<li><a href="#" class="u-tube"></a></li>
-				<li><a href="#" class="be"></a></li>
-				<li><a href="#" class="facebook"></a></li>
-			</ul>
-		</div>
-		<div class="container"> 
-			<div class="footer-info">
-				<div class="footer-info-left">
-					<p>Copyright © 2015 Property. All Rights Reserved | Design by <a href="http://heyukj.com/">山东华域网络科技</a></p>
-				</div>
-				<div class="footer-info-right">
-					<ul>
-						<li><a href="index.html">首页</a></li>
-						<li><a href="blog.html">产品中心</a></li>
-						<li><a href="news.html">新闻资讯</a></li>
-						<li><a href="services.html">使用教程</a></li>
-						<li><a href="services.html">影视专区</a></li>
-						<li><a href="personal.html">妇科知道</a></li>
-					</ul>
-				</div>
-				<div class="clearfix"> </div>
-			</div>
-		</div>
-	</div>
+<div class="site-footer">
+  <div class="footer-related" style="background:#fff;"> 
+  <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem --> </div>
+</div>
 <!-- //footer -->
 <!-- here stars scrolling icon -->
 	<script type="text/javascript">

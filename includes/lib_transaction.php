@@ -583,8 +583,7 @@ function affirm_received($order_id, $user_id = 0)
             
             //收货，分佣计算
             //expend_amount_order_log($order_id, $user_id);
-            axlmpc($user_id, $order_id, $order['order_amount'], $order['goods_amount']);
-            return true;
+            
         }
         else
         {

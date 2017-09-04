@@ -20,19 +20,28 @@ function axlmpc($user_id,$order_id,$order_amount,$good_amount){
     
     if($order_id){
         //step 1: 激活账户，设置pc_user.status = 1 ,  level=2,3,4
-        $level_sql = "SELECT * FROM " . $ecs->table('pc_user_level')."";
-        $level_list = $db->getAll($level_sql);
+        $level_sql = "SELECT * FROM " . $ecs->table('pc_user_level')." where level_limit_note <= $good_amount order by level_limit_note desc";
+        $level_list = $db->getRow($level_sql);
         $level = 0;
         if($level_list){
-            foreach($level_list as $k=>$v){
-                if($v['level_limit_note'] == $good_amount){
-                    $level = $v['id'];
-                }
-            }
+            $level = $level_list['level'];
         }
+//        if($level_list){
+//            foreach($level_list as $k=>$v){
+//                if($v['level_limit_note'] == $good_amount){
+//                    $level = $v['id'];
+//                }
+//            }
+//        }
         $status = 1;
+        
         pc_set_user_status($user_id, $status, $level,'购物');
-        //step 2: 设置金融账户变更，见3,4,5,6,7,8
+        save_jifenbi_fanli($user_id,$good_amount,'购物返积分币');        
+        
+        //step 2: 设置金融账户变更，见3,4,5,6,7,8    
+    }
+}
+function set_user_tree($user_id){
     
         //step 3: 推广
         pc_set_tuiguang_butie($user_id);
@@ -44,16 +53,14 @@ function axlmpc($user_id,$order_id,$order_amount,$good_amount){
         pc_set_jiandian_butie($user_id);
         
         //step 6: 管理补贴
-        pc_set_tuiguang_butie($uid);
+        pc_set_tuiguang_butie($user_id);
         
         //step 7: 联盟商家补贴
         
         //step 8: 服务中心补贴
         
         //step 9: 
-    }
 }
-
 function pc_set_user_status($user_id, $status,$level,$note=''){
     $ecs = $GLOBALS['ecs'];
     $db = $GLOBALS['db'];
@@ -68,6 +75,9 @@ function pc_set_user_status($user_id, $status,$level,$note=''){
         pc_save_user_change_log($user_id,'status',$status,$note,0);
     }
     
+    if($level>0){
+        set_user_tree($user_id);
+    }
 }
 
 //系统变化， adminid = 0
@@ -894,5 +904,32 @@ function save_tuiguang_fanli($uid,$leftqu_array,$rightqu_array){
         $db->query($sql);
     }
 }
+function save_jifenbi_fanli($uid,$jifenbi,$note){
+        $db = $GLOBALS['db'];
+        $ecs = $GLOBALS['ecs'];
+       
+        $userinfo = get_pc_user_allinfo($uid);
         
+        $change_value = intval($jifenbi);
+        $original_value = intval($userinfo['account_jifenbi']);
+        
+        $new_value = $original_value + $change_value;
+        
+        $sql = "update ".$ecs->table('pc_user')." set account_jifenbi = ".$new_value." where uid = ".$uid;
+        $db->query($sql);
+        pc_log($sql,'save jifenbi fanli');
+        $sql = "insert into ".$ecs->table('pc_user_account_log')."(uid,type,original_value,change_value,new_value,note,adminid,ctime) values(".
+                "'".$uid."',".
+                "'account_jifenbi',".
+                "'".$original_value."',".
+                "'".$change_value."',".
+                "'".$new_value."',".
+                "'".$note."',".
+                "'0',".
+                "'".time()."' ".
+        ")";
+
+	$db->query($sql);
+        
+}        
 //}}}
