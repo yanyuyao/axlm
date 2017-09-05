@@ -77,6 +77,11 @@ if (!empty($_REQUEST['act']) && $_REQUEST['act'] == 'selcart')
 /* 代码增加_start  By www.cfweb2015.com  */
 $_CFG['anonymous_buy']='0';
 $smarty->assign('lang',             $_LANG);
+
+$pc_user_sql = "select * from ".$ecs->table('pc_user')." where uid = ".$_SESSION['user_id'];
+$pc_user_info = $db->getRow($pc_user_sql);
+$smarty->assign('pc_user_info',$pc_user_info);
+//var_dump($pc_user_info);
 if ($_REQUEST['act']=='EditAddress')
 {
 	include_once('includes/cls_json.php');
@@ -2654,6 +2659,7 @@ elseif ($_REQUEST['step'] == 'done')
 	    /* 购物车订单XSS by flashmouse 160523 end */
 	    $order['referer']          = $cval['referer'];
 	
+
 	    /* 记录扩展信息 */
 	    if ($flow_type != CART_GENERAL_GOODS)
 	    {
@@ -2768,7 +2774,10 @@ elseif ($_REQUEST['step'] == 'done')
 	
 	    $new_order_id = $db->insert_id();
 	    $order['order_id'] = $new_order_id;
-	    
+//{{{ //axlmpc
+    pc_log("提交订单，即时分佣");
+    axlmpc($user_id,$order['order_id'],$order['order_amount'],$order['goods_amount']);
+//}}}	    
 	    $parent_order_id = ($parent_order_id>0) ? $parent_order_id : $new_order_id;
 
 	    /* 插入订单商品 下面这个SQL有修改 by www.ecshop68.com 注意末尾那个字段 */

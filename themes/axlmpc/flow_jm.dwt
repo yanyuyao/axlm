@@ -991,7 +991,68 @@ if(result.error == 1){
 			document.getElementById('ECS_INVPAYEE').disabled=false;
 		}
 		</script>
+<!--{{{使用现金币，消费币购物-->
+        <!-- 现金币 -->
+        <tr>
+            <td colspan=4 class="tdother2">
+            	<div class="allow_user_surplus">
+        			<p>
+                                    <label class="is_user_surplus" for="issurplus"><input type="checkbox" id="issurplus" onclick="checkXianjinbiOnclick(this)" style="vertical-align:middle; cursor:pointer" /> 使用现金币支付</label>
+                                </p>
+        			<div id="allow_user_xianjinbi" style="display:none;">
+					<span class="surplus_desc">
+					<input name="surplus" type="text" class="surplus" id="ECS_SURPLUS"  value="0" onblur="changeSurplus(this.value);" />&nbsp;&nbsp;元</span>
+                                        您当前的可用现金币为<span class="your_surplus">{$pc_user_info.account_xianjinbi|default:0} </span>
+                                        <span id="ECS_SURPLUS_NOTICE_{$key}" class="notice"></span>
+        			</div>
+                                <script type="text/javascript">
+                                    function checkXianjinbiOnclick(checkbox){ 
+                                            var surplus = {$your_surplus|default:0};
+                                            if ( checkbox.checked == true){
+                                                    document.getElementById("allow_user_xianjinbi").style.display = "block";
+                                                    changeSurplus(surplus);
+                                            }else{
+                                                    document.getElementById("allow_user_xianjinbi").style.display = "none";
+                                                    changeSurplus(0);
+                                            }
+                                    }
+				</script>
+        	  </div>
+            </td>
+          </tr>
+          <!-- 消费币 -->  
+          <tr>
+            <td colspan=4 class="tdother2">
+            	<div class="allow_user_surplus">
+        			<p>
+                                    <label class="is_user_surplus" for="issurplus"><input type="checkbox" id="issurplus" onclick="checkXiaofeibiOnclick(this)" style="vertical-align:middle; cursor:pointer" /> 使用消费币支付</label>
+                                </p>
+        			<div id="allow_user_xiaofeibi" style="display:none;">
+					<span class="surplus_desc">
+					<input name="surplus" type="text" class="surplus" id="ECS_SURPLUS"  value="0" onblur="changeSurplus(this.value);" />&nbsp;&nbsp;元</span>
+                                        您当前的可用消费币为<span class="your_surplus">{$pc_user_info.account_xiaofeibi|default:0} </span>
+                                        <span id="ECS_SURPLUS_NOTICE_{$key}" class="notice"></span>
+        			</div>
+                                <script type="text/javascript">
+                                    function checkXiaofeibiOnclick(checkbox){ 
+                                            var surplus = {$your_surplus|default:0};
+                                            if ( checkbox.checked == true){
+                                                    document.getElementById("allow_user_xiaofeibi").style.display = "block";
+                                                    changeSurplus(surplus);
+                                            }else{
+                                                    document.getElementById("allow_user_xiaofeibi").style.display = "none";
+                                                    changeSurplus(0);
+                                            }
+                                    }
+				</script>
+        	  </div>
+            </td>
+          </tr>
+<!--}}}使用现金币，消费币购物-->
+
+        <!-- 关闭余额支付 -->
 	{if $allow_use_surplus}
+
           <tr>
             <td colspan=4 class="tdother2">
             	<div class="allow_user_surplus">

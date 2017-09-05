@@ -22,10 +22,13 @@ function axlmpc($user_id,$order_id,$order_amount,$good_amount){
         //step 1: 激活账户，设置pc_user.status = 1 ,  level=2,3,4
         $level_sql = "SELECT * FROM " . $ecs->table('pc_user_level')." where level_limit_note <= $good_amount order by level_limit_note desc";
         $level_list = $db->getRow($level_sql);
+        echo $level_sql;
+        var_dump($level_list);
         $level = 0;
         if($level_list){
-            $level = $level_list['level'];
+            $level = $level_list['id'];
         }
+        
 //        if($level_list){
 //            foreach($level_list as $k=>$v){
 //                if($v['level_limit_note'] == $good_amount){
@@ -37,23 +40,26 @@ function axlmpc($user_id,$order_id,$order_amount,$good_amount){
         
         pc_set_user_status($user_id, $status, $level,'购物');
         save_jifenbi_fanli($user_id,$good_amount,'购物返积分币');        
-        
+        if($good_amount > 6000){
+            pc_set_guanli_butie($uid,"goods");
+        }
         //step 2: 设置金融账户变更，见3,4,5,6,7,8    
     }
+ 
 }
 function set_user_tree($user_id){
-    
+echo "<font style='color:red'>推广</font><br>";    
         //step 3: 推广
         pc_set_tuiguang_butie($user_id);
-
+echo "<font style='color:red'>服务</font><br>"; 
         //step 4: 服务
         pc_set_fuwu_butie($user_id);
-        
+echo "<font style='color:red'>见点</font><br>";         
         //step 5: 见点
         pc_set_jiandian_butie($user_id);
-        
-        //step 6: 管理补贴
-        pc_set_tuiguang_butie($user_id);
+echo "<font style='color:red'>管理补贴</font><br>";              
+        //step 6: 管理补贴       
+        pc_set_guanli_butie($uid,"expends");
         
         //step 7: 联盟商家补贴
         
@@ -65,7 +71,7 @@ function pc_set_user_status($user_id, $status,$level,$note=''){
     $ecs = $GLOBALS['ecs'];
     $db = $GLOBALS['db'];
     if($level != 0){
-        $sql = "update ".$ecs->table("pc_user")." set status = 1 and level = $level where uid = $user_id ";
+        $sql = "update ".$ecs->table("pc_user")." set status = 1 , level = $level where uid = $user_id ";
         $db->query($sql);
         pc_save_user_change_log($user_id,'status',$status,$note,0);
         pc_save_user_change_log($user_id,'level',$level,'',0);
@@ -74,7 +80,7 @@ function pc_set_user_status($user_id, $status,$level,$note=''){
         $db->query($sql);
         pc_save_user_change_log($user_id,'status',$status,$note,0);
     }
-    
+    //echo $sql;
     if($level>0){
         set_user_tree($user_id);
     }
@@ -307,7 +313,7 @@ function getCengData($uid){
     return $ceng_data;
 }
 function pc_log($body,$title=''){
-    $test = 0;
+    $test = 1;
     if($test){
         echo "<br>===== {{{ $title ==========<br>";
         if(is_array($body)){
@@ -414,7 +420,7 @@ function save_fuwu_fanli($uid,$userinfo){
 		"'".$original_value."',".
 		"'".$change_value."',".
 		"'".$new_value."',".
-		"'购物',".
+		"'服务补贴',".
 		"'0',".
 		"'".time()."' ".
 	")";
@@ -423,6 +429,7 @@ function save_fuwu_fanli($uid,$userinfo){
 //}}} 服务补贴
 //{{{见点补贴
 function pc_set_jiandian_butie($uid){
+        pc_log("见点奖");
     $db = $GLOBALS['db'];
     $ecs = $GLOBALS['ecs'];
     $checksql = "select uid,is_jiandian from ".$ecs->table('pc_user_status_log')." where uid = $uid ";
@@ -431,7 +438,7 @@ function pc_set_jiandian_butie($uid){
     if($checksql && $checksql['is_jiandian'] == 'yes'){
         return 1;
     }
-   
+
     $parent_array = array();
     $parent_array = get_user_parent_array($uid,$parent_array);
     $pcuserinfo = get_pc_user_allinfo($uid);
@@ -511,7 +518,7 @@ function save_jiandian_fanli($uid,$type,$return_bili){
                         "'".$original_value."',".
                         "'".$change_value."',".
                         "'".$new_value."',".
-                        "'购物',".
+                        "'见点奖返利',".
                         "'0',".
                         "'".time()."' ".
                 ")";
@@ -540,6 +547,7 @@ function save_jiandian_fanli($uid,$type,$return_bili){
 //消费满6000，折合3000pv
 //发展下线，1.3w,折合3000pv
 function pc_set_guanli_butie($uid,$type){
+    pc_log("管理奖");
     $db = $GLOBALS['db'];
     $ecs = $GLOBALS['ecs'];
     pc_log('','pc_set_guanli_butie');
@@ -741,6 +749,7 @@ function save_pv_xianjianbi_fanli($uid,$fanli){
 
 //{{{补贴奖计算
 function pc_set_tuiguang_butie($uid){
+    pc_log("推广补贴");
     $db = $GLOBALS['db'];
     $ecs = $GLOBALS['ecs'];
  
@@ -761,7 +770,7 @@ function pc_set_tuiguang_butie($uid){
     if(!$jiedianren_user_array){return 0;}
     
     foreach($jiedianren_user_array as $jiedian_k=>$jiedian_uid){
-        echo "<br><br><br>";
+       
         $jiedian_info = getLeftRightUserList($jiedian_uid);
         if($jiedian_info['status']){ //左右区必须都有才有可能碰对，如果没有，则status = 0
             $pengdui_success = false;
@@ -792,7 +801,6 @@ function pc_set_tuiguang_butie($uid){
             continue;
         }
         
-        echo "<br><br><br>";
     }
     
  
