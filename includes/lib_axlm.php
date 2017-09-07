@@ -9,7 +9,7 @@ function get_pc_goods_info($gid){
 }
 //{{{ axlm
 //购物激活账户      
-function axlmpc($user_id,$order_id,$order_amount,$good_amount){
+function axlmpc($user_id,$order_id,$order_amount,$good_amount,$paytype=''){
     $ecs = $GLOBALS['ecs'];
     $db = $GLOBALS['db'];
     $usql = "SELECT * FROM " . $ecs->table('pc_user')."WHERE uid = '$user_id'";
@@ -22,8 +22,9 @@ function axlmpc($user_id,$order_id,$order_amount,$good_amount){
         //step 1: 激活账户，设置pc_user.status = 1 ,  level=2,3,4
         $level_sql = "SELECT * FROM " . $ecs->table('pc_user_level')." where level_limit_note <= $good_amount order by level_limit_note desc";
         $level_list = $db->getRow($level_sql);
-        echo $level_sql;
-        var_dump($level_list);
+//        echo $level_sql;
+//        var_dump($level_list);
+        pc_log($level_list,"level_list");
         $level = 0;
         if($level_list){
             $level = $level_list['id'];
@@ -41,23 +42,29 @@ function axlmpc($user_id,$order_id,$order_amount,$good_amount){
         pc_set_user_status($user_id, $status, $level,'购物');
         save_jifenbi_fanli($user_id,$good_amount,'购物返积分币');        
         if($good_amount > 6000){
-            pc_set_guanli_butie($uid,"goods");
+            pc_set_guanli_butie($user_id,"goods");
         }
-        //step 2: 设置金融账户变更，见3,4,5,6,7,8    
+       
+        //step 2: 设置金融账户变更，见3,4,5,6,7,8   
+        if($paytype == '现金币'){
+            change_account_info($user_id, "xianjinbi", "-", $good_amount);
+        }elseif($paytype == '消费币'){
+            change_account_info($user_id, "xiaofeibi", "-", $good_amount);
+        }
     }
  
 }
 function set_user_tree($user_id){
-echo "<font style='color:red'>推广</font><br>";    
+//echo "<font style='color:red'>推广</font><br>";    
         //step 3: 推广
         pc_set_tuiguang_butie($user_id);
-echo "<font style='color:red'>服务</font><br>"; 
+//echo "<font style='color:red'>服务</font><br>"; 
         //step 4: 服务
         pc_set_fuwu_butie($user_id);
-echo "<font style='color:red'>见点</font><br>";         
+//echo "<font style='color:red'>见点</font><br>";         
         //step 5: 见点
         pc_set_jiandian_butie($user_id);
-echo "<font style='color:red'>管理补贴</font><br>";              
+//echo "<font style='color:red'>管理补贴</font><br>";              
         //step 6: 管理补贴       
         pc_set_guanli_butie($uid,"expends");
         
@@ -313,7 +320,7 @@ function getCengData($uid){
     return $ceng_data;
 }
 function pc_log($body,$title=''){
-    $test = 1;
+    $test = 0;
     if($test){
         echo "<br>===== {{{ $title ==========<br>";
         if(is_array($body)){
@@ -941,3 +948,31 @@ function save_jifenbi_fanli($uid,$jifenbi,$note){
         
 }        
 //}}}
+
+function change_account_info($uid,$bizhong,$type, $change_value){
+        $db = $GLOBALS['db'];
+        $ecs = $GLOBALS['ecs'];
+        $userinfo = get_pc_user_allinfo($uid);
+        $original_value = intval($userinfo['account_'.$bizhong]);
+        $change_value = intval($change_value);
+        if($type == '+'){
+            $new_value = $original_value + $change_value;
+        }else{
+            $new_value = $original_value - $change_value;
+        }
+        $sql = "update ".$ecs->table('pc_user')." set account_".$bizhong." = ".$new_value." where uid = ".$uid;
+  
+	$db->query($sql);
+        
+	$sql = "insert into ".$ecs->table('pc_user_account_log')."(uid,type,original_value,change_value,new_value,note,adminid,ctime) values(".
+		"'".$uid."',".
+		"'account_".$bizhong."',".
+		"'".$original_value."',".
+		"'".$type.$change_value."',".
+		"'".$new_value."',".
+		"'系统自动',".
+		"'0',".
+		"'".time()."' ".
+	")";
+	$db->query($sql);
+}        

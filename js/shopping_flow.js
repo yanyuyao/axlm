@@ -279,9 +279,14 @@ function handleGroupBuyInsure(needInsure) {
  * 回调函数
  */
 function orderSelectedResponse(result) {
+	
 	if (result.error) {
-		alert(result.error);
-		location.href = './';
+		if(result.error == 'error_xianjinbi' || result.error == 'error_xiaofeibi'){
+			alert(result.content);
+		}else{
+			alert(result.error);
+			location.href = './';
+		}
 	}
 
 	try {
@@ -306,7 +311,21 @@ function orderSelectedResponse(result) {
 /**
  * 改变余额
  */
+function changeSurplusPc(val,type,limit_money){
+	//alert(type+"\r\n"+val+"\r\n"+limit_money);
+	if(val <= limit_money){
+		return 1;
+	}else{
+		if(type=='xianjinbi'){
+			alert('不能超过您当前拥有的现金币！');
+		}else if(type == 'xiaofeibi'){
+			alert('不能超过您当前拥有的消费币！')
+		}
+		return 0;
+	}
+}
 function changeSurplus(val) {
+	
 	/* 代码增加_start By www.68ecshop.com */
 	var con_country = document.forms['theForm'].elements['have_consignee'].value;
 	if (con_country == '0') {
@@ -686,14 +705,10 @@ function checkOrderForm(frm) {
 	}
 
 	// 检查是否选择了支付配送方式
+	
 	for (i = 0; i < frm.elements.length; i++) {
-		// if (frm.elements[i].name == 'shipping' && frm.elements[i].checked)
-		// {
-		// shippingSelected = true;
-		// }
-
 		if (frm.elements[i].name == 'payment' && frm.elements[i].checked) {
-			/* 代码修改_start By www.68ecshop.com */
+			// 代码修改_start By www.68ecshop.com
 			if (frm.elements[i].value == '0') {
 				if (have_other == true) {
 					paymentSelected = true;
@@ -709,10 +724,19 @@ function checkOrderForm(frm) {
 			} else {
 				paymentSelected = true;
 			}
-			/* 代码修改_end By www.68ecshop.com */
+			// 代码修改_end By www.68ecshop.com
 		}
 	}
-
+	
+	if(!paymentSelected){
+		//alert($('#issurplus1').val());
+		if($('#issurplus2').is(':checked')){
+			paymentSelected = true;
+		}
+		if($('#issurplus1').is(':checked')){
+			paymentSelected = true;
+		}
+	}
 	
 	$('.shipping').each(function() {
 		if (this.value <= 0) {

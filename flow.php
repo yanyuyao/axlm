@@ -12,7 +12,7 @@
  * $Author: douqinghua $
  * $Id: flow.php 17218 2011-01-24 04:10:41Z douqinghua $
  */
-
+error_reporting(0);
 define('IN_ECS', true);
 
 require(dirname(__FILE__) . '/includes/init.php');
@@ -1706,7 +1706,7 @@ elseif ($_REQUEST['step'] == 'select_payment')
         /* 计算订单的费用 */
         $total = order_fee($order, $cart_goods, $consignee);
         $smarty->assign('total', $total);
-
+//        var_dump($total);
         /* 取得可以得到的积分和红包 */
         $smarty->assign('total_integral', cart_amount(false, $flow_type) - $total['bonus'] - $total['integral_money']);
         $smarty->assign('total_bonus',    price_format(get_total_bonus(), false));
@@ -1717,9 +1717,28 @@ elseif ($_REQUEST['step'] == 'select_payment')
             $smarty->assign('is_group_buy', 1);
         }
 
-        $result['content'] = $smarty->fetch('library/order_total.lbi');
+         $result['content'] = $smarty->fetch('library/order_total.lbi');
+         
+        //判断现金币/消费币是否够支付
+        $payment_id = $_REQUEST['payment'];
+        $getpay_code_sql = "select pay_code from ".$GLOBALS['ecs']->table('payment')." where pay_id = ".$payment_id;
+        //echo $getpay_code_sql;
+        $pay_code = $GLOBALS['db']->getOne($getpay_code_sql);
+        if($pay_code == "xianjinbi"){
+            if($total['amount'] > floatval($pc_user_info['account_xianjinbi'])){
+                $result['error']="error_xianjinbi";
+                $result['content']='您的现金币余额不足！\r\n订单金额：'.$total['amount_formated'].'\r\n您当前的现金币：¥'.$pc_user_info['account_xianjinbi'];
+            }
+        }else if($pay_code == 'xiaofeibi'){
+            if($total['amount'] > floatval($pc_user_info['account_xiaofeibi'])){
+                $result['error']="error_xiaofeibi";
+                $result['content']='您的消费币余额不足！\r\n订单金额：'.$total['amount_formated'].'\r\n您当前的现金币：¥'.$pc_user_info['account_xiaofeibi'];
+            }
+        }
+        
+       
     }
-
+    
     echo $json->encode($result);
     exit;
 }
@@ -2640,7 +2659,16 @@ elseif ($_REQUEST['step'] == 'done')
 			$order['order_amount'] = 0;
 	       //$order['order_amount'] = $order['surplus'];//把支付的金额存进order_amount这个中
 	    }
-	
+            if ($order['pay_name'] == '现金币' || $order['pay_name'] == '消费币')
+	    {
+	        $order['order_status'] = OS_CONFIRMED;
+	        $order['confirm_time'] = gmtime();
+	        $order['pay_status']   = PS_PAYED;
+	        $order['pay_time']     = gmtime();
+		//$order['order_amount'] = 0;
+	       //$order['order_amount'] = $order['surplus'];//把支付的金额存进order_amount这个中
+	    }
+            
 	    $order['integral_money']   = $total['integral_money'];
 	    $order['integral']         = $total['integral'];
 	
@@ -2775,8 +2803,14 @@ elseif ($_REQUEST['step'] == 'done')
 	    $new_order_id = $db->insert_id();
 	    $order['order_id'] = $new_order_id;
 //{{{ //axlmpc
-    pc_log("提交订单，即时分佣");
-    axlmpc($user_id,$order['order_id'],$order['order_amount'],$order['goods_amount']);
+    if($order['pay_name'] == '支付宝支付' || $order['pay_name'] == '微信支付'){
+//        支付成功后再分佣
+    }else if($order['pay_name'] == '现金币' || $order['pay_name'] == '消费币'){
+        pc_log("提交订单，即时分佣");
+        axlmpc($user_id,$order['order_id'],$order['order_amount'],$order['goods_amount'],$order['pay_name']);
+        //支付后，修改现金币，消费币余额
+        pc_log("提交订单，即时分佣---完成");
+    }
 //}}}	    
 	    $parent_order_id = ($parent_order_id>0) ? $parent_order_id : $new_order_id;
 
@@ -2999,27 +3033,29 @@ elseif ($_REQUEST['step'] == 'done')
 	if ($order['order_amount'] > 0)
     {
         $payment = payment_info($order['pay_id']);
+        if($order['pay_name'] == '现金币' || $order['pay_name'] == '消费币'){
+            $order['pay_desc'] = $order['pay_name']."支付";
+        }else{
+            include_once('includes/modules/payment/' . $payment['pay_code'] . '.php');
 
-        include_once('includes/modules/payment/' . $payment['pay_code'] . '.php');
+            $pay_obj    = new $payment['pay_code'];
 
-        $pay_obj    = new $payment['pay_code'];
+            $pay_online = $pay_obj->get_code($order, unserialize_config($payment['pay_config']));
 
-        $pay_online = $pay_obj->get_code($order, unserialize_config($payment['pay_config']));
-		
-		/* 代码修改_start  By www.ecshop68.com */
-		$payment_www_com=unserialize_config($payment['pay_config']);
-		if ($payment['pay_code']=='alipay_bank')
-		{
-			$payment_www_com['www_ecshop68_com_alipay_bank'] = $_POST['www_68ecshop_com_bank'] ? trim($_POST['www_68ecshop_com_bank']) : "www_ecshop68_com";
-			
-			$pay_online = $pay_obj->get_code($order, $payment_www_com);			
-		}
-        
-		/* 代码修改_end  By www.ecshop68.com */
+                    /* 代码修改_start  By www.ecshop68.com */
+                    $payment_www_com=unserialize_config($payment['pay_config']);
+                    if ($payment['pay_code']=='alipay_bank')
+                    {
+                            $payment_www_com['www_ecshop68_com_alipay_bank'] = $_POST['www_68ecshop_com_bank'] ? trim($_POST['www_68ecshop_com_bank']) : "www_ecshop68_com";
 
-        $order['pay_desc'] = $payment['pay_desc'];
+                            $pay_online = $pay_obj->get_code($order, $payment_www_com);			
+                    }
 
-        $smarty->assign('pay_online', $pay_online);
+                    /* 代码修改_end  By www.ecshop68.com */
+
+            $order['pay_desc'] = $payment['pay_desc'];
+            $smarty->assign('pay_online', $pay_online);
+        }
     }
 	if(!empty($order['shipping_name']))
     {

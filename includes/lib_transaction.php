@@ -774,14 +774,19 @@ function get_order_detail($order_id, $user_id = 0)
             $order['log_id']    = get_paylog_id($order['order_id'], $pay_type = PAY_ORDER);
             $order['user_name'] = $_SESSION['user_name'];
             $order['pay_desc']  = $payment_info['pay_desc'];
+            
+            if($payment_info['pay_code'] == 'xianjinbi' || $payment_info['pay_code']=='xiaofeibi'){
+                $order['pay_online'] = '';
+            }else{
+                 /* 调用相应的支付方式文件 */
+                include_once(ROOT_PATH . 'includes/modules/payment/' . $payment_info['pay_code'] . '.php');
 
-            /* 调用相应的支付方式文件 */
-            include_once(ROOT_PATH . 'includes/modules/payment/' . $payment_info['pay_code'] . '.php');
+                /* 取得在线支付方式的支付按钮 */
+                $pay_obj    = new $payment_info['pay_code'];
 
-            /* 取得在线支付方式的支付按钮 */
-            $pay_obj    = new $payment_info['pay_code'];
-			
-            $order['pay_online'] = $pay_obj->get_code($order, $payment);
+                $order['pay_online'] = $pay_obj->get_code($order, $payment);
+               
+            }
         }
     }
     else
