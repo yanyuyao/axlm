@@ -323,8 +323,8 @@ function zhangzhangLog($bizhong,$from_uid,$to_uid,$amount){
 	$db = $GLOBALS['db'];
 	$ecs = $GLOBALS['ecs'];
 	$time = time();
-	
-	if($bizhong == "account_xianjinbi"){
+
+	//if($bizhong == "account_xianjinbi"){
 		$sql = "insert into ".$ecs->table('pc_zhuanzhang_log')."(uid,from_uid,amount,type,ctime,utime)values('".$from_uid."','".$to_uid."','".$amount."','".$bizhong."','".$time."','".$time."')";
 		$db->query($sql);
 		
@@ -332,7 +332,7 @@ function zhangzhangLog($bizhong,$from_uid,$to_uid,$amount){
 		save_user_account_log($from_uid,$bizhong,"-",$amount);
 		save_user_account_log($to_uid,$bizhong,"+",$amount);
 		
-	}
+	//}
 	
 }
 
@@ -347,7 +347,7 @@ function save_user_account_log($uid,$type,$amount_type,$amount){
 	$note = '转账';
 	$ctime = time();
 	
-	$original_value = $db->getOne("select account_xianjinbi from ".$ecs->table('pc_user')." where uid = $uid");
+	$original_value = $db->getOne("select $type from ".$ecs->table('pc_user')." where uid = $uid");
 	$original_value = intval($original_value);
 	if($amount_type == "+"){
 		$new_value = $original_value + intval($amount);
