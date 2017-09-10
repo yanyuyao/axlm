@@ -1241,8 +1241,86 @@ elseif ($_REQUEST['act'] == 'license')
     {
         make_json_error(0);
     }
+}elseif ($_REQUEST['act'] == 'zhuanzhang'){
+    $exec = 'default';
+//    var_dump($_SESSION);
+    $supplier_id = $_SESSION['supplier_id'];
+    if($supplier_id){
+        $sql = "select user_id from ".$ecs->table('supplier')." where supplier_id = ".$supplier_id;
+        $user_id = $db->getOne($sql);
+        $sql = "select * from ".$ecs->table('pc_user')." where uid = ".$user_id;
+        $userinfo = $db->getRow($sql);
+//        var_dump($userinfo);
+        $from_uid = $user_id;
+    }
+    if($_POST){
+        $bizhong = isset($_POST['bizhong'])?$_POST['bizhong']:'';
+        $touser = isset($_POST['touser'])?$_POST['touser']:'';
+        $amount = isset($_POST['amount'])?$_POST['amount']:'';
+        if(floatval($amount) > floatval($userinfo[$bizhong])){
+             sys_msg('金额不能超过您的余额', 1, array(), false);
+        }else{
+            if($from_uid && $touser && $bizhong && $amount){
+                zhangzhangLog($bizhong, $from_uid, $touser, $amount);
+                sys_msg('执行成功', 1, array(), true);
+            }
+        }
+    }
+    $smarty->assign("userinfo",$userinfo);
+    $smarty->assign("exec",$exec);
+    $smarty->display('zhuanzhang.htm');
+}
+/*
+* bizhong : 币种 account_xianjinbi, account_xiaofeibi, account_aixinbi,account_jifenbi, account_jifen,
+* uid : 用户id
+* touid ：转给uid
+* amount : 金额
+* 现在可以转账的只有现金币
+*/
+function zhangzhangLog($bizhong,$from_uid,$to_uid,$amount){
+	
+	$db = $GLOBALS['db'];
+	$ecs = $GLOBALS['ecs'];
+	$time = time();
+	//if($bizhong == "account_xianjinbi"){
+		$sql = "insert into ".$ecs->table('pc_zhuanzhang_log')."(uid,from_uid,amount,type,ctime,utime)values('".$from_uid."','".$to_uid."','".$amount."','".$bizhong."','".$time."','".$time."')";
+		$db->query($sql);
+		
+		//更改每个人的账号变化记录
+		save_user_account_log($from_uid,$bizhong,"-",$amount);
+		save_user_account_log($to_uid,$bizhong,"+",$amount);
+		
+	//}
+	
 }
 
+function save_user_account_log($uid,$type,$amount_type,$amount){
+	
+	$db = $GLOBALS['db'];
+	$ecs = $GLOBALS['ecs'];
+	
+	$original_value = 0;
+	$new_value = 0;
+	$adminid = 0;
+	$note = '转账';
+	$ctime = time();
+	
+	$original_value = $db->getOne("select $type from ".$ecs->table('pc_user')." where uid = $uid");
+	$original_value = intval($original_value);
+	if($amount_type == "+"){
+		$new_value = $original_value + intval($amount);
+	}else{
+		$new_value = $original_value - intval($amount);
+	}
+	$new_value = intval($new_value);
+	
+	$sql = "insert into ".$ecs->table('pc_user_account_log')."(uid,type,original_value,change_value,new_value,note,adminid,ctime)values('".$uid."','".$type."','".$original_value."','".$amount_type.$amount."','".$new_value."','".$note."','".$adminid."','".$ctime."')";
+	$db->query($sql);
+	
+	$sql = "update ".$ecs->table('pc_user')." set $type = ".$new_value." where uid = $uid limit 1";
+	$db->query($sql);
+	
+}	
 /**
  * license check
  * @return  bool
