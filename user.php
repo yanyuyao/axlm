@@ -15,6 +15,7 @@
 define('IN_ECS', true);
 
 require (dirname(__FILE__) . '/includes/init.php');
+require (dirname(__FILE__) . '/includes/lib_order.php');
 
 /* 载入语言文件 */
 require_once (ROOT_PATH . 'languages/' . $_CFG['lang'] . '/user.php');
@@ -160,7 +161,13 @@ if(! function_exists($function_name))
 }
 call_user_func($function_name);
 /* 路由 */
+function payment_info2($pay_id)
+{
+    $sql = 'SELECT * FROM ' . $GLOBALS['ecs']->table('payment') .
+            " WHERE pay_id = '$pay_id' AND enabled = 1";
 
+    return $GLOBALS['db']->getRow($sql);
+}
 /* 代码增加_start By www.cfweb2015.com */
 function action_supplier_reg ()
 {
@@ -3724,12 +3731,6 @@ function action_act_account ()
 	$ecs = $GLOBALS['ecs'];
 	$user_id = $_SESSION['user_id'];
 	
-	$checkLastTixianSql = "select * from ".$ecs->table('pc_user_tixian')." where uid = $user_id and status = '' ";
-	$checkLastTixian = $db->getRow($checkLastTixianSql);
-	if($checkLastTixian){
-		show_message('您上次的提现还没有完成，请等待');
-		exit;
-	}
 	$amount = isset($_POST['amount']) ? floatval($_POST['amount']) : 0;
 	$tixian_account_type = isset($_POST['tixian_account_type']) ? $_POST['tixian_account_type'] : 0;
 	$tixian_account_info = isset($_POST['tixian_account_info']) ? $_POST['tixian_account_info'] : 0;
@@ -3737,39 +3738,45 @@ function action_act_account ()
 	$tixian_account_yinhang = isset($_POST['tixian_account_yinhang']) ? $_POST['tixian_account_yinhang'] : 0;
         
 	$user_note = isset($_POST['user_note']) ? $_POST['user_note'] : '';
-	
-	$tixian_kouchu_xiaofei = $db->getOne('select svalue from '.$ecs->table('pc_config').' where sname = "tixian_kouchu_xiaofei"');
-	$tixian_kouchu_shuishou = $db->getOne('select svalue from '.$ecs->table('pc_config').' where sname = "tixian_kouchu_shuishou"');
-	$tixian_kouchu_guanlifei = $db->getOne('select svalue from '.$ecs->table('pc_config').' where sname = "tixian_kouchu_guanlifei"');
-	$tixian_kouchu_xiaofei = $tixian_kouchu_xiaofei?floatval($tixian_kouchu_xiaofei):0;
-	$tixian_kouchu_shuishou = $tixian_kouchu_shuishou?floatval($tixian_kouchu_shuishou):0;
-	$tixian_kouchu_guanlifei = $tixian_kouchu_guanlifei?floatval($tixian_kouchu_guanlifei):0;
-	
-	$daozhang = $amount * floatval(1-$tixian_kouchu_xiaofei-$tixian_kouchu_shuishou-$tixian_kouchu_guanlifei);
-	
-	$sql = "insert into ".$ecs->table('pc_user_tixian')."(uid,realname,tixian_type,account,yinghainame,money,zhuanqu_xiaofeibi,shuishou,guanlifei,daozhang_money,note,status,ctime)values(".
-			"'".$user_id."',".
-			"'".$tixian_account_realname."',".
-			"'".$tixian_account_type."',".
-			"'".$tixian_account_info."',".
-			"'".$tixian_account_yinhang."',".
-			"'".$amount."',".
-			"'".$amount*$tixian_kouchu_xiaofei."',".
-			"'".$amount*$tixian_kouchu_shuishou."',".
-			"'".$amount*$tixian_kouchu_guanlifei."',".
-			"'".$daozhang."',".
-			"'".$user_note."',".
-			"'',".
-			"'".time()."'".
-			")";
-	$flag = $db->query($sql);
-	if($flag){
-		show_message('提现成功');
-	}else{
-		show_message('提现失败');
-	}
-	return $flag;
-	
+	if($tixian_account_type){
+                    $checkLastTixianSql = "select * from ".$ecs->table('pc_user_tixian')." where uid = $user_id and status = '' ";
+                    $checkLastTixian = $db->getRow($checkLastTixianSql);
+                    if($checkLastTixian){
+                            show_message('您上次的提现还没有完成，请等待');
+                            exit;
+                    }
+                    $tixian_kouchu_xiaofei = $db->getOne('select svalue from '.$ecs->table('pc_config').' where sname = "tixian_kouchu_xiaofei"');
+                    $tixian_kouchu_shuishou = $db->getOne('select svalue from '.$ecs->table('pc_config').' where sname = "tixian_kouchu_shuishou"');
+                    $tixian_kouchu_guanlifei = $db->getOne('select svalue from '.$ecs->table('pc_config').' where sname = "tixian_kouchu_guanlifei"');
+                    $tixian_kouchu_xiaofei = $tixian_kouchu_xiaofei?floatval($tixian_kouchu_xiaofei):0;
+                    $tixian_kouchu_shuishou = $tixian_kouchu_shuishou?floatval($tixian_kouchu_shuishou):0;
+                    $tixian_kouchu_guanlifei = $tixian_kouchu_guanlifei?floatval($tixian_kouchu_guanlifei):0;
+
+                    $daozhang = $amount * floatval(1-$tixian_kouchu_xiaofei-$tixian_kouchu_shuishou-$tixian_kouchu_guanlifei);
+
+                    $sql = "insert into ".$ecs->table('pc_user_tixian')."(uid,realname,tixian_type,account,yinghainame,money,zhuanqu_xiaofeibi,shuishou,guanlifei,daozhang_money,note,status,ctime)values(".
+                                    "'".$user_id."',".
+                                    "'".$tixian_account_realname."',".
+                                    "'".$tixian_account_type."',".
+                                    "'".$tixian_account_info."',".
+                                    "'".$tixian_account_yinhang."',".
+                                    "'".$amount."',".
+                                    "'".$amount*$tixian_kouchu_xiaofei."',".
+                                    "'".$amount*$tixian_kouchu_shuishou."',".
+                                    "'".$amount*$tixian_kouchu_guanlifei."',".
+                                    "'".$daozhang."',".
+                                    "'".$user_note."',".
+                                    "'',".
+                                    "'".time()."'".
+                                    ")";
+                    $flag = $db->query($sql);
+                    if($flag){
+                            show_message('提现成功');
+                    }else{
+                            show_message('提现失败');
+                    }
+                    return $flag;
+        }
 	if($amount <= 0)
 	{
 		show_message($_LANG['amount_gt_zero']);
@@ -3789,7 +3796,7 @@ function action_act_account ()
 	if($tixian_account_realname){ $surplus['tixian_account_realname'] = $tixian_account_realname; }
 	if($tixian_account_info){ $surplus['tixian_account_info'] = $tixian_account_info;}
 	
-	$payment_info = payment_info($surplus['payment_id']);
+	$payment_info = payment_info2($surplus['payment_id']);
 	if($payment_info['pay_code'] == 'alipay_bank')
 	{
 		$surplus['defaultbank'] = isset($_POST['www_68ecshop_com_bank']) ? trim($_POST['www_68ecshop_com_bank']) : '';
@@ -3836,7 +3843,7 @@ function action_act_account ()
 		
 		// 获取支付方式名称
 		$payment_info = array();
-		$payment_info = payment_info($surplus['payment_id']);
+		$payment_info = payment_info2($surplus['payment_id']);
 		$surplus['payment'] = $payment_info['pay_name'];
 		
 		if($surplus['rec_id'] > 0)

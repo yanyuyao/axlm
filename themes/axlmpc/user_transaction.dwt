@@ -1118,20 +1118,24 @@ function submit_surplus_form(){
               <tr align="center">
                 <td>{$lang.pay_name}</td>
                 <td width="60%">{$lang.pay_desc}</td>
-                <td width="17%">{$lang.pay_fee}</td>
+                <!--<td width="17%">{$lang.pay_fee}</td>-->
               </tr>
               <!-- {foreach from=$payment item=list} -->
+              <!-- {if $list.pay_name eq '现金币' } -->
+              <!-- {elseif $list.pay_name eq '消费币'} -->
+              <!-- {else} -->
               <tr>
-                <td align="left"><input type="radio" name="payment_id" value="{$list.pay_id}" {if $list.pay_code eq 'alipay_bank'}id="alipay_bank_input"{/if}/>
-                  {$list.pay_name}</td>
-                <td align="left">{$list.pay_desc}</td>
-                <td align="center">{$list.pay_fee}</td>
-                <!--{if $list.pay_code eq 'alipay_bank'}-->
-                <tr><td colspan="3" style="background-color:#fff">
-                <div class="payment_subbox"  style="display:block"> <!-- #BeginLibraryItem "/Library/alipay_bank.lbi" --><!-- #EndLibraryItem --> </div>
-                </tr></td>
-                <!--{/if}-->
+                    <td align="left"><input type="radio" name="payment_id" value="{$list.pay_id}" {if $list.pay_code eq 'alipay_bank'}id="alipay_bank_input"{/if}/>
+                      {$list.pay_name}</td>
+                    <td align="left">{$list.pay_desc}</td>
+                    <!--<td align="center">{$list.pay_fee}</td>-->
+                    <!--{if $list.pay_code eq 'alipay_bank'}-->
+                    <tr><td colspan="3" style="background-color:#fff">
+                    <div class="payment_subbox"  style="display:block"> <!-- #BeginLibraryItem "/Library/alipay_bank.lbi" --><!-- #EndLibraryItem --> </div>
+                    </tr></td>
+                    <!--{/if}-->
               </tr>
+            <!-- {/if} -->
               <!-- {/foreach} -->
               <tr>
                 <td colspan="3"  align="center"><input type="hidden" name="surplus_type" value="0" />
