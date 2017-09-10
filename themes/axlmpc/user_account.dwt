@@ -204,7 +204,7 @@
 						  <div id="error_container"><!--{if $msg neq ''}-->{$msg}<!-- {/if} --></div>
 						  <div class="item">
 							<label class="con_un">转给：</label>
-							<input type="text" id="tousername" name="tousername" value="{$tousername}" class="text" readonly  autocomplete="off"  />
+							<input type="text" id="touser" name="touser" value="{$touser}" class="text"  autocomplete="off"  />
 						  </div>
 						  <div class="item">
 							<label class="con_un">转账金额：</label>
@@ -214,7 +214,7 @@
 							<label class="con_un">&nbsp;</label>
 							<input type="hidden" name="act" value="zhuanzhang" />
 							<input type="hidden" name="step" value="zhuanzhang" />
-							<input type="hidden" name="touser" value="{$touser}" />
+							
 							<input type="submit" name="button" id="btn_submit" class="main-btn main-btn-large" value="提交" />
 						  </div>
 					</form>
@@ -231,6 +231,40 @@
 			  </div>
 			</div>
    <!-- {/if} -->
+<!-- {if $exec eq 'zhuanzhanglog'}-->
+			<div class="box"> 
+			  <div class="tabmenu">
+				<ul class="tab pngFix">
+				  <li class="first active"><a>转账记录</a></li>
+				</ul>
+			  </div>
+			  <div class="mar_top">
+				<a href="account.php?act=show_expend_users" class="main-btn main-btn-large">返回</a>
+				<a href="account.php?act=zhuanzhang" style="float:right;color:#ed6803;">转账</a>
+				
+				<table width="100%" style="margin-top:15px;" border="0" cellpadding="5" cellspacing="1" bgcolor="#eee">
+				  <tr align="center">
+					<td bgcolor="#ffffff">ID</td>
+					<td bgcolor="#ffffff">转给用户ID</td>
+					<td bgcolor="#ffffff">转给用户</td>
+					<td bgcolor="#ffffff">金额</td>
+					<td bgcolor="#ffffff">时间</td>
+				  </tr>
+				   <!-- {foreach from=$list key=k item=val} -->
+				  <tr align="center">
+					<td bgcolor="#ffffff">{$val.id}</td>
+					<td bgcolor="#ffffff">{$val.from_uid}</td>
+					<td bgcolor="#ffffff">{$val.user_name}</td>
+					<td bgcolor="#ffffff">{$val.amount}</td>
+					<td bgcolor="#ffffff">
+						{$val.time_format}
+					</td>
+				  </tr>
+					<!-- {/foreach} -->
+				</table>
+			  </div>
+			</div>
+   <!-- {/if} -->
    <!-- {if $exec eq 'show_expend_users'}-->
 			<div class="box"> 
 			  <div class="tabmenu">
@@ -239,7 +273,8 @@
 				</ul>
 			  </div>
 			  <div class="mar_top">
-				<!--<a href="account.php?act=zhuanzhang&touser={$val.uid}" class="main-btn main-btn-large">转账给其他人</a>-->
+				<a href="account.php?act=zhuanzhang&touser=" class="main-btn main-btn-large">转账给其他人</a>
+				<a href="account.php?act=zhuanzhanglog" style="float:right;color:#ed6803;">转账记录</a>
 				
 				<table width="100%" style="margin-top:15px;" border="0" cellpadding="5" cellspacing="1" bgcolor="#eee">
 				  <tr align="center">

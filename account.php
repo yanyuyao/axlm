@@ -40,13 +40,13 @@ $back_act = '';
 *
 */
 $not_login_arr = array(
-	'default', 'detaillog','show_expend_users','zhuanzhang'
+	'default', 'detaillog','show_expend_users','zhuanzhang','zhuanzhanglog'
 );
 /* 余额额支付密码_更改_END_www.cfweb2015.com */
 
 /* 显示页面的action列表 */
 $ui_arr = array(
-	'default', 'detaillog','show_expend_users','zhuanzhang','shenqingshop'
+	'default', 'detaillog','show_expend_users','zhuanzhang','zhuanzhanglog','shenqingshop'
 ); // 代码修改
 
 /* 未登录处理 */
@@ -256,8 +256,11 @@ function action_zhuanzhang(){
 	$pwd2 = $db->getOne('select pwd2 from '.$ecs->table('pc_user')." where uid = $user_id");
 	$curstep = isset($_REQUEST['step'])?$_REQUEST['step']:'';
 	$touser = isset($_REQUEST['touser'])?$_REQUEST['touser']:0;
-	$tousername = $db->getOne('select user_name from '.$ecs->table('users')." where user_id = $touser");
-	$smarty->assign('tousername',$tousername);
+//        $tousername = '';
+//        if($touser){
+//            $tousername = $db->getOne('select user_name from '.$ecs->table('users')." where user_id = $touser");
+//        }
+//	$smarty->assign('tousername',$tousername);
 	$step = "default";
 	//检查密码
 	if($curstep == 'checkpwd'){
@@ -295,7 +298,19 @@ function action_zhuanzhang(){
 	
 	$smarty->display('user_account.dwt');
 }
-
+function action_zhuanzhanglog(){
+        $_LANG = $GLOBALS['_LANG'];
+	$smarty = $GLOBALS['smarty'];
+	$db = $GLOBALS['db'];
+	$ecs = $GLOBALS['ecs'];
+	$user_id = $_SESSION['user_id'];
+        
+        $sql = "select *,u.user_name,from_unixtime(z.ctime,'%Y-%m-%d %H:%i:%s') as time_format from ".$ecs->table('pc_zhuanzhang_log')." z left join ".$ecs->table('users')." u on z.from_uid = u.user_id  where z.uid = ".$user_id;
+//	echo "<br>".$sql;
+	$list = $db->getAll($sql);
+        $smarty->assign("list",$list);
+        $smarty->display('user_account.dwt');
+}
 /*
 * bizhong : 币种 account_xianjinbi, account_xiaofeibi, account_aixinbi,account_jifenbi, account_jifen,
 * uid : 用户id
@@ -320,6 +335,7 @@ function zhangzhangLog($bizhong,$from_uid,$to_uid,$amount){
 	}
 	
 }
+
 function save_user_account_log($uid,$type,$amount_type,$amount){
 	
 	$db = $GLOBALS['db'];
