@@ -470,51 +470,13 @@
     <div class="box"> 
       <!-- {if $action eq 'affiliate'} --> 
       <!-- {if !$goodsid || $goodsid eq 0} -->
-      <div class="tabmenu">
-        <ul class="tab pngFix">
-          <li class="first active"><a>分成规则</a></li>
-        </ul>
-      </div>
-      <div class="mar_top">
-        <div class="box-inner"> {$affiliate_intro} </div>
-      </div>
-      <!-- {if $affiliate.config.separate_by eq 0} --> 
-      <!-- 下线人数、分成 -->
-      <div class="tabmenu">
-        <ul class="tab pngFix">
-          <li class="first active"><a name="myrecommend">{$lang.affiliate_member}</a></li>
-        </ul>
-      </div>
-      <div class="mar_top">
-        <table width="100%" border="0" cellpadding="5" cellspacing="1" bgcolor="#eee">
-          <tr align="center">
-            <td bgcolor="#ffffff">{$lang.affiliate_lever}</td>
-            <td bgcolor="#ffffff">{$lang.affiliate_num}</td>
-            <td bgcolor="#ffffff">{$lang.level_point}</td>
-            <td bgcolor="#ffffff">{$lang.level_money}</td>
-          </tr>
-          <!-- {foreach from=$affdb key=level item=val name=affdb} -->
-          <tr align="center">
-            <td bgcolor="#ffffff">{$level}</td>
-            <td bgcolor="#ffffff">{$val.num}</td>
-            <td bgcolor="#ffffff">{$val.point}</td>
-            <td bgcolor="#ffffff">{$val.money}</td>
-          </tr>
-          <!-- {/foreach} -->
-        </table>
-      </div>
-      <!-- /下线人数、分成 --> 
-      <!-- {else} --> 
-      <!-- 介绍订单数、分成 --> 
-      <!-- /介绍订单数、分成 --> 
-      <!-- {/if} --> 
       <!-- 我的推荐清单 -->
-      <div class="tabmenu">
+      <div class="tabmenu" style="display:none;">
         <ul class="tab pngFix">
           <li class="first active"><a>分成明细</a></li>
         </ul>
       </div>
-      <div class="mar_top">
+      <div class="mar_top" style="display:none;">
         <table width="100%" border="0" cellpadding="5" cellspacing="1" bgcolor="#eee">
           <tr align="center">
             <td bgcolor="#ffffff">{$lang.order_number}</td>
@@ -580,9 +542,15 @@
         <table width="100%" border="0" cellpadding="5" cellspacing="1" bgcolor="#eeeeee">
           <tr>
             <td width="30%" bgcolor="#ffffff"><a href="{$shopurl}?u={$userid}" target="_blank" class="f6">{$shopname}</a></td>
-            <td bgcolor="#ffffff"><input size="40" onclick="this.select();" type="text" value="&lt;a href=&quot;{$shopurl}?u={$userid}&quot; target=&quot;_blank&quot;&gt;{$shopname}&lt;/a&gt;" style="border:1px solid #ccc;" />
-              {$lang.recommend_webcode}</td>
+            <td bgcolor="#ffffff">
+                <!--
+                    <input size="40" onclick="this.select();" type="text" value="&lt;a href=&quot;{$shopurl}?u={$userid}&quot; target=&quot;_blank&quot;&gt;{$shopname}&lt;/a&gt;" style="border:1px solid #ccc;" />
+                    {$lang.recommend_webcode}
+                -->
+                {$shopurl}?u={$userid}
+            </td>
           </tr>
+<!--
           <tr>
             <td bgcolor="#ffffff"><a href="{$shopurl}?u={$userid}" target="_blank" title="{$shopname}"  class="f6"><img src="{$shopurl}{$logosrc}" /></a></td>
             <td bgcolor="#ffffff"><input size="40" onclick="this.select();" type="text" value="&lt;a href=&quot;{$shopurl}?u={$userid}&quot; target=&quot;_blank&quot; title=&quot;{$shopname}&quot;&gt;&lt;img src=&quot;{$shopurl}{$logosrc}&quot; /&gt;&lt;/a&gt;" style="border:1px solid #ccc;" />
@@ -598,6 +566,7 @@
             <td bgcolor="#ffffff"><input size="40" onclick="this.select();" type="text" value="[url={$shopurl}?u={$userid}][img]{$shopurl}{$logosrc}[/img][/url]" style="border:1px solid #ccc;" />
               {$lang.recommend_bbscode}</td>
           </tr>
+-->
           <!-- start Add By www.68ecshop.com ecshop开发中心 企业QQ800007396 -->
           <tr>
             <td  bgcolor="#ffffff">分享到</td>

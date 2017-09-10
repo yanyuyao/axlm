@@ -55,9 +55,12 @@ function axlmpc($user_id,$order_id,$order_amount,$good_amount,$paytype=''){
         //step 7: 联盟商家补贴
         
         //step 8: 服务中心补贴
-        
         pc_set_fuwuzhongxin_butie($fuwuzhongxin_user_id,$good_amount);
-        //step 9: 
+        //step 9: 购物给直推人返利
+        $parent_id = $db->getOne("select parent_id from ".$ecs->table('users')." where user_id = ".$user_id);
+        if($parent_id){
+            pc_set_zhitui_fanli($user_id,$parent_id,$order_id,$good_amount);
+        }
     }
  
 }
@@ -1009,4 +1012,46 @@ function pc_set_fuwuzhongxin_butie($uid, $good_amount){
 		"'".time()."' ".
 	")";
 	$db->query($sql);
+}
+
+//直推1人
+function pc_set_zhitui_fanli($fuid,$puid,$oid,$good_amount){
+    $ecs = $GLOBALS['ecs'];
+    $db = $GLOBALS['db'];
+    $zhitui_bili = 0.01;
+    $fanli = floatval($good_amount) * $zhitui_bili;
+         
+     $sql = "insert into ".$ecs->table('pc_zhitui_fanli')."(oid,from_uid,uid,amount,ctime)values(".
+            "'".$oid."',".
+            "'".$fuid."',".
+            "'".$puid."',".
+            "'".$fanli."',".
+            "'".time()."'".
+            ")";
+    //echo "<br>$sql<br>";
+    $db->query($sql);
+    
+    
+     $userinfo = get_pc_user_allinfo($puid);
+
+    if(!$fanli){ return 0;}
+
+    $original_value = intval($userinfo['account_xianjinbi']);
+    $change_value = floatval($fanli);
+    $new_value = $original_value + $change_value;
+
+    $sql = "update ".$ecs->table('pc_user')." set account_xianjinbi = ".$new_value." where uid = ".$puid;
+    $db->query($sql);
+    $sql = "insert into ".$ecs->table('pc_user_account_log')."(uid,type,original_value,change_value,new_value,note,adminid,ctime) values(".
+            "'".$puid."',".
+            "'account_xianjinbi',".
+            "'".$original_value."',".
+            "'".$change_value."',".
+            "'".$new_value."',".
+            "'直推返利',".
+            "'0',".
+            "'".time()."' ".
+    ")";
+    $db->query($sql);
+    
 }
