@@ -148,9 +148,10 @@ $modules['08_members']['01_shops_goods'] = 'shops_goods.php?act=list';
 
 $modules['08_members']['03_users_list'] = 'users.php?act=list';
 $modules['08_members']['03_users_pc'] = 'pc_users.php?act=list';
-$modules['08_members']['12_users_list_fanxian'] = 'fanxian_user.php?act=list';
-$modules['08_members']['12_trade_list'] = 'trade_list.php?act=list';
-$modules['08_members']['12_trade_cash_list'] = 'trade_cash_list.php?act=list';
+//$modules['08_members']['12_users_list_fanxian'] = 'fanxian_user.php?act=list'; 原来的返现用户
+//$modules['08_members']['12_trade_list'] = 'trade_list.php?act=list';//之前的分红2016
+$modules['08_members']['12_trade_list'] = 'fenhong2017.php?act=list';
+//$modules['08_members']['12_trade_cash_list'] = 'trade_cash_list.php?act=list'; //日交易额
 
 $modules['08_members']['04_users_export'] = 'users_export.php'; // 代码增加
                                                                             // By
@@ -197,12 +198,12 @@ $modules['11_system']['navigator'] = 'navigator.php?act=list';
 //隐藏0114 
 //$modules['11_system']['021_reg_fields'] = 'reg_fields.php?act=list';//会员注册项设置
 
-$modules['12_template']['02_template_select'] = 'template.php?act=list';
+//$modules['12_template']['02_template_select'] = 'template.php?act=list';//模板选择
 $modules['12_template']['03_template_setup'] = 'template.php?act=setup';
 //$modules['12_template']['04_template_library'] = 'template.php?act=library';
 //$modules['12_template']['05_edit_languages'] = 'edit_languages.php?act=list';
-$modules['12_template']['06_template_backup'] = 'template.php?act=backup_setting';
-$modules['12_template']['mail_template_manage'] = 'mail_template.php?act=list';
+//$modules['12_template']['06_template_backup'] = 'template.php?act=backup_setting';//模板备份
+//$modules['12_template']['mail_template_manage'] = 'mail_template.php?act=list';//邮件模板
 
 //$modules['13_backup']['02_db_manage'] = 'database.php?act=backup'; //数据备份
 //$modules['13_backup']['03_db_optimize'] = 'database.php?act=optimize'; //数据表优化
@@ -221,12 +222,14 @@ $modules['12_template']['mail_template_manage'] = 'mail_template.php?act=list';
 //隐藏原来的三级推荐
 //$modules['15_rec']['affiliate'] = 'affiliate.php?act=list';
 //$modules['15_rec']['affiliate_ck'] = 'affiliate_ck.php?act=list';
-$modules['15_rec']['fenxiao_setting'] = 'fenxiao_setting.php?act=list';
-$modules['15_rec']['fenxiao_list'] = 'fenxiao_list.php?act=list';
 //$modules['15_rec']['03_fenxiao_tixian_list'] = 'tixian.php?act=list';
 //$modules['15_rec']['fenhong'] = 'fenhong.php?act=list';
-$modules['15_rec']['fenxiao_user_list'] = 'fenyong.php?act=list';
-
+//2016年三级分销
+//#####$modules['15_rec']['fenxiao_setting'] = 'fenxiao_setting.php?act=list';
+//#####$modules['15_rec']['fenxiao_list'] = 'fenxiao_list.php?act=list';
+//#####$modules['15_rec']['fenxiao_user_list'] = 'fenyong.php?act=list';
+//
+//
 //$modules['16_email_manage']['email_list'] = 'email_list.php?act=list';
 //$modules['16_email_manage']['magazine_list'] = 'magazine_list.php?act=list';//邮件订阅管理
 //$modules['16_email_manage']['attention_list'] = 'attention_list.php?act=list'; //关注管理

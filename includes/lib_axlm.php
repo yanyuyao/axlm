@@ -1014,7 +1014,7 @@ function pc_set_fuwuzhongxin_butie($uid, $good_amount){
 	$db->query($sql);
 }
 
-//直推1人
+//直推1人,直找上一级，进行返利
 function pc_set_zhitui_fanli($fuid,$puid,$oid,$good_amount){
     $ecs = $GLOBALS['ecs'];
     $db = $GLOBALS['db'];
@@ -1055,3 +1055,103 @@ function pc_set_zhitui_fanli($fuid,$puid,$oid,$good_amount){
     $db->query($sql);
     
 }
+
+function fenhongjisuan(){
+    $ecs = $GLOBALS['ecs'];
+    $db = $GLOBALS['db'];
+    $bili = 0.06;
+    //计算已付款的所有订单，当天的付款，且付款时间是今日
+    $start_time = strtotime(date("Y-m-d")." 00:00:00");
+    $end_time = strtotime(date("Y-m-d")." 23:59:59");
+    $sql = "select order_id, user_id,goods_amount,pay_time from ".$ecs->table('order_info')." where pay_time > ".$start_time." and pay_time < ".$end_time." and pay_status = 2 ";
+    $order_list = $db->getAll($sql);
+    
+    $sumsql = "select sum(goods_amount) from ".$ecs->table('order_info')." where pay_time > ".$start_time." and pay_time < ".$end_time." and pay_status = 2 ";
+    $trade_today = floatval($db->getOne($sumsql));
+    if(!$trade_today){
+        return 0;
+    }
+    $trade_fanli_today = $trade_today * $bili;
+   //var_dump($trade_today);
+
+    //举个例子，假设上月份全球直销总业绩为1亿，那么公司将拿出1亿×6%=600万元给所有的VIP会员分。
+    //具体按加权平均的方法进行分配，比如张三是白金VIP会员，他上月的收入为100元，而假设公司全体白金VIP会员上月的总收入为400元，那么用100元÷400元再×600万元=150万元，最后再150万÷100=15000积分。这就是张三所得的VIP福利分红积分。0
+    //当期个人积分（福利分红积分）＝当期个人总收入（除以）当期符合资格的所有人的总收入（乘以）当期公司业绩总和（乘以）不同级别一期业绩对应的百分比
+    $fenhong_save_data = array();
+    if($order_list){
+        foreach($order_list as $k=>$v){
+            $user_save_data = $v;
+            $user_fenhong = floatval($v['goods_amount']/$trade_today * $trade_fanli_today);
+            $user_save_data['fenhong_num'] = $user_fenhong;
+            $user_save_data['fenhong_date'] = date("Y-m-d");
+            if (array_key_exists($v['user_id'],$fenhong_save_data)){
+                $fenhong_save_data[$v['user_id']]['fenhong_num'] = floatval($fenhong_save_data[$v['user_id']]['fenhong_num']) + $user_fenhong;
+            }else{
+                $fenhong_save_data[$v['user_id']] = $user_save_data;
+            }
+        }
+    }
+    
+   if($fenhong_save_data){
+       $save_sql = "insert into ".$ecs->table('pc_fenhong')."(fenhong_date,trade_today,trade_fanli,trade_user_total)values(".
+               "'".date("Y-m-d")."',".
+               "'".$trade_today."',".
+               "'".$trade_fanli_today."',".
+               "'".count($fenhong_save_data)."'".
+               ")";
+       $db->query($save_sql);
+
+       foreach($fenhong_save_data as $k=>$v){
+           //记录分红返利log
+            $save_sql = "insert into ".$ecs->table('pc_fenhong_log')."(user_id,fenhong,fenhong_date,ctime)values(".
+                   "'".$v['user_id']."',".
+                   "'".$v['fenhong_num']."',".
+                   "'".date("Y-m-d")."',".
+                   "'".time()."'".
+                   ")";
+            $db->query($save_sql);
+           
+            //修改现金币
+            $userinfo = get_pc_user_allinfo($v['user_id']);
+            $original_value = intval($userinfo['account_xianjinbi']);
+            $change_value = floatval($v['fenhong_num']);
+            $new_value = $original_value + $change_value;
+
+            $sql = "update ".$ecs->table('pc_user')." set account_xianjinbi = ".$new_value." where uid = ".$v['user_id'];
+            $db->query($sql);
+            $sql = "insert into ".$ecs->table('pc_user_account_log')."(uid,type,original_value,change_value,new_value,note,adminid,ctime) values(".
+                    "'".$v['user_id']."',".
+                    "'account_xianjinbi',".
+                    "'".$original_value."',".
+                    "'".$change_value."',".
+                    "'".$new_value."',".
+                    "'分红返利',".
+                    "'0',".
+                    "'".time()."' ".
+            ")";
+            $db->query($sql);
+           
+       }
+   }
+    
+}
+    
+//    $level_1 = array();
+//    $level_2 = array();
+//    $level_3 = array();
+//    $level_4 = array();
+//    $user_sql = "select uid,level from ".$ecs->table('pc_users')." where status = 1";
+//    $user_list = $db->getAll($user_sql);
+//    if($user_list){
+//        foreach($user_list as $k=>$v){
+//            if($v['level'] == 0 || $v['level'] == 1){
+//                $level_1[] = $v;
+//            }else if($v['level'] == 2){
+//                $level_2[] = $v;
+//            }else if($v['level'] == 3){
+//                $level_3[] = $v;
+//            }else if($v['level'] == 4){
+//                $level_4[] = $v;
+//            }
+//        }
+//    }
