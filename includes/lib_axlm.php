@@ -16,7 +16,7 @@ function axlmpc($user_id,$order_id,$order_amount,$good_amount,$paytype=''){
     $pcuserinfo = $db->getRow($usql);
     $tuijianren_user_id = $pcuserinfo['tuijianren_user_id'];
     $jiedianren_user_id = $pcuserinfo['jiedianren_user_id'];
-    
+    $fuwuzhongxin_user_id = $pcuserinfo['fuwuzhongxin_user_id'];
     
     if($order_id){
         //step 1: 激活账户，设置pc_user.status = 1 ,  level=2,3,4
@@ -51,9 +51,17 @@ function axlmpc($user_id,$order_id,$order_amount,$good_amount,$paytype=''){
         }elseif($paytype == '消费币'){
             change_account_info($user_id, "xiaofeibi", "-", $good_amount);
         }
+        
+        //step 7: 联盟商家补贴
+        
+        //step 8: 服务中心补贴
+        
+        pc_set_fuwuzhongxin_butie($fuwuzhongxin_user_id,$good_amount);
+        //step 9: 
     }
  
 }
+
 function set_user_tree($user_id){
 //echo "<font style='color:red'>推广</font><br>";    
         //step 3: 推广
@@ -68,11 +76,7 @@ function set_user_tree($user_id){
         //step 6: 管理补贴       
         pc_set_guanli_butie($uid,"expends");
         
-        //step 7: 联盟商家补贴
         
-        //step 8: 服务中心补贴
-        
-        //step 9: 
 }
 function pc_set_user_status($user_id, $status,$level,$note=''){
     $ecs = $GLOBALS['ecs'];
@@ -975,4 +979,34 @@ function change_account_info($uid,$bizhong,$type, $change_value){
 		"'".time()."' ".
 	")";
 	$db->query($sql);
-}        
+}
+
+//给服务中心返利
+function pc_set_fuwuzhongxin_butie($uid, $good_amount){
+        $db = $GLOBALS['db'];
+        $ecs = $GLOBALS['ecs'];
+        $fuwuzhongxin_butie = 0.01;
+        $fanli = floatval($good_amount) * $fuwuzhongxin_butie;
+        
+        pc_log($fanli,'pc_set_fuwuzhongxin_butie');
+        $userinfo = get_pc_user_allinfo($uid);
+        if(!$fanli){ return 0;}
+	$original_value = intval($userinfo['account_xianjinbi']);
+        $change_value = floatval($fanli);
+        $new_value = $original_value + $change_value;
+        
+        $sql = "update ".$ecs->table('pc_user')." set account_xianjinbi = ".$new_value." where uid = ".$uid;
+	$db->query($sql);
+        pc_log($sql,'save_pv_xianjianbi_fanli');
+	$sql = "insert into ".$ecs->table('pc_user_account_log')."(uid,type,original_value,change_value,new_value,note,adminid,ctime) values(".
+		"'".$uid."',".
+		"'account_xianjinbi',".
+		"'".$original_value."',".
+		"'".$change_value."',".
+		"'".$new_value."',".
+		"'服务中心返利',".
+		"'0',".
+		"'".time()."' ".
+	")";
+	$db->query($sql);
+}
