@@ -25,14 +25,25 @@ $separate_on = $fanxian['fanxian_open'];
 
 if ($_REQUEST['act'] == 'list')
 {
-	$info = get_today_trade('select'); 
-	$is_finished = $GLOBALS['db']->getOne("select id from ".$GLOBALS['ecs']->table('day_trade')." where trade_sn = ".$info['trade_sn']);
-	if($is_finished != null && $is_finished){
-		$smarty->assign("is_finished", 1);
-	}else{
-		$smarty->assign("is_finished", 0);
-	}
-	
+    $bili = 0.06;
+    //计算已付款的所有订单，当天的付款，且付款时间是今日
+    $start_time = strtotime(date("Y-m-d")." 00:00:00");
+    $end_time = strtotime(date("Y-m-d")." 23:59:59");
+    $sql = "select order_id, user_id,goods_amount,pay_time from ".$ecs->table('order_info')." where pay_time > ".$start_time." and pay_time < ".$end_time." and pay_status = 2 ";
+    $order_list = $db->getAll($sql);
+    
+    $sumsql = "select sum(goods_amount) from ".$ecs->table('order_info')." where pay_time > ".$start_time." and pay_time < ".$end_time." and pay_status = 2 ";
+    $trade_today = floatval($db->getOne($sumsql));
+    $trade_fanli_today = $trade_today * $bili;
+    
+    $order_total = count($order_list);
+    $order_total_amount = $trade_today;
+    $order_total_fenhong_amount = $trade_fanli_today;
+    
+    $smarty->assign("order_total",$order_total);
+    $smarty->assign("order_total_amount",$order_total_amount);
+    $smarty->assign("order_total_fenhong_amount",$order_total_fenhong_amount);
+    
     $logdb = get_trade_list(); 
     $smarty->assign('full_page',  1);
     $smarty->assign('ur_here', $_LANG['fenxiao_list']);
@@ -43,7 +54,7 @@ if ($_REQUEST['act'] == 'list')
     $smarty->assign('page_count',   $logdb['page_count']);
     
     assign_query_info();
-    $smarty->display('trade_list.htm');
+    $smarty->display('fenhong2017.htm');
 }
 /*------------------------------------------------------ */
 //-- 分页
@@ -91,105 +102,35 @@ elseif ($_REQUEST['act'] == 'day')
     $smarty->display('trade_day.htm');
 }else if($_REQUEST['act'] == "detail"){
 	$id = isset($_REQUEST['id'])?intval($_REQUEST['id']):0;
-	$trade_sn = isset($_REQUEST['trade_sn'])?intval($_REQUEST['trade_sn']):0;
 	$t = isset($_REQUEST['t'])?$_REQUEST['t']:'default';
 
 	if(!$id){
-		$links[] = array('text' => "缺少参数，操作失败", 'href' => 'fenhong.php?act=list');
+		$links[] = array('text' => "缺少参数，操作失败", 'href' => 'fenhong2017.php?act=list');
 		sys_msg('缺少参数，操作失败', 0 ,$links);
 	}
-	if(!$trade_sn){
-		$trade_sn = $GLOBALS['db']->getOne("select trade_sn from ".$GLOBALS['ecs']->table('day_trade')." where id = $id");
-	}
 	
-	$info = get_trade_info($id);
+        $info = $db->getRow("select * from ".$ecs->table('pc_fenhong')." where id = ".$id);
 	$smarty->assign("info",$info);
-		
-	if($t == 'default'){
-		 $smarty->assign('full_page',  1);
-		$smarty->assign('ur_here', '交易号'.$trade_sn.'详情');
-		$smarty->assign('on', $separate_on);
-		$smarty->display("trade_detail.htm");
-	}else if($t == 'order'){
-		
-		$sql = "SELECT  o.order_sn id,pl.order_amount money FROM " 
-			.$GLOBALS['ecs']->table('day_trade_order')." dt " 
-			." LEFT JOIN ".$GLOBALS['ecs']->table('order_info')." o ON dt.order_id = o.order_id  " 
-			." LEFT JOIN ".$GLOBALS['ecs']->table('pay_log')." pl ON dt.order_id = pl.order_id  " 
-			." WHERE 1 AND dt.trade_sn = '".$trade_sn."' and dt.type = 'order' ";
-			
-		printsqls($sql,"order ");
-			
-		$list = $GLOBALS['db']->getALL($sql);
-		if($list){
-			foreach($list as $k=>&$v){
-				$v['money'] = price_format($v['money']);
-			}
-		}
-		
-		$smarty->assign('tongji', "合计：".$info['order_amount']."<br> 记录数：".$info['order_nums']."");
-		$smarty->assign("title_id", "订单号");
-		$smarty->assign("title_money", "事件金额");
-		$smarty->assign("list",$list);
-		$smarty->assign('full_page',  1);
-		$smarty->assign('ur_here', '交易号'.$trade_sn.'');
-		$smarty->assign('on', $separate_on);
-		$smarty->display("trade_detail_record.htm");
-	}else if($t == 'cash'){
-		$sql = "SELECT  c.id ,c.money FROM " 
-			.$GLOBALS['ecs']->table('day_trade_order')." dt " 
-			." LEFT JOIN ".$GLOBALS['ecs']->table('cash_log')." c ON c.id = dt.cash_id  " 
-			." WHERE 1 AND dt.trade_sn = '".$trade_sn."' and dt.type = 'cash' ";
-			
-		printsqls($sql,"detail cash SQL ");
-			
-		$list = $GLOBALS['db']->getALL($sql);
-		if($list){
-			foreach($list as $k=>&$v){
-				$v['money'] = price_format($v['money']);
-			}
-		}
-		$smarty->assign('tongji', "合计：".$info['cash_amount']."<br> 记录数：".$info['cash_nums']."");
-		$smarty->assign("title_id", "交易号");
-		$smarty->assign("title_money", "交易金额");
-		$smarty->assign("list",$list);
-		$smarty->assign('full_page',  1);
-		$smarty->assign('ur_here', '交易号'.$trade_sn.'');
-		$smarty->assign('on', $separate_on);
-		$smarty->display("trade_detail_record.htm");
-	}else if($t == 'users'){
-		$sql = "select u.user_name id, ub.point money FROM "
-			.$GLOBALS['ecs']->table('user_backpoint_log')." ub "
-			." LEFT JOIN ".$GLOBALS['ecs']->table('users')." u ON u.user_id = ub.user_id "
-			." WHERE 1 AND ub.trade_sn = ".$trade_sn;
-		printsqls($sql,"user ");
-		$list = $GLOBALS['db']->getALL($sql);
-		if($list){
-			foreach($list as $k=>&$v){
-				$v['money'] = price_format($v['money']);
-			}
-		}
-		
-		$user_trade_fanxian_amount = $GLOBALS['db']->getOne("select sum(point) from ".$GLOBALS['ecs']->table("user_backpoint_log")." where trade_sn = '".$trade_sn."'");
-		$smarty->assign('tongji', "合计:".$user_trade_fanxian_amount."<br> 总人数：".$info['user_nums']."");
-		$smarty->assign("title_id", "用户名");
-		$smarty->assign("title_money", "返现金额");
-		$smarty->assign("list",$list);
-		$smarty->assign('full_page',  1);
-		$smarty->assign('ur_here', '交易号'.$trade_sn.'');
-		$smarty->assign('on', $separate_on);
-		$smarty->display("trade_detail_record.htm");
-	}
+	
+        $list = $db->getAll("select * from ".$ecs->table('pc_fenhong_log')." where fenhong_date = '".$info['fenhong_date']."'");
+        //echo "select * from ".$ecs->table('pc_fenhong_log')." where fenhong_date = '".$info['fenhong_date']."'";
+        if($list){
+            foreach($list as $k=>$v){
+                $v['ctime_format'] = date("Y-m-d H:i:s",$v['ctime']);
+                $list[$k] = $v;
+            }
+        }
+        $smarty->assign('full_page',  1);
+        $smarty->assign('list', $list);
+        $smarty->assign('ur_here', '分红 ['.$info['fenhong_date'].'] 详情');
+        $smarty->assign('on', $separate_on);
+        $smarty->display("fenhong2017_trade_detail.htm");
 	
 }
 //系统执行调用
 elseif ($_REQUEST['act'] == 'daytrade')
 {
-	if($separate_on){	
-	   get_today_trade('exec');
-	}else{
-		die('closed');
-	}
+	fenhongjisuan();
 }
 
 /** added by Ran **/
@@ -197,7 +138,7 @@ function get_trade_list()
 {
 
     $sqladd = '';
-    $sql = "SELECT COUNT(*) FROM " . $GLOBALS['ecs']->table('day_trade') . " dt ".
+    $sql = "SELECT COUNT(*) FROM " . $GLOBALS['ecs']->table('pc_fenhong') . " dt ".
                     " WHERE dt.id > 0  $sqladd";
      
     $filter['record_count'] = $GLOBALS['db']->getOne($sql);
@@ -206,25 +147,17 @@ function get_trade_list()
     /* 分页大小 */
     $filter = page_and_size($filter);
     
-	$sql = "SELECT id, trade_sn,trade_amount, trade_fanxian_amount,trade_fanxian_shiji_amount,trade_fanxian_bili, user_money,user_nums, order_amount, order_nums, cash_amount, cash_nums, trade_stime, trade_etime " .
-                    " FROM " . $GLOBALS['ecs']->table('day_trade') . " dt".
+	$sql = "SELECT * " .
+                    " FROM " . $GLOBALS['ecs']->table('pc_fenhong') . " dt".
                     " WHERE dt.id > 0  $sqladd" .
                     " ORDER BY dt.id DESC" .
                     " LIMIT " . $filter['start'] . ",$filter[page_size]";
-	printsqls($sql,'trade list sql');
+	//printsqls($sql,'trade list sql');
     $query = $GLOBALS['db']->query($sql);
     
     while ($rt = $GLOBALS['db']->fetch_array($query))
     {
-		$rt['stime'] = date("Y-m-d H:i",$rt['trade_stime']);
-		$rt['etime'] = date("Y-m-d H:i",$rt['trade_etime']);
-		$rt['trade_amount'] = price_format($rt['trade_amount']);
-		$rt['trade_fanxian_amount'] = price_format($rt['trade_fanxian_amount']);
-		$rt['trade_fanxian_shiji_amount'] = price_format($rt['trade_fanxian_shiji_amount']);
-		$rt['user_money'] = price_format($rt['user_money']);
-		$rt['order_amount'] = price_format($rt['order_amount']);
-		$rt['cash_amount'] = price_format($rt['cash_amount']);
-		$rt['trade_fanxian_bili'] = $rt['trade_fanxian_bili']."%";
+	
         $logdb[] = $rt;
     }
     $arr = array('list' => $logdb, 'filter' => $filter, 'page_count' => $filter['page_count'], 'record_count' => $filter['record_count']);

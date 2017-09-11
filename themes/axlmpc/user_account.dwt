@@ -119,15 +119,15 @@
 				</ul>
 			  </div>
 			  <div class="mar_top">
-				<div class="box-inner"> 基本信息 <a href="user.php?act=fenxiao&exec=bonus_list" style="float:right;color:#E31939;">分红记录</a></div>
+				<div class="box-inner"> 基本信息 <!--<a href="user.php?act=fenxiao&exec=bonus_list" style="float:right;color:#E31939;">分红记录</a>--></div>
 				<table width="100%" border="0" cellpadding="5" cellspacing="1" bgcolor="#eee">
 				  <tr align="center">
-					<td bgcolor="#ffffff">分红比例</td>
-					<td bgcolor="#ffffff">总分红数</td>
+					<td bgcolor="#ffffff">昨日分红</td>
+					<td bgcolor="#ffffff">分红</td>
 				  </tr>
 				  <tr align="center">
-					<td bgcolor="#ffffff" class="price_format"><i class="newicon fenhongbili"></i>{$baseinfo.bonus_proportional_format}</td>
-					<td bgcolor="#ffffff" class="price_format"><i class="newicon fenhong"></i>{$baseinfo.bonus_amount_format}<br></td>
+					<td bgcolor="#ffffff" class="price_format">{$pc_user.fenhong_date}</td>
+					<td bgcolor="#ffffff" class="price_format">￥{$pc_user.fenhong_amount}<br></td>
 				  </tr>
 				</table>
 			  </div>

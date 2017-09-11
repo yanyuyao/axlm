@@ -169,6 +169,16 @@ function action_default ()
 	$sql = "select * from ".$ecs->table('pc_user')." where uid = ".$user_id;
 	//echo $sql;
 	$pc_user = $db->getRow($sql);
+        
+        $yesterday_fenhong = $db->getRow("select * from ".$ecs->table('pc_fenhong_log')." where user_id = $user_id and fenhong_date = '".date("Y-m-d",strtotime("-1 days"))."'");
+        if($yesterday_fenhong){
+            $pc_user['fenhong_date'] = $yesterday_fenhong['fenhong_date'];
+            $pc_user['fenhong_amount'] = $yesterday_fenhong['fenhong'];
+        }else{
+            $pc_user['fenhong_date'] = date("Y-m-d", strtotime("-1 days"));
+            $pc_user['fenhong_amount'] = 0;
+        }
+        
 	$smarty->assign('pc_user',$pc_user);
 	
 	$data = array();

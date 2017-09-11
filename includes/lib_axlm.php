@@ -988,7 +988,7 @@ function change_account_info($uid,$bizhong,$type, $change_value){
 function pc_set_fuwuzhongxin_butie($uid, $good_amount){
         $db = $GLOBALS['db'];
         $ecs = $GLOBALS['ecs'];
-        $fuwuzhongxin_butie = 0.01;
+        $fuwuzhongxin_butie = 0.03;
         $fanli = floatval($good_amount) * $fuwuzhongxin_butie;
         
         pc_log($fanli,'pc_set_fuwuzhongxin_butie');
@@ -1014,11 +1014,11 @@ function pc_set_fuwuzhongxin_butie($uid, $good_amount){
 	$db->query($sql);
 }
 
-//直推1人,直找上一级，进行返利
+//直推1人,直找上一级，进行返利,直推返利是消费币
 function pc_set_zhitui_fanli($fuid,$puid,$oid,$good_amount){
     $ecs = $GLOBALS['ecs'];
     $db = $GLOBALS['db'];
-    $zhitui_bili = 0.01;
+    $zhitui_bili = 0.02;
     $fanli = floatval($good_amount) * $zhitui_bili;
          
      $sql = "insert into ".$ecs->table('pc_zhitui_fanli')."(oid,from_uid,uid,amount,ctime)values(".
@@ -1036,15 +1036,15 @@ function pc_set_zhitui_fanli($fuid,$puid,$oid,$good_amount){
 
     if(!$fanli){ return 0;}
 
-    $original_value = intval($userinfo['account_xianjinbi']);
+    $original_value = intval($userinfo['account_xiaofeibi']);
     $change_value = floatval($fanli);
     $new_value = $original_value + $change_value;
 
-    $sql = "update ".$ecs->table('pc_user')." set account_xianjinbi = ".$new_value." where uid = ".$puid;
+    $sql = "update ".$ecs->table('pc_user')." set account_xiaofeibi = ".$new_value." where uid = ".$puid;
     $db->query($sql);
     $sql = "insert into ".$ecs->table('pc_user_account_log')."(uid,type,original_value,change_value,new_value,note,adminid,ctime) values(".
             "'".$puid."',".
-            "'account_xianjinbi',".
+            "'account_xiaofeibi',".
             "'".$original_value."',".
             "'".$change_value."',".
             "'".$new_value."',".
@@ -1059,7 +1059,7 @@ function pc_set_zhitui_fanli($fuid,$puid,$oid,$good_amount){
 function fenhongjisuan(){
     $ecs = $GLOBALS['ecs'];
     $db = $GLOBALS['db'];
-    $bili = 0.06;
+    $bili = 0.1;
     //计算已付款的所有订单，当天的付款，且付款时间是今日
     $start_time = strtotime(date("Y-m-d")." 00:00:00");
     $end_time = strtotime(date("Y-m-d")." 23:59:59");
@@ -1111,17 +1111,17 @@ function fenhongjisuan(){
                    ")";
             $db->query($save_sql);
            
-            //修改现金币
+            //分红出的是消费币
             $userinfo = get_pc_user_allinfo($v['user_id']);
-            $original_value = intval($userinfo['account_xianjinbi']);
+            $original_value = intval($userinfo['account_xiaofeibi']);
             $change_value = floatval($v['fenhong_num']);
             $new_value = $original_value + $change_value;
 
-            $sql = "update ".$ecs->table('pc_user')." set account_xianjinbi = ".$new_value." where uid = ".$v['user_id'];
+            $sql = "update ".$ecs->table('pc_user')." set account_xiaofeibi = ".$new_value." where uid = ".$v['user_id'];
             $db->query($sql);
             $sql = "insert into ".$ecs->table('pc_user_account_log')."(uid,type,original_value,change_value,new_value,note,adminid,ctime) values(".
                     "'".$v['user_id']."',".
-                    "'account_xianjinbi',".
+                    "'account_xiaofeibi',".
                     "'".$original_value."',".
                     "'".$change_value."',".
                     "'".$new_value."',".
