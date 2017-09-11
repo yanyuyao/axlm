@@ -99,6 +99,17 @@ elseif ($_REQUEST['act'] == 'post')
 	$db->query($sql);
 		
 	save_user_account_log($uid,$bizhong, $oldvalue,$change_value,$new_value,$note,$_SESSION['admin_id']);
+        
+        if($type == 'jifenbi'){
+            $pc_user = $db->getRow("select * from ".$ecs->table('pc_user')." where uid = $uid");
+//            var_dump($pc_user);
+            if($pc_user && $pc_user['identity'] == 3 && $changetype == 'add'){ //如果调整的是联盟商家的积分币，则给联盟商家的推荐人1%提成
+                
+                $tuijianren_uid = $pc_user['tuijianren_user_id'];
+//                var_dump($tuijianren_uid);
+                pc_set_lianmengshangjia_butie($tuijianren_uid, $value);
+            }
+        }
 	sys_msg('保存成功', 1);
 }
 

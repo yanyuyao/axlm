@@ -1187,3 +1187,32 @@ function fenhongjisuan($bili='0.1'){
 //            }
 //        }
 //    }
+
+//当后台给用户充积分币时，如果该用户是联盟商家，则给其推荐者1%的提成，消费币
+function pc_set_lianmengshangjia_butie($uid,$amount){
+    $ecs = $GLOBALS['ecs'];
+    $db = $GLOBALS['db'];
+    $bili = 0.01;
+    $fanli = floatval($amount)*$bili;
+    $userinfo = get_pc_user_allinfo($uid);
+
+    $original_value = floatval($userinfo['account_xiaofeibi']);
+    $change_value = floatval($fanli);
+    $new_value = $original_value + $change_value;
+
+    $sql = "update ".$ecs->table('pc_user')." set account_xiaofeibi = ".$new_value." where uid = ".$uid;
+//    echo $sql;
+    $db->query($sql);
+    $sql = "insert into ".$ecs->table('pc_user_account_log')."(uid,type,original_value,change_value,new_value,note,adminid,ctime) values(".
+            "'".$uid."',".
+            "'account_xiaofeibi',".
+            "'".$original_value."',".
+            "'".$change_value."',".
+            "'".$new_value."',".
+            "'推荐联盟商家返利',".
+            "'".$_SESSION['admin_id']."',".
+            "'".time()."' ".
+    ")";
+//    echo $sql;
+    $db->query($sql);
+}
