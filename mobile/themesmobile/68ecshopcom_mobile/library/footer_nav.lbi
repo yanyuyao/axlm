@@ -7,7 +7,7 @@
     <i class="vf_1"></i>
     <span>首页</span></a></li>
 	<li>
-	<a href="shops.php">
+	<a href="/mobile/supplier_near.php">
     <i class="vf_2"></i>
     <span>商家</span></a>
 	</li>

@@ -53,9 +53,11 @@
 <!--<a href="user.php?act=affiliate"><em class="Icon4"></em><dl class="border_bottm"><dt>我的推荐</dt><dd>&nbsp;</dd></dl></a>-->
 <a href="user.php?act=message_list"><em class="Icon5"></em><dl><dt>我的留言</dt><dd>&nbsp;</dd></dl></a>
 </div>
+<!--
 <div class="Wallet main_top">
 <a href="javascript:void(0)" onClick="window.location.href='user.php?act=profile'" ><em class="Icon5"></em><dl><dt>绑定会员卡</dt></dl></a>
 </div>
+-->
 <div class="Wallet main_top">
 <a href="javascript:void(0)" onClick="window.location.href='user.php?act=logout'" ><em class="Icon6"></em><dl><dt>注销登录</dt></dl></a>
 </div>

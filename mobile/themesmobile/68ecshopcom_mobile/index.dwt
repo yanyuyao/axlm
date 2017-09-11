@@ -26,7 +26,7 @@
 <!-- #BeginLibraryItem "/library/index_icon.lbi" --><!-- #EndLibraryItem --> 
 
 <!---商城热点-->
-<div class="hot">
+<div class="hot" style="display:none;">
 <h3></h3>
 <ul id="mq" onmouseover="iScrollAmount=0"onmouseout="iScrollAmount=1">
   <!-- TemplateBeginEditable name="首页商城热点" -->
@@ -59,7 +59,7 @@ oMarquee.innerHTML += oMarquee.innerHTML;
 window.setTimeout( "run()", 2000 );
 </script>
 <!---广告位1--->
-<div class="floor_img">
+<div class="floor_img" style="display:none;">
 <h2>
  <!-- TemplateBeginEditable name="手机端首页广告1" -->
 <!-- #BeginLibraryItem "/library/ad_position.lbi" -->
@@ -110,33 +110,13 @@ window.setTimeout( "run()", 2000 );
 </div>
 <!---推荐爱心联盟商户--->
 <div class="brand">
-<h4><span>商家联盟</span><i><a href="shops.php">更多</a></i></h4>
-<dl>
-<table cellpadding="0" cellspacing="0">
-<tbody>
-		<tr><td>
-			<a href="shops.php?id={$shop.id}" target="_blank">
-			<img src="images/shops.jpg" width="1" height="1" border="0" style="width:100%;height:150px;"></a>
-		</td></tr>
-</tbody></table>
-</dl>
-<ul>
-
-<!-- TemplateBeginEditable name="首页推荐商户" -->
-<!-- #BeginLibraryItem "/library/shops.lbi" -->
-
-{if $shops_list}
-{foreach from=$shops_list item=shop name=shop}
-<li class="image"><a href="shops.php?id={$shop.id}" title="{$shop.name|escape:html}"><img src="/data/shopsimgs/{$shop.thumb}"/></a></li>
-{/foreach}
-{/if}
- <!-- #EndLibraryItem -->
-<!-- TemplateEndEditable -->
-</ul>
+<h4><span>商家联盟</span><i><a href="/mobile/supplier_near.php">更多</a></i></h4>
+<a href="/mobile/supplier_near.php"><img src="themesmobile/68ecshopcom_mobile/images/shops_banner.jpg" style="width:100%;" /></a>
 </div>
 <!--- end 推荐爱心联盟商户--->
 
 <!---推荐品牌--->
+<!--
 <div class="brand">
 <h4><span>{$lang.index_brand}</span><i><a href="brand.php">更多</a></i></h4>
 <dl>
@@ -162,7 +142,7 @@ window.setTimeout( "run()", 2000 );
 <!-- TemplateEndEditable -->
 </ul>
 </div>
-
+-->
 <!--促销商品-->
 <!-- TemplateBeginEditable name="首页促销模块" -->
 <!-- #BeginLibraryItem "/library/recommend_promotion.lbi" -->
@@ -209,7 +189,7 @@ function clock(key)
    document.getElementById("jstimerBox"+key).innerHTML = a + b + c + d; //显示倒计时信息
 }
 </script>
-<section class="floor_body">
+<section class="floor_body" >
   <h4><span>{$lang.promotion_goods}</span><i><a href="../search.php?intro=promotion">更多</a></i></h4>
     <div id="scroll_promotion" style=" background:#eeeeee">
         <ul>

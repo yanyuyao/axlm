@@ -75,6 +75,11 @@ else
 /*end*/
 $user_id = isset($_SESSION['user_id'])?$_SESSION['user_id']:0;
 
+$pc_user = $db->getRow("select * from ".$ecs->table('pc_user')." where uid = ".$user_id);
+
+$fenhong = $db->getOne("select fenhong from ".$ecs->table('pc_fenhong_log')." where user_id = ".$user_id." and fenhong_date='".date("Y-m-d")."'");
+$pc_user['fenhong'] = $fenhong;
+$smarty->assign("pc_userinfo",$pc_user);
 $action = isset($_REQUEST['act']) ? trim($_REQUEST['act']) : 'default';
 
 $affiliate = unserialize($GLOBALS['_CFG']['affiliate']);
