@@ -1056,10 +1056,10 @@ function pc_set_zhitui_fanli($fuid,$puid,$oid,$good_amount){
     
 }
 
-function fenhongjisuan(){
+function fenhongjisuan($bili='0.1'){
     $ecs = $GLOBALS['ecs'];
     $db = $GLOBALS['db'];
-    $bili = 0.1;
+    $bili = $bili;
     if($db->getOne("select id from ".$ecs->table('pc_fenhong')." where fenhong_date = '".date('Y-m-d')."'")){
         sys_msg('已存在【'.date('Y-m-d').'】分红记录', 0 ,$links);
         return 0;

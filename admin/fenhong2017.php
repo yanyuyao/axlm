@@ -22,10 +22,12 @@ $timestamp = time();
 $fanxian = unserialize($GLOBALS['_CFG']['fanxian']);
 
 $separate_on = $fanxian['fanxian_open'];
+$rand_fenhong_bili = floatval(rand(5,10)/100);
+$smarty->assign("rand_fenhong_bili",$rand_fenhong_bili);
 
 if ($_REQUEST['act'] == 'list')
 {
-    $bili = 0.06;
+    $bili = 0.1;
     //计算已付款的所有订单，当天的付款，且付款时间是今日
     $start_time = strtotime(date("Y-m-d")." 00:00:00");
     $end_time = strtotime(date("Y-m-d")." 23:59:59");
@@ -34,7 +36,7 @@ if ($_REQUEST['act'] == 'list')
     
     $sumsql = "select sum(goods_amount) from ".$ecs->table('order_info')." where pay_time > ".$start_time." and pay_time < ".$end_time." and pay_status = 2 ";
     $trade_today = floatval($db->getOne($sumsql));
-    $trade_fanli_today = $trade_today * $bili;
+    //$trade_fanli_today = $trade_today * $bili;
     
     $order_total = count($order_list);
     $order_total_amount = $trade_today;
@@ -130,7 +132,21 @@ elseif ($_REQUEST['act'] == 'day')
 //系统执行调用
 elseif ($_REQUEST['act'] == 'daytrade')
 {
-	fenhongjisuan();
+    $bili = floatval(isset($_REQUEST['fenhong_bili'])?$_REQUEST['fenhong_bili']:0);
+    //echo $bili;
+    if($bili > 0.1){
+        sys_msg('分红比例最高不能超过10%', 0 ,$links);
+        return 0;
+    }
+    if($bili <= 0){
+        sys_msg('分红比例不能小于或等于0', 0 ,$links);
+        return 0;
+    }
+    if($bili == ''){
+        sys_msg('分红比例不能为空', 0 ,$links);
+        return 0;
+    }
+	fenhongjisuan($bili);
         sys_msg('操作成功', 0 ,$links);
 }
 

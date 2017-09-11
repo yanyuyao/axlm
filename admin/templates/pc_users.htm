@@ -51,7 +51,7 @@
 				<td align="center">{$user.status_title}</td>
 				<td align="center">{$user.reg_time}</td>
 				<td align="center">
-					
+					{if $user.level neq ''}
 					<!--调整用户账户-->
 					<a href="pc_user_account.php?act=default&uid={$user.user_id}" title="{$lang.view_order}">
 						<img src="images/用户操作.png" border="0" height="16" width="16" />
@@ -74,6 +74,7 @@
 						<img src="images/删除.png" border="0" height="16" width="16" />
 					</a>
 					-->
+                                        {/if}
 				</td>
 			</tr>
 			{foreachelse}

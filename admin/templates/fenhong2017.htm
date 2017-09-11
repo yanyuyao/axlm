@@ -6,8 +6,15 @@
 <div class="list-div" id="listDiv" style="margin-bottom:30px;">
 <!--<a class='btn-red' href="?act=day">今日交易额</a>
 {if $is_finished eq '0'}<a class='btn-orange' href="?act=daytrade">执行今日返现</a>{/if}-->
-<p style="font-size:14px;color:#fa841e;">今日交易： 共支付{$order_total}个订单， 订单总金额{$order_total_amount}, 分红金额{$order_total_fenhong_amount}
-<a class='btn-orange' href="?act=daytrade" style="margin-left:20px;">执行今日分红</a>
+<p style="font-size:14px;color:#fa841e;">今日交易： 共支付{$order_total}个订单， 订单总金额{$order_total_amount}
+    <br>
+<form action="?act=daytrade">
+    分红比例：<input type="text" id="fenhong_bili" name="fenhong_bili" value="{$rand_fenhong_bili}" style="width:100px;"/>
+        <input type="hidden" name="act" value="daytrade" />
+        <input type="submit" class='btn-orange' style="background:#fa841e;color:#fff;margin-left:20px;border:none;cursor:pointer;padding:5px;" value="执行今日分红" />
+        <p>备注：分红比例是系统自动生成随机数字，范围5%-10%.</p>
+</form>
+
 </p>
 </div>
 
