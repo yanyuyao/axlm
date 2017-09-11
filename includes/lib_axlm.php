@@ -1060,6 +1060,11 @@ function fenhongjisuan(){
     $ecs = $GLOBALS['ecs'];
     $db = $GLOBALS['db'];
     $bili = 0.1;
+    if($db->getOne("select id from ".$ecs->table('pc_fenhong')." where fenhong_date = '".date('Y-m-d')."'")){
+        sys_msg('已存在【'.date('Y-m-d').'】分红记录', 0 ,$links);
+        return 0;
+    }
+    
     //计算已付款的所有订单，当天的付款，且付款时间是今日
     $start_time = strtotime(date("Y-m-d")." 00:00:00");
     $end_time = strtotime(date("Y-m-d")." 23:59:59");
@@ -1069,6 +1074,7 @@ function fenhongjisuan(){
     $sumsql = "select sum(goods_amount) from ".$ecs->table('order_info')." where pay_time > ".$start_time." and pay_time < ".$end_time." and pay_status = 2 ";
     $trade_today = floatval($db->getOne($sumsql));
     if(!$trade_today){
+        sys_msg('交易额为0，不可分红', 0 ,$links);
         return 0;
     }
     $trade_fanli_today = $trade_today * $bili;
@@ -1078,35 +1084,61 @@ function fenhongjisuan(){
     //具体按加权平均的方法进行分配，比如张三是白金VIP会员，他上月的收入为100元，而假设公司全体白金VIP会员上月的总收入为400元，那么用100元÷400元再×600万元=150万元，最后再150万÷100=15000积分。这就是张三所得的VIP福利分红积分。0
     //当期个人积分（福利分红积分）＝当期个人总收入（除以）当期符合资格的所有人的总收入（乘以）当期公司业绩总和（乘以）不同级别一期业绩对应的百分比
     $fenhong_save_data = array();
-    if($order_list){
-        foreach($order_list as $k=>$v){
-            $user_save_data = $v;
-            $user_fenhong = floatval($v['goods_amount']/$trade_today * $trade_fanli_today);
-            $user_save_data['fenhong_num'] = $user_fenhong;
-            $user_save_data['fenhong_date'] = date("Y-m-d");
-            if (array_key_exists($v['user_id'],$fenhong_save_data)){
-                $fenhong_save_data[$v['user_id']]['fenhong_num'] = floatval($fenhong_save_data[$v['user_id']]['fenhong_num']) + $user_fenhong;
-            }else{
-                $fenhong_save_data[$v['user_id']] = $user_save_data;
-            }
+    
+    //根据当日个人交易额计算分红数
+//    if($order_list){
+//        foreach($order_list as $k=>$v){
+//            $user_save_data = $v;
+//            $user_fenhong = floatval($v['goods_amount']/$trade_today * $trade_fanli_today);
+//            $user_save_data['fenhong_num'] = $user_fenhong;
+//            $user_save_data['fenhong_date'] = date("Y-m-d");
+//            if (array_key_exists($v['user_id'],$fenhong_save_data)){
+//                $fenhong_save_data[$v['user_id']]['fenhong_num'] = floatval($fenhong_save_data[$v['user_id']]['fenhong_num']) + $user_fenhong;
+//            }else{
+//                $fenhong_save_data[$v['user_id']] = $user_save_data;
+//            }
+//        }
+//    }
+    
+    //360分割
+    //echo $trade_fanli_today;
+//    if($trade_fanli_today){
+        $user_fenhong_dian = array();
+        $userlist = $db->getAll("select uid,uid as user_id, account_jifenbi from ".$ecs->table('pc_user')." where status = 1 and account_jifenbi > 0");
+        
+        $total_jifenbi = $db->getOne("select sum(account_jifenbi) from ".$ecs->table('pc_user')." where status = 1 and account_jifenbi > 0");
+        $total_jifenbi = intval($total_jifenbi);
+        $total_fenhongdian = intval($total_jifenbi/360);
+        
+        foreach($userlist as $k=>$v){
+            $user_jifenbi_fenhongdain = intval($v['account_jifenbi']/360);
+            $user_fenhong = floatval($user_jifenbi_fenhongdain/$total_fenhongdian) * $trade_fanli_today;
+            $v['fenhong_num'] = $user_fenhong;
+            $v['fenhong_date'] = date("Y-m-d");
+            $v['total_fenhongdian'] = $total_fenhongdian;
+            $v['user_fenhongdian'] = $user_jifenbi_fenhongdain;
+            
+            $fenhong_save_data[$k] = $v;
         }
-    }
+//    }
     
    if($fenhong_save_data){
-       $save_sql = "insert into ".$ecs->table('pc_fenhong')."(fenhong_date,trade_today,trade_fanli,trade_user_total)values(".
+       $save_sql = "insert into ".$ecs->table('pc_fenhong')."(fenhong_date,trade_today,trade_fanli,trade_user_total,trade_fenhongdian)values(".
                "'".date("Y-m-d")."',".
                "'".$trade_today."',".
                "'".$trade_fanli_today."',".
-               "'".count($fenhong_save_data)."'".
+               "'".count($fenhong_save_data)."',".
+               "'".$v['total_fenhongdian']."'".
                ")";
        $db->query($save_sql);
 
        foreach($fenhong_save_data as $k=>$v){
            //记录分红返利log
-            $save_sql = "insert into ".$ecs->table('pc_fenhong_log')."(user_id,fenhong,fenhong_date,ctime)values(".
+            $save_sql = "insert into ".$ecs->table('pc_fenhong_log')."(user_id,fenhong,fenhong_date,user_fenhongdian,ctime)values(".
                    "'".$v['user_id']."',".
                    "'".$v['fenhong_num']."',".
                    "'".date("Y-m-d")."',".
+                   "'".$v['user_fenhongdian']."',".
                    "'".time()."'".
                    ")";
             $db->query($save_sql);

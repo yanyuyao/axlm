@@ -131,6 +131,7 @@ elseif ($_REQUEST['act'] == 'day')
 elseif ($_REQUEST['act'] == 'daytrade')
 {
 	fenhongjisuan();
+        sys_msg('操作成功', 0 ,$links);
 }
 
 /** added by Ran **/
