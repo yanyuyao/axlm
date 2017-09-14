@@ -135,7 +135,7 @@ call_user_func($function_name);
 /* 路由 */
 
 function action_rantest(){
-    $uid =1;
+    $uid =7;
     $oid = 9;
     //测试某个订单中女性专区的产品总金额
 //    echo getTopCat(368);

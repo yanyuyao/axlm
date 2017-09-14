@@ -70,7 +70,7 @@ function axlmpc($user_id,$order_id,$order_amount,$good_amount,$paytype=''){
         }
         //step 9: 购物给直推人返利,购买非专区的产品才给直推人返利
         $parent_id = $db->getOne("select parent_id from ".$ecs->table('users')." where user_id = ".$user_id);
-        if($parent_id){
+        if($parent_id && $parent_id != $user_id){
             pc_set_zhitui_fanli($user_id,$parent_id,$order_id,$good_amount);
         }
     }
@@ -589,7 +589,7 @@ function pc_set_guanli_butie($uid,$type){
                 foreach($ulist as $k=>$v){
 //                  echo "<br>".$v['uid']."-----".$v['role']."------".$v['level']."<br>";
                     $level = $v['level'];
-                    if($level > 2){ //只给高级会员及以上返
+                    if($level > 2 && $v['role']>1){ //只给高级会员及以上返
                         
                             $pv = 3000;
                             save_pv_fanli($v['uid'], $pv, '发展下线返积分');
@@ -1138,6 +1138,7 @@ function change_account_info($uid,$bizhong,$type, $change_value){
 
 //给服务中心返利
 function pc_set_fuwuzhongxin_butie($uid, $good_amount){
+    if(!$uid){return 1;}
         $db = $GLOBALS['db'];
         $ecs = $GLOBALS['ecs'];
         $fuwuzhongxin_butie = 0.03;
