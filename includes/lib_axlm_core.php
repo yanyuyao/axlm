@@ -1,4 +1,42 @@
 <?php
+
+function getTopCat($catid){
+    $ecs = $GLOBALS['ecs'];
+    $db = $GLOBALS['db'];
+    $sql = "select cat_id,parent_id from ".$ecs->table('category')." where cat_id = $catid ";
+//    echo "<br>".$sql."<br>";
+    $catinfo = $db->getRow($sql);
+    if($catinfo && $catinfo['parent_id']){
+        return getTopCat($catinfo['parent_id']);
+    }else{
+        return $catinfo['cat_id'];
+    }
+}
+
+function check_zhuanqu_product($oid){
+    $ecs = $GLOBALS['ecs'];
+    $db = $GLOBALS['db'];
+    $sql = "select og.goods_id, og.goods_price,g.cat_id from ".$ecs->table('order_goods')." as og left join ".$ecs->table('goods')." as g on og.goods_id = g.goods_id  where order_id = $oid ";
+//    echo "<br>".$sql."<br>";
+    $order_goods = $db->getAll($sql);
+//    echo mysql_error();
+//    var_dump($order_goods);
+    $goods_amount = 0;
+    if($order_goods){
+        foreach($order_goods as $k=>$v){
+//            echo "<br>goods_id:".$v['goods_id']."--- cat_id:".$v['cat_id']."<br>";
+            $topcat = getTopCat($v['cat_id']);
+//            echo "[[[".$topcat."]]]";
+            if($topcat == 367){//女性产品的大分类id
+                $goods_amount += $v['goods_price'];
+            }
+        }
+        
+    }
+    return $goods_amount;
+}
+
+
 //获得用户信息 pc_users表
 function get_pc_user_allinfo($uid){
     $ecs = $GLOBALS['ecs'];
@@ -8,7 +46,6 @@ function get_pc_user_allinfo($uid){
 //    pc_log($sql,'get_pc_user_allinfo');
     return $db->getRow($sql);
 }
-
 
 //先获得所有的接点人直线数组，每一层循环判断
 function get_user_parent_array($uid,&$parent_array){
@@ -28,6 +65,9 @@ function get_user_parent_leftright_array($uid,&$parent_array){
     $info = get_pc_user_allinfo($uid);
 //    var_dump($info);
 //    echo "<br>";
+    //限制十层
+    if(count($parent_array)>=10){ return $parent_array;}
+    
     if(!$info['jiedianren_user_id']){ //没有接点人，就是到顶级了
        // $parent_array[] = $info['jiedianren_user_id']."---".$info['leftright'];
     }else{

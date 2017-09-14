@@ -22,46 +22,53 @@ function axlmpc($user_id,$order_id,$order_amount,$good_amount,$paytype=''){
     $fuwuzhongxin_user_id = $pcuserinfo['fuwuzhongxin_user_id'];
     
     if($order_id){
-        //step 1: 激活账户，设置pc_user.status = 1 ,  level=2,3,4
-        $level_sql = "SELECT * FROM " . $ecs->table('pc_user_level')." where level_limit_note <= $good_amount order by level_limit_note desc";
-        $level_list = $db->getRow($level_sql);
-//        echo $level_sql;
-//        var_dump($level_list);
-        pc_log($level_list,"level_list");
-        $level = 0;
-        if($level_list){
-            $level = $level_list['id'];
+        //获得该订单中女性专区的产品总金额
+        $is_zhuanqu_product = check_zhuanqu_product($order_id);
+        echo $is_zhuanqu_product."]]]]";
+        if($is_zhuanqu_product){ //专区产品走这个流程
+            echo "axlm pc jisuan <br>";
+            $good_amount = $is_zhuanqu_product;
+            //step 1: 激活账户，设置pc_user.status = 1 ,  level=2,3,4
+            $level_sql = "SELECT * FROM " . $ecs->table('pc_user_level')." where level_limit_note <= $good_amount order by level_limit_note desc";
+            $level_list = $db->getRow($level_sql);
+    //        echo $level_sql;
+    //        var_dump($level_list);
+            pc_log($level_list,"level_list");
+            $level = 0;
+            if($level_list){
+                $level = $level_list['id'];
+            }
+
+    //        if($level_list){
+    //            foreach($level_list as $k=>$v){
+    //                if($v['level_limit_note'] == $good_amount){
+    //                    $level = $v['id'];
+    //                }
+    //            }
+    //        }
+            $status = 1;
+
+            pc_set_user_status($user_id, $status, $level,'购物');
+
+            save_jifenbi_fanli($user_id,$good_amount,'购物返积分币');     
+
+            if($good_amount > 6000){
+                pc_set_guanli_butie($user_id,"goods");
+            }
+
+            //step 2: 设置金融账户变更，见3,4,5,6,7,8   
+            if($paytype == '现金币'){
+                change_account_info($user_id, "xianjinbi", "-", $good_amount);
+            }elseif($paytype == '消费币'){
+                change_account_info($user_id, "xiaofeibi", "-", $good_amount);
+            }
+
+            //step 7: 联盟商家补贴
+
+            //step 8: 服务中心补贴
+            pc_set_fuwuzhongxin_butie($fuwuzhongxin_user_id,$good_amount);
         }
-        
-//        if($level_list){
-//            foreach($level_list as $k=>$v){
-//                if($v['level_limit_note'] == $good_amount){
-//                    $level = $v['id'];
-//                }
-//            }
-//        }
-        $status = 1;
-    
-        pc_set_user_status($user_id, $status, $level,'购物');
-     
-        save_jifenbi_fanli($user_id,$good_amount,'购物返积分币');     
-       
-        if($good_amount > 6000){
-            pc_set_guanli_butie($user_id,"goods");
-        }
-        
-        //step 2: 设置金融账户变更，见3,4,5,6,7,8   
-        if($paytype == '现金币'){
-            change_account_info($user_id, "xianjinbi", "-", $good_amount);
-        }elseif($paytype == '消费币'){
-            change_account_info($user_id, "xiaofeibi", "-", $good_amount);
-        }
-        
-        //step 7: 联盟商家补贴
-        
-        //step 8: 服务中心补贴
-        pc_set_fuwuzhongxin_butie($fuwuzhongxin_user_id,$good_amount);
-        //step 9: 购物给直推人返利
+        //step 9: 购物给直推人返利,购买非专区的产品才给直推人返利
         $parent_id = $db->getOne("select parent_id from ".$ecs->table('users')." where user_id = ".$user_id);
         if($parent_id){
             pc_set_zhitui_fanli($user_id,$parent_id,$order_id,$good_amount);
@@ -289,7 +296,7 @@ function pc_set_fuwu_butie($uid){
     foreach($jiedianren_user_array as $k=>$v){
         //$v 即是接点人
         $ceng = $k+1;
-//        echo "接点人 ： $v, 当前层 ： $ceng <br>";
+        //echo "接点人 ： $v, 当前层 ： $ceng <br>";
         
         $user_ceng_stauts = pc_get_user_status_info($v,"fuwubutie",$ceng);
         
@@ -298,11 +305,11 @@ function pc_set_fuwu_butie($uid){
             //var_dump($data);
             $leftnum = intval($data['left']);
             $rightnum = intval($data['right']);
-//            echo "左边：$leftnum ; 右边 ：$rightnum<br>";
+            //echo "左边：$leftnum ; 右边 ：$rightnum<br>";
             if($leftnum/$rightnum>=1 || $rightnum/$leftnum>=1){ //服务是左右达成1:1则拿， 只要左右有人
                 $userinfo = get_pc_user_allinfo($v);
                 
-//                var_dump($userinfo);
+               // var_dump($userinfo);
                 if($userinfo['level'] > 2){
                     save_fuwu_fanli($v,$userinfo);
                     pc_save_user_status_info($v,$ceng, $jiangxiang,json_encode($data));
@@ -408,6 +415,8 @@ function pc_set_jiandian_butie($uid){
     
 //    var_dump($jiedianren_user_array);
     if($jiedianren_user_array){
+        
+        
         foreach($jiedianren_user_array as $k=>$v){
             if($v['level']>2){
                 $checksql = "select id from ".$ecs->table('pc_user_jiandian_log')." where uid = ".$v['uid']." and from_uid = $uid";
@@ -642,21 +651,77 @@ function shengji_pv_account($uid){
         pc_log($role_sql,"shengji_pv_account");
         $nextrole = $db->getRow($role_sql);
         
+        $update_flag = 0;
         
+//        var_dump($nextrole);
         if($nextrole && $nextrole['id'] != $userinfo['role']){
-            $sql = "update ".$ecs->table('pc_user')." set role = ".$nextrole['id']." where uid = $uid ";
-            $db->query($sql);
-            
-            $sql = "insert into ".$ecs->table('pc_user_change_log')."(uid,name,type,original_value,new_value,note,ctime)values(".
-                        "'".$uid."',".
-                        "'baseinfo',".
-                        "'role',".
-                        "'".$userinfo['role']."',".
-                        "'".$nextrole['id']."',".
-                        "'pv积分升级',".
-                        "'".time()."'"
-                    .")";
-            $db->query($sql);
+            if($nextrole['id'] >= 3){ //见习经理开始，除了积分够之外，还要判断是否满足ab市场各有一个下级
+                $xiaji_role = $nextrole['id']-1;
+                
+                            $left_sql = "select uid from ".$ecs->table('pc_user')." where jiedianren_user_id = $uid and leftright = 'left'";
+                            $right_sql = "select uid from ".$ecs->table('pc_user')." where jiedianren_user_id = $uid and leftright = 'right'";
+//                            echo $left_sql."<br>";
+//                            echo $right_sql."<br>";;
+                            $leftuser = $db->getOne($left_sql);
+                            $rightuser = $db->getOne($right_sql);
+                            $leftuserid = $leftuser?$leftuser:0;
+                            $rightuserid = $rightuser?$rightuser:0;
+                            $left_array = array();
+                            $right_array = array();
+//                            echo "<br>left user id : $leftuserid <br>right user id : $rightuserid<br>";
+                            if($leftuserid){
+                                $left_arr = getCengDataByUid($leftuserid);
+                                foreach($left_arr as $kk=>$vv){
+                                    foreach($vv as $kkk=>$vvv){
+                                        $left_array[] = $vvv;
+                                    }
+                                }    
+                            }
+                            
+                            if($rightuserid){
+                                $right_arr = getCengDataByUid($rightuserid);
+                                foreach($right_arr as $kk=>$vv){
+                                    foreach($vv as $kkk=>$vvv){
+                                        $right_array[] = $vvv;
+                                    }
+                                }   
+                            }
+//                            var_dump($left_array);echo "<br><br>";
+//                            var_dump($right_array);echo "<br><br>";
+                            if($left_array && $right_array){
+                                $left_arr_str = implode(",",$left_array);
+                                $right_arr_str = implode(",",$right_array);
+                                $sql_left = "select uid from ".$ecs->table('pc_user')." where role = ".$xiaji_role." and uid in (".$left_arr_str.")";
+                                $sql_right = "select uid from ".$ecs->table('pc_user')." where role = ".$xiaji_role." and uid in (".$right_arr_str.")";
+//                                echo "<br>===".$sql_left;
+//                                echo "<br>===".$sql_right;
+                                $is_left = $db->getRow($sql_left);
+                                $is_right = $db->getRow($sql_right);
+                                if($is_left && $is_right){
+                                    $update_flag = 1;
+                                }
+                            }
+                            
+                            
+            }else{
+                $update_flag = 1;
+            }
+//            echo "====".$update_flag;
+            if($update_flag){
+                    $sql = "update ".$ecs->table('pc_user')." set role = ".$nextrole['id']." where uid = $uid ";
+                    $db->query($sql);
+
+                    $sql = "insert into ".$ecs->table('pc_user_change_log')."(uid,name,type,original_value,new_value,note,ctime)values(".
+                                "'".$uid."',".
+                                "'baseinfo',".
+                                "'role',".
+                                "'".$userinfo['role']."',".
+                                "'".$nextrole['id']."',".
+                                "'pv积分升级',".
+                                "'".time()."'"
+                            .")";
+                    $db->query($sql);
+            }
         }
     
 }
@@ -1102,7 +1167,7 @@ function pc_set_fuwuzhongxin_butie($uid, $good_amount){
 	$db->query($sql);
 }
 
-//直推1人,直找上一级，进行返利,直推返利是消费币
+//直推1人,直找上一级，进行返利,直推消费返利是消费币
 function pc_set_zhitui_fanli($fuid,$puid,$oid,$good_amount){
     $ecs = $GLOBALS['ecs'];
     $db = $GLOBALS['db'];
@@ -1136,7 +1201,7 @@ function pc_set_zhitui_fanli($fuid,$puid,$oid,$good_amount){
             "'".$original_value."',".
             "'".$change_value."',".
             "'".$new_value."',".
-            "'直推返利',".
+            "'直推消费返利',".
             "'0',".
             "'".time()."' ".
     ")";

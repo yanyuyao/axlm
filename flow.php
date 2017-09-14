@@ -2802,17 +2802,7 @@ elseif ($_REQUEST['step'] == 'done')
 	
 	    $new_order_id = $db->insert_id();
 	    $order['order_id'] = $new_order_id;
-//{{{ //axlmpc
-            //var_dump($_SESSION);
-    if($order['pay_name'] == '支付宝支付' || $order['pay_name'] == '微信支付'){
-//        支付成功后再分佣
-    }else if($order['pay_name'] == '现金币' || $order['pay_name'] == '消费币'){
-        pc_log("提交订单，即时分佣");
-        axlmpc($_SESSION['user_id'],$order['order_id'],$order['order_amount'],$order['goods_amount'],$order['pay_name']);
-        //支付后，修改现金币，消费币余额
-        pc_log("提交订单，即时分佣---完成");
-    }
-//}}}	    
+  
 	    $parent_order_id = ($parent_order_id>0) ? $parent_order_id : $new_order_id;
 
 	    /* 插入订单商品 下面这个SQL有修改 by www.ecshop68.com 注意末尾那个字段 */
@@ -2989,7 +2979,18 @@ elseif ($_REQUEST['step'] == 'done')
     	$all_order_amount += $order['order_amount'];
     	user_uc_call('add_feed', array($order['order_id'], BUY_GOODS)); //推送feed到uc
     }
- 
+    
+ //{{{ //axlmpc
+            //var_dump($_SESSION);
+    if($order['pay_name'] == '支付宝支付' || $order['pay_name'] == '微信支付'){
+//        支付成功后再分佣
+    }else if($order['pay_name'] == '现金币' || $order['pay_name'] == '消费币'){
+        pc_log("提交订单，即时分佣");
+        axlmpc($_SESSION['user_id'],$order['order_id'],$order['order_amount'],$order['goods_amount'],$order['pay_name']);
+        //支付后，修改现金币，消费币余额
+        pc_log("提交订单，即时分佣---完成");
+    }
+//}}}	  
     /* 清空购物车 */
     clear_cart($flow_type,$id_ext);
     /* 清除缓存，否则买了商品，但是前台页面读取缓存，商品数量不减少 */

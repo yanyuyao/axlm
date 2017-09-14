@@ -135,7 +135,12 @@ call_user_func($function_name);
 /* 路由 */
 
 function action_rantest(){
-    $uid =18;
+    $uid =1;
+    $oid = 9;
+    //测试某个订单中女性专区的产品总金额
+//    echo getTopCat(368);
+//    $d = check_zhuanqu_product($oid);
+//    echo $d;
     
     //测试父级array
     //$parent_array = array();
@@ -143,7 +148,7 @@ function action_rantest(){
     //var_dump($parent_array);
     
     //测试服务补贴
-//    pc_set_fuwu_butie($uid);
+    //pc_set_fuwu_butie($uid);
     //pc_get_user_ceng_leftright_user($uid,4);
     //exit;
     //exit;
@@ -151,7 +156,7 @@ function action_rantest(){
     //pc_set_jiandian_butie($uid);
     
     //管理补贴
-//    pc_set_guanli_butie($uid,"expends");
+    //pc_set_guanli_butie($uid,"expends");
     //shengji_pv_account($uid); //pv更新后升级账户，只判断了积分，还没判断左右市场身份站位
     
     //推广补贴
