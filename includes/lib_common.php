@@ -5446,5 +5446,5 @@ function set_user_to_fenxiao2($userid){
 }
 
 //}}} 365
-include_once('includes/lib_axlm.php');
+
 ?>

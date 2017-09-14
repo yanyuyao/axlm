@@ -136,24 +136,26 @@ call_user_func($function_name);
 
 function action_rantest(){
     $uid =18;
-
+    
     //测试父级array
     //$parent_array = array();
     //$parent_array = get_user_parent_array($uid,$parent_array);
     //var_dump($parent_array);
     
     //测试服务补贴
-    //pc_set_fuwu_butie($uid);
-    
+//    pc_set_fuwu_butie($uid);
+    //pc_get_user_ceng_leftright_user($uid,4);
+    //exit;
+    //exit;
     //测试见点补贴
     //pc_set_jiandian_butie($uid);
     
     //管理补贴
-    //pc_set_guanli_butie($uid,"expends");
+//    pc_set_guanli_butie($uid,"expends");
     //shengji_pv_account($uid); //pv更新后升级账户，只判断了积分，还没判断左右市场身份站位
     
     //推广补贴
-    pc_set_tuiguang_butie($uid);
+//    pc_set_tuiguang_butie($uid);
     
 }
 /* 代码增加_start By www.cfweb2015.com */

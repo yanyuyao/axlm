@@ -2803,11 +2803,12 @@ elseif ($_REQUEST['step'] == 'done')
 	    $new_order_id = $db->insert_id();
 	    $order['order_id'] = $new_order_id;
 //{{{ //axlmpc
+            //var_dump($_SESSION);
     if($order['pay_name'] == '支付宝支付' || $order['pay_name'] == '微信支付'){
 //        支付成功后再分佣
     }else if($order['pay_name'] == '现金币' || $order['pay_name'] == '消费币'){
         pc_log("提交订单，即时分佣");
-        axlmpc($user_id,$order['order_id'],$order['order_amount'],$order['goods_amount'],$order['pay_name']);
+        axlmpc($_SESSION['user_id'],$order['order_id'],$order['order_amount'],$order['goods_amount'],$order['pay_name']);
         //支付后，修改现金币，消费币余额
         pc_log("提交订单，即时分佣---完成");
     }

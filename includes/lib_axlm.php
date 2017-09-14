@@ -1,4 +1,6 @@
-<?php
+<?php 
+require(ROOT_PATH . 'includes/lib_axlm_core.php');
+
 function get_pc_goods_info($gid){
     $ecs = $GLOBALS['ecs'];
     $db = $GLOBALS['db'];
@@ -13,6 +15,7 @@ function axlmpc($user_id,$order_id,$order_amount,$good_amount,$paytype=''){
     $ecs = $GLOBALS['ecs'];
     $db = $GLOBALS['db'];
     $usql = "SELECT * FROM " . $ecs->table('pc_user')."WHERE uid = '$user_id'";
+    
     $pcuserinfo = $db->getRow($usql);
     $tuijianren_user_id = $pcuserinfo['tuijianren_user_id'];
     $jiedianren_user_id = $pcuserinfo['jiedianren_user_id'];
@@ -38,13 +41,15 @@ function axlmpc($user_id,$order_id,$order_amount,$good_amount,$paytype=''){
 //            }
 //        }
         $status = 1;
-        
+    
         pc_set_user_status($user_id, $status, $level,'购物');
-        save_jifenbi_fanli($user_id,$good_amount,'购物返积分币');        
+     
+        save_jifenbi_fanli($user_id,$good_amount,'购物返积分币');     
+       
         if($good_amount > 6000){
             pc_set_guanli_butie($user_id,"goods");
         }
-       
+        
         //step 2: 设置金融账户变更，见3,4,5,6,7,8   
         if($paytype == '现金币'){
             change_account_info($user_id, "xianjinbi", "-", $good_amount);
@@ -77,7 +82,7 @@ function set_user_tree($user_id){
         pc_set_jiandian_butie($user_id);
 //echo "<font style='color:red'>管理补贴</font><br>";              
         //step 6: 管理补贴       
-        pc_set_guanli_butie($uid,"expends");
+        pc_set_guanli_butie($user_id,"expends");
         
         
 }
@@ -94,6 +99,7 @@ function pc_set_user_status($user_id, $status,$level,$note=''){
         $db->query($sql);
         pc_save_user_change_log($user_id,'status',$status,$note,0);
     }
+    echo 1111;
     //echo $sql;
     if($level>0){
         set_user_tree($user_id);
@@ -137,17 +143,7 @@ function get_user_parent_tuijian_array($uid,&$parent_array){
     return $parent_array;
 }
 
-function get_user_parent_array($uid,&$parent_array){
-    $info = get_pc_user_allinfo($uid);
-    //var_dump($info);
-    if(!$info['jiedianren_user_id']){
-        
-    }else{
-        $parent_array[] = $info['jiedianren_user_id'];
-        get_user_parent_array($info['jiedianren_user_id'], $parent_array);
-    }
-    return $parent_array;
-}
+
 
 function get_top_user_same_parent($cengNum,$uid1,$uid2){
      $uid1_info = get_pc_user_allinfo($uid1);
@@ -233,14 +229,7 @@ function get_top_user($uid){
         return get_top_user($jiedian['jiedianren_user_id']);
     }
 }
-function get_pc_user_allinfo($uid){
-    $ecs = $GLOBALS['ecs'];
-    $db = $GLOBALS['db'];
-    
-    $sql = "SELECT u.*,log.is_tuiguang,log.is_fuwu,log.is_jiandian, log.is_guanli FROM " . $ecs->table('pc_user')." u left join ".$ecs->table('pc_user_status_log')." log on u.uid = log.uid WHERE u.uid = '$uid' and u.status = 1 ";
-//    pc_log($sql,'get_pc_user_allinfo');
-    return $db->getRow($sql);
-}
+
 
 function getAllUserList($uid,&$data){
 	$db = $GLOBALS['db'];
@@ -262,70 +251,8 @@ function getAllUserList($uid,&$data){
 		return $data;
 	}
 }
-function getUserCentNum($uid){
-    $data = array();
-    $data = getCengData($uid);
-//    $top_uid = get_top_user($uid);
-//    $data = getCengjiList($top_uid,1,$data);
-//    pc_log($data,'getUserCentNum');
-    $cengNum = 0;
-    foreach($data as $k=>$v){
-        if($v){
-            foreach($v as $kk=>$vv){
-                if($vv['uid'] == $uid){
-                    $cengNum = $k;
-                }
-            }
-        }
-    }
-//    pc_log($cengNum,' Ceng Num');
-    return array("cengNum"=>$cengNum,'cengList'=>$data);
-}
-//顶级userid ,uid的层
-//
-function getCengjiList($uid,$dengji, &$data){
-    $db = $GLOBALS['db'];
-    $ecs = $GLOBALS['ecs'];
 
-    if($dengji == 1){
-        $data = array();
-        $data[1]=array($uid);
-         getCengjiList($uid,$dengji+1,$data);
-    }else{
-        
-        $sql = "select uid from ".$ecs->table('pc_user')." where jiedianren_user_id = $uid ";
-//        pc_log($sql,"getCentjiList");
-        $nextlist = $db->getAll($sql);
-        if($nextlist){
-            foreach($nextlist as $k=>$v){
-                $data[$dengji][] = $v['uid'];
-                getCengjiList($v['uid'],$dengji+1,$data);
-            }
-        }else{
-            return;
-        }
-    }
-    
-    return $data;
-}
-//等级层的详细信息
-function getCengData($uid){
-    $top_uid = get_top_user($uid);
-    $data = array();
-    $ceng_data = getCengjiList($top_uid, 1, $data);
-    $user_cent_all_info = array();
-    if($ceng_data){
-        foreach($ceng_data as $k=>&$v){
-            if($v){
-                foreach($v as $kk=>&$vv){
-                    $vv = get_pc_user_allinfo($vv);
-                }
-            }
-            
-        }
-    }
-    return $ceng_data;
-}
+
 function pc_log($body,$title=''){
     $test = 0;
     if($test){
@@ -344,119 +271,127 @@ function pc_log($body,$title=''){
 
 //{{{ 服务补贴
 
+
 //{{{服务补贴计算
 function pc_set_fuwu_butie($uid){
     $ecs = $GLOBALS['ecs'];
     $db = $GLOBALS['db'];
+    $jiangxiang = "fuwubutie";
+//    $cenginfo = getUserCentNum($uid);
+//    var_dump($cenginfo);
+//    $cengNum = $cenginfo['cengNum'];
+//    $cengList = $cenginfo['cengList'];
+    //先获得所有的接点人直线数组，每一层循环判断
+    $jiedianren_user_array = get_user_parent_array($uid);
     
-    $cenginfo = getUserCentNum($uid);
-    $cengNum = $cenginfo['cengNum'];
-    $cengList = $cenginfo['cengList'];
+    //var_dump($jiedianren_user_array);
+   
+    foreach($jiedianren_user_array as $k=>$v){
+        //$v 即是接点人
+        $ceng = $k+1;
+//        echo "接点人 ： $v, 当前层 ： $ceng <br>";
+        
+        $user_ceng_stauts = pc_get_user_status_info($v,"fuwubutie",$ceng);
+        
+        if(!$user_ceng_stauts){ //这个层的这个状态没设置过，则进行
+            $data = pc_get_user_ceng_leftright_user($v, $ceng);
+            //var_dump($data);
+            $leftnum = intval($data['left']);
+            $rightnum = intval($data['right']);
+//            echo "左边：$leftnum ; 右边 ：$rightnum<br>";
+            if($leftnum/$rightnum>=1 || $rightnum/$leftnum>=1){ //服务是左右达成1:1则拿， 只要左右有人
+                $userinfo = get_pc_user_allinfo($v);
+                
+//                var_dump($userinfo);
+                if($userinfo['level'] > 2){
+                    save_fuwu_fanli($v,$userinfo);
+                    pc_save_user_status_info($v,$ceng, $jiangxiang,json_encode($data));
+                }
+            }
+//            echo "<br>===============<br>";
+        }
+        
+//        if($k == 0){
+//            $userinfo = get_pc_user_allinfo($v);
+//            if($userinfo['level'] > 2){
+//                save_fuwu_fanli($v,$userinfo);
+//            }
+//        }else{
+//           
+//        }
+    }
+    
     
 //    echo "层数:".$cengNum;
-    
-    if($uid){
-        $pcuserinfo = get_pc_user_allinfo($uid);
-        //pc_log($pcuserinfo,"pc_set_fuwu_butie");
-        $tuijianren_user_id = $pcuserinfo['tuijianren_user_id'];
-        $jiedianren_user_id = $pcuserinfo['jiedianren_user_id'];
-        
-        $level = intval($pcuserinfo['level']);
-        $is_fuwu = $pcuserinfo['is_fuwu'];
-        $cengUser = $cengList[$cengNum];
-        
-//        var_dump($cengUser);
-        if($cengUser){
-            $is_fuwu_pengdui = false;
-            foreach($cengUser as $k=>$v){
-                //判断当前层是否碰过对
-                if($v['is_fuwu'] == 'yes'){
-                    $is_fuwu_pengdui = true;
-                }
-            }
-            //已经碰对
-            if($is_fuwu_pengdui){
-                //save_user_status_log($uid,"fuwu",'beyes');
-                return 1;
-            }else{
-                //当前层没有碰过对,则说明，这层只有一个人或者还没有人
-                //只有高级会员即以上才能参与服务补贴, 且没有参与过的，也只能返利给高级会员及之上，每层一次， 最先达成的碰， 碰完这层结束
-                foreach($cengUser as $k=>$v){
-//                    echo $v['uid']."(".$v['level'].")--VS--".$uid."<br>";
-                    //碰对的和自己不能是同一个人， 且两人必须同时达到高级及以上
-                    if($v['uid'] != $uid && $v['level']>2 && $level>2){
-                        //碰对
-                        //情况1， 同一个接点人下的左右区碰
-                        if($v['jiedianren_user_id'] == $jiedianren_user_id){
-                            $jiedianren_info = get_pc_user_allinfo($jiedianren_user_id);
-                            if($jiedianren_info && $jiedianren_info['level']>2){//返利用户必须是高级及以上
-                                save_fuwu_fanli($jiedianren_user_id,$jiedianren_info);
-                                save_user_status_log($v['uid'], "fuwu", 'yes');
-                                save_user_status_log($uid, "fuwu", 'yes');
-                            }
-                        }else{ //不是同一个接点人
-                         
-                            $p_uid = get_top_user_same_parent($cengNum,$v['uid'],$uid);
-                            $p_uid_info = get_pc_user_allinfo($p_uid);
-//                            echo "<br>puid".$p_uid."<br>";
-                            if($p_uid_info && $p_uid_info['level']>2){ //返利用户必须是高级及以上
-                                save_fuwu_fanli($p_uid,$p_uid_info);
-                                save_user_status_log($v['uid'], "fuwu", 'yes');
-                                save_user_status_log($uid, "fuwu", 'yes');
-                            }
-                        }
-                    }
-                }
+    /*
+//    if($uid){
+//        $pcuserinfo = get_pc_user_allinfo($uid);
+//        //pc_log($pcuserinfo,"pc_set_fuwu_butie");
+//        $tuijianren_user_id = $pcuserinfo['tuijianren_user_id'];
+//        $jiedianren_user_id = $pcuserinfo['jiedianren_user_id'];
+//        
+//        $level = intval($pcuserinfo['level']);
+//        $is_fuwu = $pcuserinfo['is_fuwu'];
+//        $cengUser = $cengList[$cengNum];
+//        
+////        var_dump($cengUser);
+//        if($cengUser){
+//            $is_fuwu_pengdui = false;
+//            foreach($cengUser as $k=>$v){
+//                //判断当前层是否碰过对
+//                if($v['is_fuwu'] == 'yes'){
+//                    $is_fuwu_pengdui = true;
+//                }
+//            }
+//            //已经碰对
+//            if($is_fuwu_pengdui){
+//                //save_user_status_log($uid,"fuwu",'beyes');
+//                return 1;
+//            }else{
+//                //当前层没有碰过对,则说明，这层只有一个人或者还没有人
+//                //只有高级会员即以上才能参与服务补贴, 且没有参与过的，也只能返利给高级会员及之上，每层一次， 最先达成的碰， 碰完这层结束
+//                foreach($cengUser as $k=>$v){
+////                    echo $v['uid']."(".$v['level'].")--VS--".$uid."<br>";
+//                    //碰对的和自己不能是同一个人， 且两人必须同时达到高级及以上
+//                    if($v['uid'] != $uid && $v['level']>2 && $level>2){
+//                        //碰对
+//                        //情况1， 同一个接点人下的左右区碰
+//                        if($v['jiedianren_user_id'] == $jiedianren_user_id){
+//                            $jiedianren_info = get_pc_user_allinfo($jiedianren_user_id);
+//                            if($jiedianren_info && $jiedianren_info['level']>2){//返利用户必须是高级及以上
+//                                save_fuwu_fanli($jiedianren_user_id,$jiedianren_info);
+//                                save_user_status_log($v['uid'], "fuwu", 'yes');
+//                                save_user_status_log($uid, "fuwu", 'yes');
+//                            }
+//                        }else{ //不是同一个接点人
+//                         
+//                            $p_uid = get_top_user_same_parent($cengNum,$v['uid'],$uid);
+//                            $p_uid_info = get_pc_user_allinfo($p_uid);
+////                            echo "<br>puid".$p_uid."<br>";
+//                            if($p_uid_info && $p_uid_info['level']>2){ //返利用户必须是高级及以上
+//                                save_fuwu_fanli($p_uid,$p_uid_info);
+//                                save_user_status_log($v['uid'], "fuwu", 'yes');
+//                                save_user_status_log($uid, "fuwu", 'yes');
+//                            }
+//                        }
+//                    }
+//                }
+//
+//            }
+//            
+//        }
+//    }
+//    
+    */
+}
 
-            }
-            
-        }
-    }
-}
-//计算服务返利
-function save_fuwu_fanli($uid,$userinfo){
-	$db = $GLOBALS['db'];
-        $ecs = $GLOBALS['ecs'];
-        pc_log("",'save fuwu fanli');
-        $config = $db->getRow("select svalue from ".$ecs->table('pc_config')." where sname = 'fuwu_ticheng'");
-        $fuwu_ticheng = $config['svalue']?intval($config['svalue']):0;
-        $change_value = $fuwu_ticheng;
-        
-	$original_value = intval($userinfo['account_xianjinbi']);
-        $new_value = $original_value + $change_value;
-        
-        $sql = "update ".$ecs->table('pc_user')." set account_xianjinbi = ".$new_value." where uid = ".$uid;
-	$db->query($sql);
-        
-	$sql = "insert into ".$ecs->table('pc_user_account_log')."(uid,type,original_value,change_value,new_value,note,adminid,ctime) values(".
-		"'".$uid."',".
-		"'account_xianjinbi',".
-		"'".$original_value."',".
-		"'".$change_value."',".
-		"'".$new_value."',".
-		"'服务补贴',".
-		"'0',".
-		"'".time()."' ".
-	")";
-	$db->query($sql);
-}
-//}}} 服务补贴
+
 //{{{见点补贴
 function pc_set_jiandian_butie($uid){
-        pc_log("见点奖");
+    pc_log("见点奖");
     $db = $GLOBALS['db'];
     $ecs = $GLOBALS['ecs'];
-    $checksql = "select uid,is_jiandian from ".$ecs->table('pc_user_status_log')." where uid = $uid ";
-    //echo $checksql;
-    $checksql = $db->getRow($checksql);
-    if($checksql && $checksql['is_jiandian'] == 'yes'){
-        return 1;
-    }
-
-    $parent_array = array();
-    $parent_array = get_user_parent_array($uid,$parent_array);
-    $pcuserinfo = get_pc_user_allinfo($uid);
-     
+    
     $jiandian_config = $db->getAll("select sname,svalue from ".$ecs->table('pc_config')." where sname in ('jiandian_limit_ceng','jiandian_left_danwei','jiandian_bili_left','jiandian_right_danwei','jiandian_bili_right')");
     $jiandain_config_array = array();
     if($jiandian_config){
@@ -465,49 +400,106 @@ function pc_set_jiandian_butie($uid){
        }
     }
     
-    $parent_array = array_reverse($parent_array);
-    $type = '';
-    if(count($parent_array) == 1){
-        return 1;
-    }elseif(count($parent_array)>=2){
-        $ceng2user = $parent_array[1];
-        $ceng2userinfo = get_pc_user_allinfo($ceng2user);
-        if($ceng2userinfo['leftright'] == 'left'){
-            $type = 'left';
-        }else{
-            $type = 'right';
-        }
-    }
-    
     $jiandian_bili_left = $jiandain_config_array['jiandian_bili_left'];
     $jiandian_bili_right = $jiandain_config_array['jiandian_bili_right'];
     
-    $return_bili = "";
-    if($type == 'left'){
-        $return_bili = $jiandian_bili_left;
-    }elseif($type == 'right'){
-        $return_bili = $jiandian_bili_right;
-    }
+    $jiedianren_user_array = get_user_parent_leftright_array($uid);
+    if(!$jiedianren_user_array){return 0;}
     
-    if($return_bili){
-        
-        if($checksql){
-            $sql = "update ".$ecs->table('pc_user_status_log')." set is_jiandian = 'yes', jiandian_used_time = '".time()."' where uid = $uid";
-        }else{
-            $sql = "insert into ".$ecs->table('pc_user_status_log')."(uid,is_jiandian, jiandian_used_time)values('".$uid."','yes','".time()."')";
-        }
-        $db->query($sql);
-        foreach($parent_array as $k=>$u){
-            $check_level_sql = "select level from ".$ecs->table('pc_user')." where uid = $u ";
-            $u_level = $db->getRow($check_level_sql);
-            if($u_level && $u_level['level']>2){
-                save_jiandian_fanli($u,$type,$return_bili);
-            }else{
-                continue;
+//    var_dump($jiedianren_user_array);
+    if($jiedianren_user_array){
+        foreach($jiedianren_user_array as $k=>$v){
+            if($v['level']>2){
+                $checksql = "select id from ".$ecs->table('pc_user_jiandian_log')." where uid = ".$v['uid']." and from_uid = $uid";
+    //            echo "<br>".$checksql."<br>";
+                $checkflag = $db->getOne($checksql);
+                if($checkflag){
+                    continue;
+                }
+                $return_bili = "";
+                $type = $v['leftright'];
+                if($type == 'left'){
+                    $return_bili = $jiandian_bili_left;
+                }elseif($type == 'right'){
+                    $return_bili = $jiandian_bili_right;
+                }
+                save_jiandian_fanli($v['uid'],$type,$return_bili);
+                $sql = "insert into ".$ecs->table("pc_user_jiandian_log")."(uid,from_uid,ctime)values(".
+                        "'".$v['uid']."',".
+                        "'".$uid."',".
+                        "'".time()."'".
+                        ")";
+    //            echo "<br>".$sql;
+                $db->query($sql);
             }
-            $check_level_sql = "";
         }
     }
+    return 1;
+    /*
+//    
+//    $checksql = "select uid,is_jiandian from ".$ecs->table('pc_user_status_log')." where uid = $uid ";
+//    //echo $checksql;
+//    $checksql = $db->getRow($checksql);
+//    if($checksql && $checksql['is_jiandian'] == 'yes'){
+//        return 1;
+//    }
+//
+//    $parent_array = array();
+//    $parent_array = get_user_parent_array($uid,$parent_array);
+//    $pcuserinfo = get_pc_user_allinfo($uid);
+//     
+//    $jiandian_config = $db->getAll("select sname,svalue from ".$ecs->table('pc_config')." where sname in ('jiandian_limit_ceng','jiandian_left_danwei','jiandian_bili_left','jiandian_right_danwei','jiandian_bili_right')");
+//    $jiandain_config_array = array();
+//    if($jiandian_config){
+//       foreach($jiandian_config as $k=>$v){
+//           $jiandain_config_array[$v['sname']] = $v['svalue'];
+//       }
+//    }
+//    
+//    $parent_array = array_reverse($parent_array);
+//    $type = '';
+//    if(count($parent_array) == 1){
+//        return 1;
+//    }elseif(count($parent_array)>=2){
+//        $ceng2user = $parent_array[1];
+//        $ceng2userinfo = get_pc_user_allinfo($ceng2user);
+//        if($ceng2userinfo['leftright'] == 'left'){
+//            $type = 'left';
+//        }else{
+//            $type = 'right';
+//        }
+//    }
+//    
+//    $jiandian_bili_left = $jiandain_config_array['jiandian_bili_left'];
+//    $jiandian_bili_right = $jiandain_config_array['jiandian_bili_right'];
+//    
+//    $return_bili = "";
+//    if($type == 'left'){
+//        $return_bili = $jiandian_bili_left;
+//    }elseif($type == 'right'){
+//        $return_bili = $jiandian_bili_right;
+//    }
+//    
+//    if($return_bili){
+//        
+//        if($checksql){
+//            $sql = "update ".$ecs->table('pc_user_status_log')." set is_jiandian = 'yes', jiandian_used_time = '".time()."' where uid = $uid";
+//        }else{
+//            $sql = "insert into ".$ecs->table('pc_user_status_log')."(uid,is_jiandian, jiandian_used_time)values('".$uid."','yes','".time()."')";
+//        }
+//        $db->query($sql);
+//        foreach($parent_array as $k=>$u){
+//            $check_level_sql = "select level from ".$ecs->table('pc_user')." where uid = $u ";
+//            $u_level = $db->getRow($check_level_sql);
+//            if($u_level && $u_level['level']>2){
+//                save_jiandian_fanli($u,$type,$return_bili);
+//            }else{
+//                continue;
+//            }
+//            $check_level_sql = "";
+//        }
+//    }
+    */
 }
 function save_jiandian_fanli($uid,$type,$return_bili){
 	$db = $GLOBALS['db'];
@@ -532,7 +524,7 @@ function save_jiandian_fanli($uid,$type,$return_bili){
                         "'".$original_value."',".
                         "'".$change_value."',".
                         "'".$new_value."',".
-                        "'见点奖返利',".
+                        "'见点奖返利-左区',".
                         "'0',".
                         "'".time()."' ".
                 ")";
@@ -547,7 +539,7 @@ function save_jiandian_fanli($uid,$type,$return_bili){
                         "'".$original_value."',".
                         "'".$change_value."',".
                         "'".$new_value."',".
-                        "'购物',".
+                        "'见点奖返利-右区',".
                         "'0',".
                         "'".time()."' ".
                 ")";
@@ -766,13 +758,107 @@ function pc_set_tuiguang_butie($uid){
     pc_log("推广补贴");
     $db = $GLOBALS['db'];
     $ecs = $GLOBALS['ecs'];
- 
+    $jiangxiang = "fuwubutie";
     //$userinfo = get_pc_user_allinfo($uid);
     //var_dump($userinfo);
     //$jiedianren_user_id = $userinfo['jiedianren_user_id'];
     
     //先获得所有的接点人直线数组，每一层循环判断
     $jiedianren_user_array = get_user_parent_array($uid);
+    if(!$jiedianren_user_array){return 0;}
+    
+//    var_dump($jiedianren_user_array);
+//    echo "<br>";
+    foreach($jiedianren_user_array as $k=>$v){
+        //$v 即是接点人
+//        echo "<hr><br>接点人 ： $v <br>";
+        $left_sql = "select uid from ".$ecs->table('pc_user')." where jiedianren_user_id = $v and leftright = 'left'";
+        $right_sql = "select uid from ".$ecs->table('pc_user')." where jiedianren_user_id = $v and leftright = 'right'";
+//        echo $left_sql."<br>";
+//        echo $right_sql."<br>";
+        $leftuser = $db->getOne($left_sql);
+        $rightuser = $db->getOne($right_sql);
+      
+        $leftuserid = $leftuser?$leftuser:0;
+        $rightuserid = $rightuser?$rightuser:0;
+//        echo "接点人下的left: $leftuserid;<br>";
+//        echo "接点人下的right: $rightuserid;<br>";
+        $left_array = array();
+        $right_array = array();
+        if($leftuserid){
+            $left_arr = getCengDataByUid($leftuserid);
+//            var_dump($left_arr);
+            foreach($left_arr as $kk=>$vv){
+                foreach($vv as $kkk=>$vvv){
+                    $check_sql = "select id from ".$ecs->table('pc_user_tuiguang_log')." where uid = $v and tuiguang_uid_used = $vvv ";
+//                    echo "left : ".$check_sql."<br>";
+                    $is_used_tuiguang = $db->getOne($check_sql);
+//                    echo $is_used_tuiguang."----<br>";
+                    if($is_used_tuiguang){
+                        
+                    }else{//没用过才能用
+                        $left_array[] = $vvv;
+                    }
+                }
+            }
+        }
+        if($rightuserid){
+            $right_arr = getCengDataByUid($rightuserid);
+            foreach($right_arr as $kk=>$vv){
+                foreach($vv as $kkk=>$vvv){
+                    $check_sql = "select id from ".$ecs->table('pc_user_tuiguang_log')." where uid = $v and tuiguang_uid_used = $vvv ";
+//                    echo "right : ".$check_sql."<br>";
+                    $is_used_tuiguang = $db->getOne($check_sql);
+//                    echo $is_used_tuiguang."----<br>";
+                    if($is_used_tuiguang){ 
+                        continue;
+                    }else{//没用过才能用
+                        $right_array[] = $vvv;
+                    }
+                    
+                }
+            }
+        }
+//                echo "<br>左边：".count($left_array)."<br>";
+//                var_dump($left_array);
+                $left_total = count($left_array);
+//                echo "<br>右边：".count($right_array)."<br>";
+//                var_dump($right_array);
+                $right_total = count($right_array);
+                
+        if(($left_total>=2 && $right_total) || ($right_total>=2 && $left_total)){
+            $peng = array();
+            if($left_total>$right_total){ //哪边人数多从那一边多碰
+                $peng[] = $left_array[0];
+                $peng[] = $left_array[1];
+                $peng[] = $right_array[0];
+                
+            }else{
+                $peng[] = $left_array[0];
+                $peng[] = $right_array[0];
+                $peng[] = $right_array[1];
+            }
+            if($peng){
+            $log_id = save_tuiguang_fanli($v);
+                foreach($peng as $pk=>$pv){
+                    $peng_sql = "insert into ".$ecs->table('pc_user_tuiguang_log')."(uid,tuiguang_uid_used,tuiguang_account_log_id,ctime)values(".
+                            "'".$v."',".
+                            "'".$pv."',".
+                            "'".$log_id."',".
+                            "'".time()."'".
+                            ")";
+//                    echo $peng_sql."<br>";
+                    $db->query($peng_sql);
+                }
+            }
+        }else{
+            //没有碰对
+            continue;
+        }
+
+        
+        
+    }
     
 //    var_dump($jiedianren_user_array);
 //    $where = "";
@@ -781,44 +867,46 @@ function pc_set_tuiguang_butie($uid){
 //    }else{
 //        $where .= " And leftright = 'left'";
 //    }
-    if(!$jiedianren_user_array){return 0;}
+   
+    /*
+//    foreach($jiedianren_user_array as $jiedian_k=>$jiedian_uid){
+//       
+//        $jiedian_info = getLeftRightUserList($jiedian_uid);
+//        if($jiedian_info['status']){ //左右区必须都有才有可能碰对，如果没有，则status = 0
+//            $pengdui_success = false;
+//            
+//            $leftuid = $jiedian_info['leftuid'];
+//            $rightuid = $jiedian_info['rightuid'];
+//            
+//            $leftqu_array = array();
+//            getAllUserListByUidNotUsedTuiguang($leftuid,$leftqu_array);
+////            pc_log($leftqu_array," left qu array {".$leftuid."}");
+//            
+//            $rightqu_array = array();
+//            getAllUserListByUidNotUsedTuiguang($rightuid,$rightqu_array);
+////            pc_log($rightqu_array," right qu array {".$rightuid."}");
+//            
+//            $bili = intval(count($leftqu_array))/intval(count($rightqu_array));
+//            pc_log($bili," 对碰比例 [left: ".count($leftqu_array)."] [right: ".count($rightqu_array)."]");
+//            if($bili == 0.5 || $bili == 2){
+//                save_tuiguang_fanli($jiedian_uid,$leftqu_array,$rightqu_array);
+//                $pengdui_success = true;
+//            }else{
+//                $pengdui_success = false;
+//            }
+//            if($pengdui_success){ //碰对成功即跳出
+//                break;
+//            }
+//        }else{
+//            continue;
+//        }
+//        
+//    }
+    */
     
-    foreach($jiedianren_user_array as $jiedian_k=>$jiedian_uid){
-       
-        $jiedian_info = getLeftRightUserList($jiedian_uid);
-        if($jiedian_info['status']){ //左右区必须都有才有可能碰对，如果没有，则status = 0
-            $pengdui_success = false;
-            
-            $leftuid = $jiedian_info['leftuid'];
-            $rightuid = $jiedian_info['rightuid'];
-            
-            $leftqu_array = array();
-            getAllUserListByUidNotUsedTuiguang($leftuid,$leftqu_array);
-//            pc_log($leftqu_array," left qu array {".$leftuid."}");
-            
-            $rightqu_array = array();
-            getAllUserListByUidNotUsedTuiguang($rightuid,$rightqu_array);
-//            pc_log($rightqu_array," right qu array {".$rightuid."}");
-            
-            $bili = intval(count($leftqu_array))/intval(count($rightqu_array));
-            pc_log($bili," 对碰比例 [left: ".count($leftqu_array)."] [right: ".count($rightqu_array)."]");
-            if($bili == 0.5 || $bili == 2){
-                save_tuiguang_fanli($jiedian_uid,$leftqu_array,$rightqu_array);
-                $pengdui_success = true;
-            }else{
-                $pengdui_success = false;
-            }
-            if($pengdui_success){ //碰对成功即跳出
-                break;
-            }
-        }else{
-            continue;
-        }
-        
-    }
     
- 
-       
+    $cur_cent = count($jiedianren_user_array)+1;
+    
     
 }
 
@@ -865,7 +953,7 @@ function getAllUserListByUidNotUsedTuiguang($uid,&$data){
 	}
 }
 
-function save_tuiguang_fanli($uid,$leftqu_array,$rightqu_array){
+function save_tuiguang_fanli($uid,$leftqu_array=array(),$rightqu_array=array()){
     $bili = 0.26;
     $basenum = 5000;
     //不区分高级，初级会员，都返利
@@ -894,37 +982,37 @@ function save_tuiguang_fanli($uid,$leftqu_array,$rightqu_array){
             "'0',".
             "'".time()."' ".
     ")";
-    $db->query($sql);
+    return $db->query($sql);
     
-    foreach($leftqu_array as $k=>$v){
-        $sql = "select * from ".$ecs->table('pc_user_status_log')." where uid =  ".$v['uid'];
-        $check = $db->getRow($sql);
-        if($check){
-            $sql = "update ".$ecs->table('pc_user_status_log')." set is_tuiguang = 'yes' where uid = ".$v['uid'];
-        }else{
-            $sql = "insert into ".$ecs->table('pc_user_status_log')."(uid,is_tuiguang,tuiguang_used_time)values(".
-                    "'".$v['uid']."',".
-                    "'yes',".
-                    "'".time()."'".
-                    ")";
-        }
-        $db->query($sql);
-    }
-    
-    foreach($rightqu_array as $k=>$v){
-        $sql = "select * from ".$ecs->table('pc_user_status_log')." where uid =  ".$v['uid'];
-        $check = $db->getRow($sql);
-        if($check){
-            $sql = "update ".$ecs->table('pc_user_status_log')." set is_tuiguang = 'yes' where uid = ".$v['uid'];
-        }else{
-            $sql = "insert into ".$ecs->table('pc_user_status_log')."(uid,is_tuiguang,tuiguang_used_time)values(".
-                    "'".$v['uid']."',".
-                    "'yes',".
-                    "'".time()."'".
-                    ")";
-        }
-        $db->query($sql);
-    }
+//    foreach($leftqu_array as $k=>$v){
+//        $sql = "select * from ".$ecs->table('pc_user_status_log')." where uid =  ".$v['uid'];
+//        $check = $db->getRow($sql);
+//        if($check){
+//            $sql = "update ".$ecs->table('pc_user_status_log')." set is_tuiguang = 'yes' where uid = ".$v['uid'];
+//        }else{
+//            $sql = "insert into ".$ecs->table('pc_user_status_log')."(uid,is_tuiguang,tuiguang_used_time)values(".
+//                    "'".$v['uid']."',".
+//                    "'yes',".
+//                    "'".time()."'".
+//                    ")";
+//        }
+//        $db->query($sql);
+//    }
+//    
+//    foreach($rightqu_array as $k=>$v){
+//        $sql = "select * from ".$ecs->table('pc_user_status_log')." where uid =  ".$v['uid'];
+//        $check = $db->getRow($sql);
+//        if($check){
+//            $sql = "update ".$ecs->table('pc_user_status_log')." set is_tuiguang = 'yes' where uid = ".$v['uid'];
+//        }else{
+//            $sql = "insert into ".$ecs->table('pc_user_status_log')."(uid,is_tuiguang,tuiguang_used_time)values(".
+//                    "'".$v['uid']."',".
+//                    "'yes',".
+//                    "'".time()."'".
+//                    ")";
+//        }
+//        $db->query($sql);
+//    }
 }
 function save_jifenbi_fanli($uid,$jifenbi,$note){
         $db = $GLOBALS['db'];
@@ -1216,3 +1304,4 @@ function pc_set_lianmengshangjia_butie($uid,$amount){
 //    echo $sql;
     $db->query($sql);
 }
+
