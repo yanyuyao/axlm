@@ -24,9 +24,9 @@ function axlmpc($user_id,$order_id,$order_amount,$good_amount,$paytype=''){
     if($order_id){
         //获得该订单中女性专区的产品总金额
         $is_zhuanqu_product = check_zhuanqu_product($order_id);
-        echo $is_zhuanqu_product."]]]]";
+//        echo $is_zhuanqu_product."]]]]";
         if($is_zhuanqu_product){ //专区产品走这个流程
-            echo "axlm pc jisuan <br>";
+//            echo "axlm pc jisuan <br>";
             $good_amount = $is_zhuanqu_product;
             //step 1: 激活账户，设置pc_user.status = 1 ,  level=2,3,4
             $level_sql = "SELECT * FROM " . $ecs->table('pc_user_level')." where level_limit_note <= $good_amount order by level_limit_note desc";
@@ -106,7 +106,6 @@ function pc_set_user_status($user_id, $status,$level,$note=''){
         $db->query($sql);
         pc_save_user_change_log($user_id,'status',$status,$note,0);
     }
-    echo 1111;
     //echo $sql;
     if($level>0){
         set_user_tree($user_id);
