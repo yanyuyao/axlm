@@ -260,7 +260,7 @@ function getAllUserList($uid,&$data){
 
 
 function pc_log($body,$title=''){
-    $test = 0;
+    $test = 1;
     if($test){
         echo "<br>===== {{{ $title ==========<br>";
         if(is_array($body)){
@@ -582,12 +582,13 @@ function pc_set_guanli_butie($uid,$type){
         //给直推线上的人返积分
         if($tuijian_parent_array){
             $sql = "select uid, role,level from ".$ecs->table('pc_user')." where uid in (".implode(",",$tuijian_parent_array).") order by uid desc ";
+                    echo $sql;
             $ulist = $db->getAll($sql);
             if($ulist){
                 
             //{{{给直推人返积分    
                 foreach($ulist as $k=>$v){
-//                  echo "<br>".$v['uid']."-----".$v['role']."------".$v['level']."<br>";
+                  echo "<br>".$v['uid']."-----".$v['role']."------".$v['level']."<br>";
                     $level = $v['level'];
                     if($level > 2 && $v['role']>1){ //只给高级会员及以上返
                         
@@ -646,7 +647,7 @@ function shengji_pv_account($uid){
         $userinfo = get_pc_user_allinfo($uid);
         $user_pv = $userinfo['account_jifen'];
         
-        $role_sql = "select id,role_name,role_pv, role_limit from ".$ecs->table('pc_user_role')." where role_pv <= ".$user_pv." order by id desc";
+        $role_sql = "select id,role_name,role_pv, role_limit from ".$ecs->table('pc_user_role')." where role_pv <= ".intval($user_pv)." order by id desc";
         pc_log($role_sql,"shengji_pv_account");
         $nextrole = $db->getRow($role_sql);
         

@@ -135,7 +135,7 @@ call_user_func($function_name);
 /* 路由 */
 
 function action_rantest(){
-    $uid =7;
+    $uid =1;
     $oid = 9;
     //测试某个订单中女性专区的产品总金额
 //    echo getTopCat(368);
@@ -156,8 +156,8 @@ function action_rantest(){
     //pc_set_jiandian_butie($uid);
     
     //管理补贴
-    //pc_set_guanli_butie($uid,"expends");
-    //shengji_pv_account($uid); //pv更新后升级账户，只判断了积分，还没判断左右市场身份站位
+    pc_set_guanli_butie($uid,"expends");
+    shengji_pv_account($uid); //pv更新后升级账户，只判断了积分，还没判断左右市场身份站位
     
     //推广补贴
 //    pc_set_tuiguang_butie($uid);
