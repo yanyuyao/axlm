@@ -600,7 +600,7 @@ function pc_set_guanli_butie($uid,$type){
         }
     }elseif($type == 'expends'){
         //给直推线上的人返积分
-        echo 111;
+       
         if($tuijian_parent_array){
             //{{{ 返现金币
                 save_pv_fanli_xianjinbi($tuijian_parent_array,$pv);
