@@ -62,23 +62,29 @@ function get_user_parent_array($uid,&$parent_array){
 //for 见点奖，区分左右区
 function get_user_parent_leftright_array($uid,&$parent_array){
 //    echo "<br>$uid<br>";
+    
     $info = get_pc_user_allinfo($uid);
+    $jiedianreninfo = get_pc_user_allinfo($info['jiedianren_user_id']);
+//    echo "<br>==============<br>";
 //    var_dump($info);
-//    echo "<br>";
+//    echo "<br>==============<br>";
     //限制十层
     if(count($parent_array)>=10){ return $parent_array;}
     
+    $parent_array[] = array(
+                            "uid"=>$info['jiedianren_user_id'],
+                            "leftright"=>$info['leftright'],
+                            "level"=>$jiedianreninfo['level']
+                            );
+    
     if(!$info['jiedianren_user_id']){ //没有接点人，就是到顶级了
-       // $parent_array[] = $info['jiedianren_user_id']."---".$info['leftright'];
+//        $parent_array[] = $info['jiedianren_user_id']."---".$info['leftright'];
+        return $parent_array;
     }else{
-        $parent_array[] = array(
-                                "uid"=>$info['jiedianren_user_id'],
-                                "leftright"=>$info['leftright'],
-                                "level"=>$info['level']
-                                );
-        get_user_parent_leftright_array($info['jiedianren_user_id'], $parent_array);
+        return get_user_parent_leftright_array($info['jiedianren_user_id'], $parent_array);
     }
-    return $parent_array;
+//    unset($info);
+//    return $parent_array;
 }
 //获得用户的，当前层，该类型的返利，是否拿到， 1：已返利，0：未返利
 //$type = tuiguangbutie, fuwubutie, jiandianbutue,guanli
@@ -185,8 +191,9 @@ function pc_get_user_ceng_leftright_user($uid,$ceng){
     //echo $uid;
     $ecs = $GLOBALS['ecs'];
     $db = $GLOBALS['db'];
-    $leftuser = $db->getOne("select uid from ".$ecs->table('pc_user')." where jiedianren_user_id = $uid and leftright = 'left'");
-    $rightuser = $db->getOne("select uid from ".$ecs->table('pc_user')." where jiedianren_user_id = $uid and leftright = 'right'");
+    //只让1.3的碰，5000的不碰
+    $leftuser = $db->getOne("select uid from ".$ecs->table('pc_user')." where jiedianren_user_id = $uid and leftright = 'left' and level > 2");
+    $rightuser = $db->getOne("select uid from ".$ecs->table('pc_user')." where jiedianren_user_id = $uid and leftright = 'right' and level > 2");
     $left_arr = array();
     $right_arr = array();
 
@@ -218,13 +225,24 @@ function save_fuwu_fanli($uid,$userinfo=array()){
         $fuwu_ticheng = $config['svalue']?intval($config['svalue']):0;
         $change_value = $fuwu_ticheng;
         
+         //保存现金币，扣除费用
+        $kouchu_aixinbi = $db->getOne("select svalue from ".$ecs->table('pc_config')." where sname='kouchu_aixinbi'");
+        $kouchu_shuishou = $db->getOne("select svalue from ".$ecs->table('pc_config')." where sname='kouchu_shuishou'");
+        $kouchu_xiaofeibi = $db->getOne("select svalue from ".$ecs->table('pc_config')." where sname='kouchu_xiaofeibi'");
+        
+        $kouchu_aixinbi = $kouchu_aixinbi?$change_value*floatval($kouchu_aixinbi):0;
+        $kouchu_shuishou = $kouchu_shuishou?$change_value*floatval($kouchu_shuishou):0;
+        $kouchu_xiaofeibi = $kouchu_xiaofeibi?$change_value*floatval($kouchu_xiaofeibi):0;
+        
+        $xianjinbi_systemnote = "扣除之前的现金币".$change_value;
+        $change_value = $change_value - $kouchu_aixinbi - $kouchu_shuishou - $kouchu_xiaofeibi;
+        
+//保存现金币
 	$original_value = intval($userinfo['account_xianjinbi']);
         $new_value = $original_value + $change_value;
-        
         $sql = "update ".$ecs->table('pc_user')." set account_xianjinbi = ".$new_value." where uid = ".$uid;
 	$db->query($sql);
-        
-	$sql = "insert into ".$ecs->table('pc_user_account_log')."(uid,type,original_value,change_value,new_value,note,adminid,ctime) values(".
+	$sql = "insert into ".$ecs->table('pc_user_account_log')."(uid,type,original_value,change_value,new_value,note,adminid,ctime,systemnote) values(".
 		"'".$uid."',".
 		"'account_xianjinbi',".
 		"'".$original_value."',".
@@ -232,8 +250,50 @@ function save_fuwu_fanli($uid,$userinfo=array()){
 		"'".$new_value."',".
 		"'服务补贴',".
 		"'0',".
-		"'".time()."' ".
+		"'".time()."', ".
+		"'".$xianjinbi_systemnote."' ".
 	")";
 	$db->query($sql);
+        
+        //保存爱心币
+        $original_value = 0;
+        $new_value = 0;
+        $original_value = intval($userinfo['account_aixinbi']);
+        $new_value = $original_value + $kouchu_aixinbi;
+        $sql = "update ".$ecs->table('pc_user')." set account_aixinbi = ".$new_value." where uid = ".$uid;
+	$db->query($sql);
+	$sql = "insert into ".$ecs->table('pc_user_account_log')."(uid,type,original_value,change_value,new_value,note,adminid,ctime,systemnote) values(".
+		"'".$uid."',".
+		"'account_aixinbi',".
+		"'".$original_value."',".
+		"'".$kouchu_aixinbi."',".
+		"'".$new_value."',".
+		"'服务补贴返爱心币',".
+		"'0',".
+		"'".time()."', ".
+		"'服务补贴返爱心币-扣除兑换成爱心币'".
+	")";
+	$db->query($sql);
+        
+        //保存消费币
+        $original_value = 0;
+        $new_value = 0;
+        $original_value = intval($userinfo['account_xiaofeibi']);
+        $new_value = $original_value + $kouchu_xiaofeibi;
+        $sql = "update ".$ecs->table('pc_user')." set account_xiaofeibi = ".$new_value." where uid = ".$uid;
+	$db->query($sql);
+	$sql = "insert into ".$ecs->table('pc_user_account_log')."(uid,type,original_value,change_value,new_value,note,adminid,ctime,systemnote) values(".
+		"'".$uid."',".
+		"'account_xiaofeibi',".
+		"'".$original_value."',".
+		"'".$kouchu_xiaofeibi."',".
+		"'".$new_value."',".
+		"'服务补贴返消费币',".
+		"'0',".
+		"'".time()."', ".
+		"'服务补贴返消费币-扣除兑换成消费币'".
+	")";
+	$db->query($sql);
+        
 }
 //}}} 服务补贴
