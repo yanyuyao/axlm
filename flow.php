@@ -1727,12 +1727,12 @@ elseif ($_REQUEST['step'] == 'select_payment')
         if($pay_code == "xianjinbi"){
             if($total['amount'] > floatval($pc_user_info['account_xianjinbi'])){
                 $result['error']="error_xianjinbi";
-                $result['content']='您的现金币余额不足！\r\n订单金额：'.$total['amount_formated'].'\r\n您当前的现金币：¥'.$pc_user_info['account_xianjinbi'];
+                $result['content']='您的现金币余额不足！订单金额：'.$total['amount_formated'].'; 您当前的现金币：¥'.$pc_user_info['account_xianjinbi'];
             }
         }else if($pay_code == 'xiaofeibi'){
             if($total['amount'] > floatval($pc_user_info['account_xiaofeibi'])){
                 $result['error']="error_xiaofeibi";
-                $result['content']='您的消费币余额不足！\r\n订单金额：'.$total['amount_formated'].'\r\n您当前的现金币：¥'.$pc_user_info['account_xiaofeibi'];
+                $result['content']='您的消费币余额不足！订单金额：'.$total['amount_formated'].'; 您当前的现金币：¥'.$pc_user_info['account_xiaofeibi'];
             }
         }
         

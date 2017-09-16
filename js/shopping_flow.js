@@ -279,9 +279,10 @@ function handleGroupBuyInsure(needInsure) {
  * 回调函数
  */
 function orderSelectedResponse(result) {
-	
 	if (result.error) {
+		$("#pay_div input[type='radio']").attr("checked", false);
 		if(result.error == 'error_xianjinbi' || result.error == 'error_xiaofeibi'){
+			
 			alert(result.content);
 		}else{
 			alert(result.error);

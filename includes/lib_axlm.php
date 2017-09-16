@@ -265,7 +265,7 @@ function getAllUserList($uid,&$data){
 
 
 function pc_log($body,$title=''){
-    $test = 1;
+    $test = 0;
     if($test){
         echo "<br>===== {{{ $title ==========<br>";
         if(is_array($body)){
