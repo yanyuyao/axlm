@@ -529,6 +529,8 @@ function action_register ()
 			require_once (ROOT_PATH . 'includes/lib_validate_record.php');
 			
 			$mobile_phone = ! empty($_POST['mobile_phone']) ? trim($_POST['mobile_phone']) : '';
+			$uname = ! empty($_POST['uname']) ? trim($_POST['uname']) : '';
+			$uemail = ! empty($_POST['uemail']) ? trim($_POST['uemail']) : '';
 			$mobile_code = ! empty($_POST['mobile_code']) ? trim($_POST['mobile_code']) : '';
 			
 			$record = get_validate_record($mobile_phone);
@@ -561,8 +563,11 @@ function action_register ()
 			}
 			
 			/* 手机注册时，用户名默认为u+手机号 */
-			$username = generate_username_by_mobile($mobile_phone);
-			
+			if(!$uname){
+                            $username = generate_username_by_mobile($mobile_phone);
+                        }else{
+                            $username = $uname;
+                        }
 			/* 手机注册 */
 			$result = register_by_mobile($username, $password, $mobile_phone, $other);
 			
@@ -583,6 +588,9 @@ function action_register ()
 		
 		if($result)
 		{
+                        if($uemail){
+                            $db->query("update ".$ecs->table('users')." set email = '".$uemail."' where user_id = ".$_SESSION['user_id']);
+                        }
 			//插入pc_user
 			$newsql = 'INSERT INTO ' . $ecs->table('pc_user') . ' (`uid`) VALUES('.$_SESSION['user_id'].')';
 			$db->query($newsql);

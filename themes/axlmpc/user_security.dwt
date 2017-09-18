@@ -137,10 +137,16 @@ function countdown(obj, msg) {
         <div class="mc" id="shengji-mc">
           <div class="fore1"> <s class="fore1_1"></s> <strong>升级账户</strong> </div>
           <div class="fore2"> 
-           
+           <!-- {if $pc_user.jiedianren_user_id} -->
+                    <p>推荐人：{$pc_user.tuijianren_user_name}</p>
+                    <p>接点人：{$pc_user.jiedianren_user_name} 【{$pc_user.leftright_title}】</p>
+            <!-- {/if}-->
           </div>
           <div class="fore3"> 
-            <input type="button" value="设置" onclick="window.location.href='security.php?act=shengji_setup'" class="main-btn main-btn-large" />
+            <!-- {if $pc_user.jiedianren_user_id} -->
+            <!-- {else}-->
+                <input type="button" value="设置" onclick="window.location.href='security.php?act=shengji_setup'" class="main-btn main-btn-large" />
+            <!-- {/if}-->
           </div>
           
         </div>
@@ -2081,7 +2087,7 @@ function countdown(obj, msg) {
 				<div class="find_con">
 				<!--{if $step eq 'setpup'}--> 
 				  <div id="find-box" class="uc_box">
-					<form action="security.php" method="post" id="fpForm" name="fpForm">
+					<form action="security.php" method="post" id="fpForm" name="fpForm" onsubmit="return checkshengji();" >
 					  <div id="error_container"></div>
 					 
 					  <div class="item">
@@ -2090,14 +2096,13 @@ function countdown(obj, msg) {
 					  </div>
 					  <div class="item">
 						<label class="con_un">接点人账户：</label>
-						<input type="text" id="jiedianren_user_id" name="jiedianren_user_id" class="text text_te" placeholder="" autocomplete="off" value="{$pc_user.jiedianren_user_id}" />
-					  </div>
+						<input type="text" id="jiedianren_user_name" name="jiedianren_user_name" onblur="selectLeftRight(this)"; class="text text_te" placeholder="" autocomplete="off" value="{$pc_user.jiedianren_user_id}" />
+						<input type="text" id="jiedianren_user_id" name="jiedianren_user_id" value="{$pc_user.jiedianren_user_id}" readonly style="display:none;" />
+                                                
+                                            </div>
 					  <div class="item">
 						<label class="con_un">接点区域：</label>
-						<select id="leftright" name="leftright" autocomplete="off" />
-							<option value="left" <!--{if $pc_user.leftright eq 'left'}-->selected<!--{/if}-->>左区</option>
-							<option value="right" <!--{if $pc_user.leftright eq 'right'}-->selected<!--{/if}-->>右区</option>
-						</select>
+                                                <select id="leftright" name="leftright" autocomplete="off" /><option value="">--请选择--</option></select>
 					  </div>
 					  <div class="item">
 						<label class="con_un">服务中心：</label>
@@ -2155,5 +2160,67 @@ function countdown(obj, msg) {
 {foreach from=$lang.clips_js item=item key=key}
 var {$key} = "{$item}";
 {/foreach}
+var jiedianren_list = {$jiedianrenlist};
+jiedianren_list = eval("("+jiedianren_list+")"); 
+function selectLeftRight(e){
+    var selectbody = "";
+    var left_uid = 0;
+    var right_uid = 0;
+
+    if($(e).val() == 0){
+        selectbody += '<option value="left">左区</option>';
+        $('#leftright').html(selectbody);
+        return 1;
+    }
+
+    var jiedianren_user_id = 0;
+    var flag = false;
+    $.each(jiedianren_list, function (n, val) {
+        //alert(val.uid +" "+ val.left_uid);
+        //console.log(n+"-->"+val.user_name+"-->"+$(e).val());
+        if(val.user_name == $(e).val()){
+            flag = true;
+            console.log("left uid : "+val.left_uid+" right uid : "+val.right_uid);
+            left_uid = val.left_uid;
+            right_uid = val.right_uid;
+            $('#jiedianren_user_id').val(val.uid);
+        }
+    });
+    if(flag){
+        //alert(left_uid+"==="+right_uid);
+        if(left_uid == 0){
+            selectbody += '<option value="left">左区</option>'
+        }
+        if(right_uid == 0){
+            selectbody += '<option value="right">右区</option>'
+        }
+
+        $('#leftright').html(selectbody);
+    }else{
+        alert('没有找到该接点人或者接点人下没有位置可以放');
+        $('#leftright').html('');
+        return false;
+    }
+}
+function checkshengji(){
+    var tuijianren_user_id = $('#tuijianren_user_id').val();
+    var jiedianren_user_id = $('#jiedianren_user_id').val();
+    var leftright = $('#leftright').val();
+    if(leftright == null){ leftright = '';}
+    //console.log("tj : ["+tuijianren_user_id+"]");
+    //console.log("jd : ["+jiedianren_user_id+"]");
+    //console.log("leftright : ["+leftright+"]");
+
+    //if(tuijianren_user_id == '0' && jiedianren_user_id == '0' && leftright == 'left'){
+    //    return true;
+    //}
+
+    if(tuijianren_user_id != '0' && jiedianren_user_id != '0' && leftright != ''){
+        return true;
+    }
+  
+    alert('请正确填写接点人和所属区域');
+    return false;
+}
 </script>
 </html>

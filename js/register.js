@@ -182,7 +182,37 @@ function checkEmailExist(email, callback) {
 		}
 	}, 'text');
 }
+function check_username(val) {
+	if (val == '') {
+		document.getElementById('username_message').innerHTML = '用户名不能为空！';
+	} else if (val.match(/[\u4e00-\u9fa5]/)) {
+		document.getElementById('username_message').innerHTML = '用户名不能有中文！';
+    /* 代码增加 By  www.68ecshop.com Start */
+    } else if (!val.match(/^[a-zA-Z0-9_]{1,}$/)) {
+        document.getElementById('username_message').innerHTML = '用户名只能由字母数字下划线组成！';
+    /* 代码增加 By  www.68ecshop.com End */
+    } else {
+		Ajax.call('user.php?act=check_username', 'username=' + val, checkusername_callback, 'GET', 'TEXT', true, true);
+	}
+}
 
+function checkusername_callback(result) {
+	if (result == 0) {
+		document.getElementById('username_message').innerHTML = '可以修改';
+	} else {
+		document.getElementById('username_message').innerHTML = '用户名已存在，请重新输入！';
+	}
+}
+
+function checkUname(uname){
+	if(!(/^[\w]{4,20}$/.test($(uname).val()))){ 
+		return false; 
+	}
+	else
+	{
+		return true;
+	}
+}
 function checkMobile(sMobile){ 
 	if(!(/^1[3|4|5|7|8][0-9]\d{4,8}$/.test(sMobile))){ 
 		return false; 
@@ -411,11 +441,14 @@ function reg_by_email() {
 }
 
 function reg_by_mobile() {
+	
 	var frm = document.forms['formUser'];
 	// 手机时不支持用户名注册
 	// var username = Utils.trim(frm.elements['username'].value);
 	var mobile_phone = frm.elements['mobile_phone'].value;
 	var password = Utils.trim(frm.elements['password'].value);
+	var uname = Utils.trim(frm.elements['uname'].value);
+	var uemail = Utils.trim(frm.elements['uemail'].value);
 	var confirm_password = Utils.trim(frm.elements['confirm_password'].value);
 	var checked_agreement = frm.elements['agreement'].checked;
 	var msn = frm.elements['extend_field1'] ? Utils.trim(frm.elements['extend_field1'].value) : '';
@@ -436,12 +469,19 @@ function reg_by_mobile() {
 	// 检查输入
 	var msg = '';
 
+	
 	if (mobile_phone.length == 0) {
 		msg += msg_mobile_phone_blank + '\n';
 	} else {
 		if (!(Utils.isMobile(mobile_phone))) {
 			msg += mobile_phone_invalid + '\n';
 		}
+	}
+	if(uname.length == 0){
+		msg += "-姓名不能为空\n";
+	}
+	if(uemail.length == 0){
+		msg += '-邮箱不能为空\n';
 	}
 	if (password.length == 0) {
 		msg += password_empty + '\n';
@@ -487,7 +527,7 @@ function reg_by_mobile() {
 	if ($("#captcha").size() > 0 && captcha.length == 0) {
 		msg += msg_captcha_blank + '\n';
 	}
-
+	
 	// if (mobile_phone.length > 0) {
 	// var reg = /^[\d|\-|\s]+$/;
 	// if (!reg.test(mobile_phone)) {

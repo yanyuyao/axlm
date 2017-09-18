@@ -40,6 +40,24 @@ if(empty($_SESSION['user_id']))
 	$action = 'login';
 	header("Location: user.php?act=login");
 }
+//var_dump($_SESSION);
+$user_id = $_SESSION['user_id'];
+$sql = "select * from ".$ecs->table('pc_user')." where uid = ".$user_id;
+//echo $sql;
+$pc_user = $db->getRow($sql);
+if($pc_user['jiedianren_user_id']){
+    $pc_user['jiedianren_user_name'] = $db->getOne("select user_name from ".$ecs->table('users')." where user_id = '".$pc_user['jiedianren_user_id']."'");
+}
+if($pc_user['tuijianren_user_id']){
+    $pc_user['tuijianren_user_name'] = $db->getOne("select user_name from ".$ecs->table('users')." where user_id = '".$pc_user['tuijianren_user_id']."'");
+}
+if($pc_user['leftright'] == 'left'){
+    $pc_user['leftright_title'] = '左区';
+}elseif($pc_user['leftright'] == 'right'){
+    $pc_user['leftright_title'] = '右区';
+}
+var_dump($pc_user);
+$smarty->assign('pc_user',$pc_user);
 
 /* 如果是显示页面，对页面进行相应赋值 */
 if(in_array($action, $ui_arr) || true)
@@ -1579,7 +1597,7 @@ function action_shengji_setup ()
 	$user_id = $GLOBALS['user_id'];
 
 	//服务中心
-	$sql = "select uid from " . $ecs->table('pc_user') . " where identity = 4 ";
+	$sql = "select uid from " . $ecs->table('pc_user') . " where identity = 4 and status = 1";
 	//echo $sql;
 	$fuwuzhongxinlist = $db->getAll($sql);
 	if($fuwuzhongxinlist){
@@ -1590,6 +1608,35 @@ function action_shengji_setup ()
 	//var_dump($fuwuzhongxinlist);
 	$smarty->assign('fuwuzhongxinlist', $fuwuzhongxinlist);
 	
+        $jiedian_sql = "select uid from " . $ecs->table('pc_user') . " where status = 1";
+	$jiedianrenlist = $db->getAll($jiedian_sql);
+        $jiedianrenArray = array();
+        if($jiedianrenlist){
+            foreach($jiedianrenlist as $k=>$v){
+                $v['left_uid'] = 0;
+                $v['right_uid'] = 0;
+                $nextlist = $db->getAll("select uid,leftright,user_name from ".$ecs->table('pc_user')." pu left join ".$ecs->table("users")." u on pu.uid = u.user_id where jiedianren_user_id = ".$v['uid']);
+                if($nextlist){
+                    foreach($nextlist as $kk=>$vv){                        
+                        if($vv['leftright'] == 'right'){
+                            $v['right_uid'] = $vv['uid'];
+                        }
+                        if($vv['leftright'] == 'left'){
+                            $v['left_uid'] = $vv['uid'];
+                        }
+                        $v['user_name'] = $vv['user_name'];
+                    }
+                    if($v['left_uid'] == 0 || $v['right_uid'] == 0){
+                        $jiedianrenArray[$k]=$v;
+                    }
+                }
+                
+            }
+        }
+//        var_dump($jiedianrenArray);
+        $smarty->assign("jiedianrenlist", json_encode($jiedianrenArray));
+        
+        
 	$user_info = $user->get_profile_by_id($user_id);
 	$user_name = $user_info['user_name'];
 	$email = $user_info['email'];

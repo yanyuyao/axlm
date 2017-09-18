@@ -208,7 +208,7 @@ function submit_surplus_form(){
                     <tr>
                       <td width="35%" align="right">用户名称：</td>
                       <td width="65%" align="left">
-                      	<input type="text" name="username" value="{$profile.user_name}" onblur="check_username(this.value)" size="25" class="inputBg" style="ime-mode:disabled" />
+                      	<input type="text" name="username" value="{$profile.user_name}" onblur="check_username(this.value)" size="25" class="inputBg" style="ime-mode:disabled" readonly />
                         <span id="username_message" style="color:#E31939"></span>
                       </td>
                     </tr>

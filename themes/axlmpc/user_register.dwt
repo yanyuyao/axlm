@@ -72,6 +72,16 @@ function erweima1(obj, sType) { var oDiv = document.getElementById(obj); if (sTy
               <i class="i-phone"></i>
               <div> <span class="label" id="mobile_phone_notice"></span> </div>
             </div>
+            <div class="item">
+              <input name="uname" type="text" id="uname" placeholder="名字" onblur="check_username($(this).val())"  class="text" />
+              <i class="i-user" style="background-position:0 -15px;"></i>
+              <div> <span class="label" id="username_message"></span> </div>
+            </div>
+            <div class="item">
+              <input name="uemail" type="text" id="uemail" placeholder="邮箱" onblur="checkEmail(this)"  class="text" />
+              <i class="i-email"></i>
+              <div> <span class="label" id="email_notice"></span> </div>
+            </div>
             <!-- {/if} -->
             <div id="o-password">
               <div class="item">
