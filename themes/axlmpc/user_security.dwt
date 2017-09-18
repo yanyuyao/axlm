@@ -134,6 +134,7 @@ function countdown(obj, msg) {
           
         </div>
 		<!--余额额支付密码_添加_START_www.68ecshop.com-->
+<!-- {if $pc_user.is_show_shengji} -->
         <div class="mc" id="shengji-mc">
           <div class="fore1"> <s class="fore1_1"></s> <strong>升级账户</strong> </div>
           <div class="fore2"> 
@@ -150,6 +151,7 @@ function countdown(obj, msg) {
           </div>
           
         </div>
+<!-- {/if} -->
         <!--余额额支付密码_添加_END_www.68ecshop.com--> 
         <!-- 会员用户信息同步给商家 START --> 
         <!-- {if 0 && $is_supplier == 1} -->
