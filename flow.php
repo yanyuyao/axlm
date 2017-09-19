@@ -1732,7 +1732,7 @@ elseif ($_REQUEST['step'] == 'select_payment')
         }else if($pay_code == 'xiaofeibi'){
             if($total['amount'] > floatval($pc_user_info['account_xiaofeibi'])){
                 $result['error']="error_xiaofeibi";
-                $result['content']='您的消费币余额不足！订单金额：'.$total['amount_formated'].'; 您当前的现金币：¥'.$pc_user_info['account_xiaofeibi'];
+                $result['content']='您的消费币余额不足！订单金额：'.$total['amount_formated'].'; 您当前的消费币：¥'.$pc_user_info['account_xiaofeibi'];
             }
         }
         
@@ -2231,6 +2231,7 @@ elseif ($_REQUEST['step'] == 'done')
 {	
     include_once('includes/lib_clips.php');
     include_once('includes/lib_payment.php');
+    $user_id = $_SESSION['usser_id'];
 
 	/* 代码增加_start  By www.cfweb2015.com */
 	$id_ext ="";
@@ -2624,7 +2625,7 @@ elseif ($_REQUEST['step'] == 'done')
 	
 	    $order['order_amount']  = number_format($total['amount'], 2, '.', '');
 	
-		/*增值税发票_添加_START_www.cfweb2015.com*/
+	/*增值税发票_添加_START_www.cfweb2015.com*/
     	/*发票金额*/
     	$order['inv_money'] =  $total['goods_price'] ;
     	/*增值税发票_添加_END_www.cfweb2015.com*/
@@ -2661,6 +2662,24 @@ elseif ($_REQUEST['step'] == 'done')
 	    }
             if ($order['pay_name'] == '现金币' || $order['pay_name'] == '消费币')
 	    {
+                
+                $sql = "select account_xianjinbi,account_xiaofeibi from ".$ecs->table('pc_user')." where uid = ".$user_id;
+                $pc_userinfo = $db->getRow($sql);
+                if($order['pay_name'] == '现金币'){//account_xianjinbi
+                    $xianjinbi = floatval($pc_userinfo['account_xianjinbi']);
+                    if($order['goods_amount'] > $xianjinbi){
+                        show_message('现金余额不足，请联系管理员进行充值');
+                        exit;
+                    }    
+                }
+                if($order['pay_name'] == '消费币'){//account_xianjinbi
+                    $xiaofeibi = floatval($pc_userinfo['account_xiaofeibi']);
+                     if($order['goods_amount'] > $xiaofeibi){
+                        show_message('消费币余额不足，请联系管理员进行充值');
+                        exit;
+                    }   
+                }
+                
 	        $order['order_status'] = OS_CONFIRMED;
 	        $order['confirm_time'] = gmtime();
 	        $order['pay_status']   = PS_PAYED;
