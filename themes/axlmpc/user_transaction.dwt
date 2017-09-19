@@ -3026,6 +3026,11 @@ function submit_surplus_form(){
 </div>  
 </body>
 <script language="javascript">
+var selectab = "{$selectab}";
+if(selectab == 'realname'){
+    setTabCatGoods('tab',3,3);
+}
+
 get_invoice_info('{$order.invoices.0.shipping_name}','{$order.invoices.0.invoice_no}',1);
 
 function get_invoice_info(expressid,expressno,div_id)
@@ -3061,6 +3066,8 @@ function get_invoice_info2(expressid,expressno,div_id,order_id)
 		false
 	);
 }
+
+
 </script>
 <script type="text/javascript">
 {foreach from=$lang.clips_js item=item key=key}

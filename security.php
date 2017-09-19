@@ -1658,6 +1658,17 @@ function action_shengji_setup ()
 	$db = $GLOBALS['db'];
 	$ecs = $GLOBALS['ecs'];
 	$user_id = $GLOBALS['user_id'];
+        //判断是否进行实名认证了
+        $real_info = $db->getRow('select real_name, card from '.$ecs->table('users').' where user_id = "'.$user_id.'"');
+        if($real_info && $real_info['real_name'] != '' && $real_info['card'] != ''){
+            //continue
+        }else{
+            show_message('您还未实名认证！', array(
+			'去实名认证',
+		), array(
+			'user.php?act=profile&selectab=realname'
+		), 'info');
+        }
 //        echo $user_id;
 	//服务中心
 	$sql = "select uid,user_name,user_name as name from " . $ecs->table('pc_user') . " pc left join ".$ecs->table('users')." u on pc.uid = u.user_id where identity = 4 and pc.status = 1";

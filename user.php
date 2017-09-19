@@ -1300,6 +1300,9 @@ function action_profile ()
 	$db = $GLOBALS['db'];
 	$ecs = $GLOBALS['ecs'];
 	$user_id = $_SESSION['user_id'];
+        $selectab = isset($_GET['selectab'])?$_GET['selectab']:'';
+        $smarty->assign('selectab', $selectab);
+        
 	include_once (ROOT_PATH . 'includes/lib_transaction.php');
 	/* 代码增加2014-12-23 by www.cfweb2015.com _star */
 	include_once (ROOT_PATH . 'languages/' . $_CFG['lang'] . '/shopping_flow.php');
