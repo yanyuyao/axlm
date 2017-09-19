@@ -14,8 +14,8 @@ function check_username(val) {
 	} else if (val.match(/[\u4e00-\u9fa5]/)) {
 		document.getElementById('username_message').innerHTML = '用户名不能有中文！';
     /* 代码增加 By  www.68ecshop.com Start */
-    } else if (!val.match(/^[a-zA-Z0-9_]{1,}$/)) {
-        document.getElementById('username_message').innerHTML = '用户名只能由字母数字下划线组成！';
+    } else if (!val.match(/^[a-zA-Z0-9]{1,}$/)) {
+        document.getElementById('username_message').innerHTML = '用户名只能由字母数字组成！';
     /* 代码增加 By  www.68ecshop.com End */
     } else {
 		Ajax.call('user.php?act=check_username', 'username=' + val, checkusername_callback, 'GET', 'TEXT', true, true);

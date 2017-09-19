@@ -477,9 +477,17 @@ function reg_by_mobile() {
 			msg += mobile_phone_invalid + '\n';
 		}
 	}
-	if(uname.length == 0){
-		msg += "-姓名不能为空\n";
-	}
+	
+	if (uname == '') {
+		msg += '用户名不能为空！\n';
+	} else if (uname.match(/[\u4e00-\u9fa5]/)) {
+		msg += '用户名不能有中文！\n';
+    /* 代码增加 By  www.68ecshop.com Start */
+    } else if (!uname.match(/^[a-zA-Z0-9]{1,}$/)) {
+        msg += '用户名只能由字母数字组成！\n';
+    /* 代码增加 By  www.68ecshop.com End */
+    } 
+	
 	if(uemail.length == 0){
 		msg += '-邮箱不能为空\n';
 	}

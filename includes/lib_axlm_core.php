@@ -187,16 +187,22 @@ function getCengData($uid){
 }
 
 //获得某个用户左右区， 分别第几层的人数
-function pc_get_user_ceng_leftright_user($uid,$ceng){
+function pc_get_user_ceng_leftright_user($uid,$ceng,$levellimit=1){
     //echo $uid;
     $ecs = $GLOBALS['ecs'];
     $db = $GLOBALS['db'];
     //只让1.3的碰，5000的不碰
-    $leftuser = $db->getOne("select uid from ".$ecs->table('pc_user')." where jiedianren_user_id = $uid and leftright = 'left' and level > 2");
-    $rightuser = $db->getOne("select uid from ".$ecs->table('pc_user')." where jiedianren_user_id = $uid and leftright = 'right' and level > 2");
+    //$leftuser = $db->getOne("select uid from ".$ecs->table('pc_user')." where jiedianren_user_id = $uid and leftright = 'left' and level > 2");
+    //$rightuser = $db->getOne("select uid from ".$ecs->table('pc_user')." where jiedianren_user_id = $uid and leftright = 'right' and level > 2");
+	$left_sql = "select uid from ".$ecs->table('pc_user')." where jiedianren_user_id = $uid and leftright = 'left' ";
+	$right_sql = "select uid from ".$ecs->table('pc_user')." where jiedianren_user_id = $uid and leftright = 'right'";
+	$leftuser = $db->getOne($left_sql);
+	$rightuser = $db->getOne($right_sql);
+	
     $left_arr = array();
     $right_arr = array();
-
+	//var_dump($leftuser);
+	//var_dump($rightuser);
     //获得左边右边第几层的人数
     if($leftuser){
         $leftceng = getCengDataByUid($leftuser);
@@ -210,6 +216,24 @@ function pc_get_user_ceng_leftright_user($uid,$ceng){
     }else{
         $rightceng_arr = array();
     }
+	
+	if($levellimit){
+		foreach($leftceng_arr as $k=>$v){
+			if($db->getOne("select level from ".$ecs->table('pc_user')." where uid = ".$v) >2){
+				
+			}else{
+				unset($leftceng_arr[$k]);
+			}
+		}
+		foreach($rightceng_arr as $k=>$v){
+			if($db->getOne("select level from ".$ecs->table('pc_user')." where uid = ".$v) >2){
+				
+			}else{
+				unset($rightceng_arr[$k]);
+			}
+		}
+	}
+	
     return array("left"=>count($leftceng_arr), "right"=>count($rightceng_arr),"leftarr"=>$leftceng_arr,"rightarr"=>$rightceng_arr);
 }
 

@@ -634,7 +634,7 @@ function pc_set_guanli_butie($uid,$type){
                     if($level > 2){ //只给高级会员及以上返
                         
                             $pv = 3000;
-                            save_pv_fanli($v['uid'], $pv, '发展下线返积分');
+                            save_pv_fanli($v['uid'], $pv, '推广会员返积分');
                         
                     }
                 }

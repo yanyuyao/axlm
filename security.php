@@ -62,7 +62,7 @@ $pc_user['is_show_shengji'] = 0;
 $order_amount_max = 0;
 $fuhe_oid = 0;
 $order_sql = "select order_id, goods_amount from ".$ecs->table('order_info')." where user_id = ".$user_id." and pay_status = 2 ";
-echo $order_sql."<br>";
+//echo $order_sql."<br>";
 $orderlist = $db->getAll($order_sql);
 if($orderlist){
     foreach($orderlist as $k=>$v){
@@ -1660,18 +1660,19 @@ function action_shengji_setup ()
 	$user_id = $GLOBALS['user_id'];
 //        echo $user_id;
 	//服务中心
-	$sql = "select uid from " . $ecs->table('pc_user') . " where identity = 4 and status = 1";
-	//echo $sql;
+	$sql = "select uid,user_name,user_name as name from " . $ecs->table('pc_user') . " pc left join ".$ecs->table('users')." u on pc.uid = u.user_id where identity = 4 and pc.status = 1";
+//	echo $sql;
 	$fuwuzhongxinlist = $db->getAll($sql);
-	if($fuwuzhongxinlist){
-		foreach($fuwuzhongxinlist as $k=>&$v){
-			$v['name'] = $db->getOne("select user_name from ".$ecs->table('users')." where user_id = ".$v['uid']);
-		}
-	}
+//	if($fuwuzhongxinlist){
+//		foreach($fuwuzhongxinlist as $k=>&$v){
+//			$v['name'] = $db->getOne("select user_name from ".$ecs->table('users')." where user_id = ".$v['uid']);
+//		}
+//	}
 	//var_dump($fuwuzhongxinlist);
 	$smarty->assign('fuwuzhongxinlist', $fuwuzhongxinlist);
 	
-        $jiedian_sql = "select uid from " . $ecs->table('pc_user') . " where status = 1";
+        $jiedian_sql = "select uid,user_name from " . $ecs->table('pc_user') . " pc left join ".$ecs->table('users')." u on pc.uid = u.user_id where pc.status = 1";
+//        echo $jiedian_sql;
 	$jiedianrenlist = $db->getAll($jiedian_sql);
         $jiedianrenArray = array();
         if($jiedianrenlist){
@@ -1687,11 +1688,15 @@ function action_shengji_setup ()
                         if($vv['leftright'] == 'left'){
                             $v['left_uid'] = $vv['uid'];
                         }
-                        $v['user_name'] = $vv['user_name'];
+                        //$v['user_name'] = $vv['user_name'];
                     }
                     if($v['left_uid'] == 0 || $v['right_uid'] == 0){
                         $jiedianrenArray[$k]=$v;
+                    }else{
+                         
                     }
+                }else{
+                     $jiedianrenArray[$k]=$v;
                 }
                 
             }
