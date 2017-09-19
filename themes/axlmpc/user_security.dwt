@@ -2092,21 +2092,23 @@ function countdown(obj, msg) {
 					<form action="security.php" method="post" id="fpForm" name="fpForm" onsubmit="return checkshengji();" >
 					  <div id="error_container"></div>
 					 
-					  <div class="item">
+					  <div class="item" style="width:100%;">
 						<label class="con_un">推荐人账户：</label>
-						<input type="text" id="tuijianren_user_id" name="tuijianren_user_id" class="text text_te" placeholder="" autocomplete="off" MaxLength="6" value="{$pc_user.tuijianren_user_id}"/>
+						<input type="text" id="tuijianren_user_name" name="tuijianren_user_name" class="text text_te" style="width:150px;" placeholder="" autocomplete="off"  value="{$pc_user.tuijianren_user_name}" onblur="getUserShortInfo(this);"/>
+						<input type="text" id="tuijianren_user_id" name="tuijianren_user_id" class="text text_te" placeholder="" autocomplete="off"  value="{$pc_user.tuijianren_user_id}" readonly style="display:none;"/>
+                                                <span class="uinfo"></span>
 					  </div>
-					  <div class="item">
+					  <div class="item"  style="width:100%;">
 						<label class="con_un">接点人账户：</label>
-						<input type="text" id="jiedianren_user_name" name="jiedianren_user_name" onblur="selectLeftRight(this)"; class="text text_te" placeholder="" autocomplete="off" value="{$pc_user.jiedianren_user_id}" />
+						<input type="text" id="jiedianren_user_name" name="jiedianren_user_name" onblur="selectLeftRight(this)"; style="width:150px;" class="text text_te" placeholder="" autocomplete="off" value="{$pc_user.jiedianren_user_name}" onblur="getUserShortInfo(this);" />
 						<input type="text" id="jiedianren_user_id" name="jiedianren_user_id" value="{$pc_user.jiedianren_user_id}" readonly style="display:none;" />
-                                                
+                                                <span class="uinfo"></span>
                                             </div>
-					  <div class="item">
+					  <div class="item"  style="width:100%;">
 						<label class="con_un">接点区域：</label>
                                                 <select id="leftright" name="leftright" autocomplete="off" /><option value="">--请选择--</option></select>
 					  </div>
-					  <div class="item">
+					  <div class="item"  style="width:100%;">
 						<label class="con_un">服务中心：</label>
 						<select name="fuwuzhongxin_user_id" id="fuwuzhongxin_user_id">
 							<option value="0">--请选择--</option>
@@ -2198,8 +2200,14 @@ function selectLeftRight(e){
         }
 
         $('#leftright').html(selectbody);
+
+        getUserShortInfo(e);
     }else{
         alert('没有找到该接点人或者接点人下没有位置可以放');
+        getUserShortInfo(e);
+        $(e).parent().find('span').html('');
+        $(e).next().val('');
+        //alert($(e).next().val()+"===="+$('#jiedianren_user_id').val());
         $('#leftright').html('');
         return false;
     }
@@ -2223,6 +2231,27 @@ function checkshengji(){
   
     alert('请正确填写接点人和所属区域');
     return false;
+}
+
+function getUserShortInfo(e){
+    var v = $(e).val();
+    if(v){
+        $.post('user.php?act=getUserShortInfo', {
+		uname: v
+	}, function(result) {
+            //alert(result);
+                //alert(result.msg);
+		if (result.status == 'success') {
+                    //$(e).parent().find('span').text("该用户信息为：【"+result.data.user_id+"】 "+result.data.user_name+" "+result.data.mobile_phone+", 请核实");
+                    $(e).parent().find('span').html("&nbsp;&nbsp;该用户信息为：【<i style='color:#E4393C'>"+result.data.user_name+"</i>】【<i style='color:#E4393C'>"+result.data.mobile_phone+"</i>】, 请核实");
+                    $(e).next().val(result.data.user_id);
+		}else{
+                    $(e).parent().find('span').text(result.msg);
+                    $(e).val('');
+                    $(e).next().val('');
+		}
+	}, 'Json');
+    }
 }
 </script>
 </html>

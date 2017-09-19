@@ -10,8 +10,9 @@ function get_pc_goods_info($gid){
     return $data;
 }
 //{{{ axlm
-//购物激活账户      
+//购物账户      
 function axlmpc($user_id,$order_id,$order_amount,$good_amount,$paytype=''){
+    
     $ecs = $GLOBALS['ecs'];
     $db = $GLOBALS['db'];
     $usql = "SELECT * FROM " . $ecs->table('pc_user')."WHERE uid = '$user_id'";
@@ -34,31 +35,7 @@ function axlmpc($user_id,$order_id,$order_amount,$good_amount,$paytype=''){
                 pc_set_guanli_butie($user_id,"goods");
             }
             
-            //step 1: 激活账户，设置pc_user.status = 1 ,  level=2,3,4
-            $level_sql = "SELECT * FROM " . $ecs->table('pc_user_level')." where level_limit_note <= $good_amount order by level_limit_note desc";
-            $level_list = $db->getRow($level_sql);
-    //        echo $level_sql;
-    //        var_dump($level_list);
-            pc_log($level_list,"level_list");
-            $level = 0;
-            if($level_list){
-                $level = $level_list['id'];
-            }
-
-    //        if($level_list){
-    //            foreach($level_list as $k=>$v){
-    //                if($v['level_limit_note'] == $good_amount){
-    //                    $level = $v['id'];
-    //                }
-    //            }
-    //        }
-            $status = 1;
-
-            pc_set_user_status($user_id, $status, $level,'购物');
-
-            save_jifenbi_fanli($user_id,$good_amount,'购物返积分币');     
-            
-
+            save_jifenbi_fanli($user_id,$good_amount,'购物返积分币');   
             //step 2: 设置金融账户变更，见3,4,5,6,7,8   
             if($paytype == '现金币'){
                 change_account_info($user_id, "xianjinbi", "-", $good_amount);
@@ -67,9 +44,10 @@ function axlmpc($user_id,$order_id,$order_amount,$good_amount,$paytype=''){
             }
 
             //step 7: 联盟商家补贴
-
-            //step 8: 服务中心补贴
-            pc_set_fuwuzhongxin_butie($fuwuzhongxin_user_id,$good_amount);
+            //step 8: 服务中心补贴，升级后， 查看是否给服务中心返利
+            if($fuwuzhongxin_user_id){
+                pc_set_fuwuzhongxin_butie($fuwuzhongxin_user_id,$good_amount);
+            }
         }else{ //不是专区的产品才给推荐奖励
             //step 9: 购物给直推人返利,购买非专区的产品才给直推人返利
             $parent_id = $db->getOne("select parent_id from ".$ecs->table('users')." where user_id = ".$user_id);
@@ -80,7 +58,46 @@ function axlmpc($user_id,$order_id,$order_amount,$good_amount,$paytype=''){
     }
  
 }
+//run it when user upgroup
+//order_id: 符合双轨的订单金额（专区产品的）,
+//return 0: 激活失败
+//return 1: 激活成功
+//return 2: 已经激活过了
+function axlmpc_user_active($user_id,$order_id){
+    pc_log($order_id,"符合的oid == 进入激活账户");
+    $ecs = $GLOBALS['ecs'];
+    $db = $GLOBALS['db'];          
+    
+        if($order_id){
+                //获得该订单中女性专区的产品总金额
+                $is_zhuanqu_product = check_zhuanqu_product($order_id);
+                pc_log($is_zhuanqu_product," 专区产品价格");
+        //        echo $is_zhuanqu_product."]]]]";
+                if($is_zhuanqu_product){ //专区产品走这个流程
+                    $good_amount = $is_zhuanqu_product;
+                    //step 1: 激活账户，设置pc_user.status = 1 ,  level=2,3,4
+                    $level_sql = "SELECT * FROM " . $ecs->table('pc_user_level')." where level_limit_note <= $good_amount order by level_limit_note desc";
+                    $level_list = $db->getRow($level_sql);
+                    pc_log($level_list,"level_list");
+                    $level = 0;
+                    if($level_list){
+                        $level = $level_list['id'];
+                    }
 
+                    $status = 1;
+                    pc_set_user_status($user_id, $status, $level,'升级账户');
+                    
+                    //step 8: 服务中心补贴，升级后， 查看是否给服务中心返利
+                    $usql = "SELECT fuwuzhongxin_user_id FROM " . $ecs->table('pc_user')."WHERE uid = '$user_id'";
+                    $fuwuzhongxin_user_id = $db->getOne($usql);
+                    pc_set_fuwuzhongxin_butie($fuwuzhongxin_user_id,$good_amount);
+            
+                }
+                return 1;
+        }
+        
+        return 0;
+}
 function set_user_tree($user_id){
 //echo "<font style='color:red'>推广</font><br>";    
         //step 3: 推广
@@ -265,7 +282,7 @@ function getAllUserList($uid,&$data){
 
 
 function pc_log($body,$title=''){
-    $test = 0;
+    $test = 1;
     if($test){
         echo "<br>===== {{{ $title ==========<br>";
         if(is_array($body)){
@@ -429,8 +446,6 @@ function pc_set_jiandian_butie($uid){
     pc_log($jiedianren_user_array,"见点奖人");
 //    var_dump($jiedianren_user_array);
     if($jiedianren_user_array){
-        
-        
         foreach($jiedianren_user_array as $k=>$v){
 //            echo "<br>jiandian ===>".$v['uid']."===".$v['level']."<br>";
             if(intval($v['level'])>2){
@@ -554,12 +569,13 @@ function save_jiandian_fanli($uid,$type,$return_bili){
                 ")";
                  pc_log($sql,'save jiandain fanli');
         }else{
-                $sql = "update ".$ecs->table('pc_user')." set account_xiaofeibi_zhuanqu = ".$new_value." where uid = ".$uid;
+            //右区见点，返专区消费币，即爱心币
+                $sql = "update ".$ecs->table('pc_user')." set account_aixinbi = ".$new_value." where uid = ".$uid;
                 $db->query($sql);
                  pc_log($sql,'save jiandain fanli');
                 $sql = "insert into ".$ecs->table('pc_user_account_log')."(uid,type,original_value,change_value,new_value,note,adminid,ctime) values(".
                         "'".$uid."',".
-                        "'account_xiaofeibi_zhuanqu',".
+                        "'account_aixinbi',".
                         "'".$original_value."',".
                         "'".$change_value."',".
                         "'".$new_value."',".

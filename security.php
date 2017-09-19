@@ -62,7 +62,7 @@ $pc_user['is_show_shengji'] = 0;
 $order_amount_max = 0;
 $fuhe_oid = 0;
 $order_sql = "select order_id, goods_amount from ".$ecs->table('order_info')." where user_id = ".$user_id." and pay_status = 2 ";
-//echo $order_sql."<br>";
+echo $order_sql."<br>";
 $orderlist = $db->getAll($order_sql);
 if($orderlist){
     foreach($orderlist as $k=>$v){
@@ -1600,54 +1600,48 @@ function action_shengji(){
 	
 	$sql = "UPDATE " . $ecs->table('pc_user') . " SET `tuijianren_user_id`='" . $tuijianren_user_id . "',`jiedianren_user_id`='" . $jiedianren_user_id . "',`leftright`='" . $leftright . "',`fuwuzhongxin_user_id`='" . $fuwuzhongxin_user_id . "' WHERE `uid`='" . $user_id . "'";
 	$db->query($sql);
+        
+        //{{{ 激活账户
+        $order_amount_max = 0;
+        $fuhe_oid = 0;
+        $order_sql = "select order_id, goods_amount from ".$ecs->table('order_info')." where user_id = ".$user_id." and pay_status = 2 ";
+//        echo $order_sql."<br>";
+        $orderlist = $db->getAll($order_sql);
+        if($orderlist){
+            foreach($orderlist as $k=>$v){
+
+                $v['zhuanqu_goods_amount'] = floatval(check_zhuanqu_product($v['order_id']));
+        //        echo $v['order_id'];
+        //        echo "<br>".$v['zhuanqu_goods_amount']."<br>=============<br>";
+                if($v['zhuanqu_goods_amount'] >= 5000){
+                    if($v['zhuanqu_goods_amount']> $order_amount_max){
+                        $order_amount_max = $v['zhuanqu_goods_amount'];
+                        $fuhe_oid = $v['order_id'];
+                    }        
+                }
+            }
+        }
+        pc_log($fuhe_oid,"符合的oid");
+        if($fuhe_oid){
+            $flag = axlmpc_user_active($user_id, $fuhe_oid);
+            if($flag == 1){
+                $msg = "激活成功";
+            }elseif($flag == 2){
+                $msg = "账户已激活，请不要重复操作";
+            }else{
+                $msg = "激活失败";
+            }
+        }
+        pc_log($msg, "激活账户返回信息");
+        //}}} 激活账户
+        
 	$affected_rows = $db->affected_rows();
 	if($affected_rows == 1)
 	{
-		//echo "success";
-             //{{{ //axlmpc
-            //var_dump($_SESSION);
-            
-            
-            ##########################################################
-            ##########################################################
-            ##########################################################
-            ########################## 需要调试  ######################
-            ##########################################################
-            ##########################################################
-            ##########################################################
-            ##########################################################
-            ##########################################################
-            
-            
-            
-            
-                pc_log("提交订单，即时分佣");
-//                axlmpc($_SESSION['user_id'],$order['order_id'],$order['order_amount'],$order['goods_amount'],$order['pay_name']);
-                //判断是否有符合情况的oid
-                if($fuhe_oid){
-                    $good_amount = $lastorder['goods_amount'];
-                    //step 1: 
-                    $level_sql = "SELECT * FROM " . $ecs->table('pc_user_level')."";
-                    $level_list = $db->getAll($level_sql);
-                    $level = 0;
-                    if($level_list){
-                        foreach($level_list as $k=>$v){
-                            if($v['level_limit_note'] == $good_amount){
-                                $level = $v['id'];
-                            }
-                        }
-                    }
-                    $status = 1;
-        //            pc_set_user_status($user_id, $status, $level,'升级账户');
-        //            pc_set_tuiguang_butie($user_id);
-        //            pc_set_fuwu_butie($user_id);
-        //            pc_set_jiandian_butie($user_id);
-        //            pc_set_tuiguang_butie($user_id);
-                }
-                pc_log("提交订单，即时分佣---完成");
-            //}}}	
+            //echo "success";
 	}
-	
+
+	$smarty->assign('msg',$msg);
 	$smarty->assign('step', 'success');
 	$smarty->assign('action', 'shengji_setup');
 	//}}}
@@ -1664,7 +1658,7 @@ function action_shengji_setup ()
 	$db = $GLOBALS['db'];
 	$ecs = $GLOBALS['ecs'];
 	$user_id = $GLOBALS['user_id'];
-        echo $user_id;
+//        echo $user_id;
 	//服务中心
 	$sql = "select uid from " . $ecs->table('pc_user') . " where identity = 4 and status = 1";
 	//echo $sql;
@@ -1719,7 +1713,18 @@ function action_shengji_setup ()
 	$sql = "select * from ".$ecs->table('pc_user')." where uid = ".$user_id;
 //	echo $sql;
 	$pc_user = $db->getRow($sql);
-        
+        if($pc_user['jiedianren_user_id']){
+            $pc_user['jiedianren_user_name'] = $db->getOne("select user_name from ".$ecs->table('users')." where user_id = '".$pc_user['jiedianren_user_id']."'");
+        }
+        if($pc_user['tuijianren_user_id']){
+            $pc_user['tuijianren_user_name'] = $db->getOne("select user_name from ".$ecs->table('users')." where user_id = '".$pc_user['tuijianren_user_id']."'");
+        }
+        if($pc_user['leftright'] == 'left'){
+            $pc_user['leftright_title'] = '左区';
+        }elseif($pc_user['leftright'] == 'right'){
+            $pc_user['leftright_title'] = '右区';
+}
+
 	$smarty->assign('pc_user',$pc_user);
 	//var_dump($pc_user);
 	$smarty->assign('step', 'setpup');

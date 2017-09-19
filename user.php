@@ -35,7 +35,7 @@ $back_act = '';
 $not_login_arr = array(
 	'login', 'act_login', 'act_edit_password', 'get_password', 'send_pwd_email', 'password', 'signin', 'add_tag', 'collect', 're_collect', 'return_to_cart', 'book_goods','add_book_goods', 'logout', 'user_bonus', 'email_list', 'validate_email', 'send_hash_mail', 'order_query', 'is_registered', 'check_email', 'check_mobile_phone', 'clear_history', 'qpassword_name', 'get_passwd_question', 'check_answer', 'check_register', 'oath', 'oath_login', 'other_login', 'ch_email', 'ck_email', 'check_username', 'forget_password', 'getverifycode', 'step_1',
 /*余额额支付密码_更改_START_www.cfweb2015.com*/
-'act_forget_pass', 're_pass', 'open_surplus_password', 'close_surplus_password'
+'act_forget_pass', 're_pass', 'open_surplus_password', 'close_surplus_password','getUserShortInfo'
 );
 /* 余额额支付密码_更改_END_www.cfweb2015.com */
 
@@ -167,6 +167,45 @@ function payment_info2($pay_id)
             " WHERE pay_id = '$pay_id' AND enabled = 1";
 
     return $GLOBALS['db']->getRow($sql);
+}
+function action_getUserShortInfo(){
+    $_LANG = $GLOBALS['_LANG'];
+    $smarty = $GLOBALS['smarty'];
+    $db = $GLOBALS['db'];
+    $ecs = $GLOBALS['ecs'];
+    $user_id = $_SESSION['user_id'];
+        
+    $uname = isset($_POST['uname'])?$_POST['uname']:"";
+    if($uname == ''){
+        $data = array(
+            "status"=>"error",
+            "msg"=>"参数错误"
+        );
+    }else{
+        $sql = "select user_id,user_name ,mobile_phone from ".$ecs->table('users')." where user_name = '$uname'";
+        $info = $db->getRow($sql);
+        if($info){
+            if($info['user_id'] == $user_id){
+                $data = array(
+                    "status"=>"error",
+                    "msg"=>"不能填写自己"
+                );
+            }else{
+                $data = array(
+                    "status"=>"success",
+                    "msg"=>"返回成功",
+                    "data"=>$info
+                );
+            }
+        }else{
+           $data = array(
+               "status"=>'error',
+               "msg"=>"没有找到此用户"
+           );
+        }
+    }
+    echo json_encode($data);
+    exit;
 }
 /* 代码增加_start By www.cfweb2015.com */
 function action_supplier_reg ()
