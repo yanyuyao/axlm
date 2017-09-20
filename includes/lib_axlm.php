@@ -282,7 +282,7 @@ function getAllUserList($uid,&$data){
 
 
 function pc_log($body,$title=''){
-    $test = 1;
+    $test = 0;
     if($test){
         echo "<br>===== {{{ $title ==========<br>";
         if(is_array($body)){
@@ -550,7 +550,8 @@ function save_jiandian_fanli($uid,$type,$return_bili){
         if($type == "left"){
             $original_value = intval($userinfo['account_xiaofeibi']);
         }else{
-            $original_value = intval($userinfo['account_xiaofeibi_zhuanqu']);
+            //$original_value = intval($userinfo['account_xiaofeibi_zhuanqu']);
+            $original_value = intval($userinfo['account_aixinbi']);
         }
         $new_value = $original_value + $change_value;
         if($type == "left"){
