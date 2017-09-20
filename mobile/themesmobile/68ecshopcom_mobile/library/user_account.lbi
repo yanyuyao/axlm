@@ -8,8 +8,8 @@
 		<h3 class="yongjin">现金币：{$pc_userinfo.account_xianjinbi}</h3>
 		<h3 class="yongjin">消费币：{$pc_userinfo.account_xiaofeibi}</h3>
 		<h3 class="yongjin">积分币：{$pc_userinfo.account_jifenbi}</h3>
-		<h3 class="yongjin">积分：{$pc_userinfo.jifen}</h3>
-		<h3 class="yongjin">爱心币：{$pc_userinfo.aixinbi}</h3>
+		<h3 class="yongjin">积分：{$pc_userinfo.account_jifen}</h3>
+		<h3 class="yongjin">爱心币：{$pc_userinfo.account_aixinbi}</h3>
 	<!-- {/if} -->
 </div>
 <p style="text-align:center;">查看更多信息请到电脑端网站</p>
