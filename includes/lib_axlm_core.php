@@ -292,10 +292,10 @@ function save_fuwu_fanli($uid,$userinfo=array()){
 		"'".$original_value."',".
 		"'".$kouchu_aixinbi."',".
 		"'".$new_value."',".
-		"'服务补贴返爱心币',".
+		"'服务补贴赠爱心币',".
 		"'0',".
 		"'".time()."', ".
-		"'服务补贴返爱心币-扣除兑换成爱心币'".
+		"'服务补贴赠爱心币-扣除兑换成爱心币'".
 	")";
 	$db->query($sql);
         

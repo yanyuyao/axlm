@@ -35,7 +35,7 @@ function axlmpc($user_id,$order_id,$order_amount,$good_amount,$paytype=''){
                 pc_set_guanli_butie($user_id,"goods");
             }
             
-            save_jifenbi_fanli($user_id,$good_amount,'购物返积分币');   
+            save_jifenbi_fanli($user_id,$good_amount,'购物赠积分币');   
             //step 2: 设置金融账户变更，见3,4,5,6,7,8   
             if($paytype == '现金币'){
                 change_account_info($user_id, "xianjinbi", "-", $good_amount);
@@ -564,7 +564,7 @@ function save_jiandian_fanli($uid,$type,$return_bili){
                         "'".$original_value."',".
                         "'".$change_value."',".
                         "'".$new_value."',".
-                        "'见点奖返利-左区',".
+                        "'见点奖赠消费币',".
                         "'0',".
                         "'".time()."' ".
                 ")";
@@ -580,7 +580,7 @@ function save_jiandian_fanli($uid,$type,$return_bili){
                         "'".$original_value."',".
                         "'".$change_value."',".
                         "'".$new_value."',".
-                        "'见点奖返利-右区',".
+                        "'见点奖赠爱心币',".
                         "'0',".
                         "'".time()."' ".
                 ")";
@@ -635,7 +635,7 @@ function pc_set_guanli_butie($uid,$type){
                     if($level > 2){ //只给高级会员及以上返
                         
                             $pv = 3000;
-                            save_pv_fanli($v['uid'], $pv, '推广会员返积分');
+                            save_pv_fanli($v['uid'], $pv, '推广会员赠积分');
                         
                     }
                 }
@@ -864,7 +864,7 @@ function save_pv_xianjianbi_fanli($uid,$fanli){
 		"'".$original_value."',".
 		"'".$change_value."',".
 		"'".$new_value."',".
-		"'管理奖返现',".
+		"'管理补贴',".
 		"'0',".
 		"'".time()."', ".
 		"'".$xianjinbi_systemnote."' ".
@@ -884,10 +884,10 @@ function save_pv_xianjianbi_fanli($uid,$fanli){
 		"'".$original_value."',".
 		"'".$kouchu_aixinbi."',".
 		"'".$new_value."',".
-		"'管理补贴返爱心币',".
+		"'管理补贴赠爱心币',".
 		"'0',".
 		"'".time()."', ".
-		"'管理补贴返爱心币-扣除兑换成爱心币'".
+		"'管理补贴赠爱心币-扣除兑换成爱心币'".
 	")";
 	$db->query($sql);
         
@@ -904,10 +904,10 @@ function save_pv_xianjianbi_fanli($uid,$fanli){
 		"'".$original_value."',".
 		"'".$kouchu_xiaofeibi."',".
 		"'".$new_value."',".
-		"'管理补贴返消费币',".
+		"'管理补贴赠消费币',".
 		"'0',".
 		"'".time()."', ".
-		"'管理补贴返消费币-扣除兑换成消费币'".
+		"'管理补贴赠消费币-扣除兑换成消费币'".
 	")";
 	$db->query($sql);
         return 1;
@@ -1152,7 +1152,7 @@ function save_tuiguang_fanli($uid,$leftqu_array=array(),$rightqu_array=array()){
             "'".$original_value."',".
             "'".$change_value."',".
             "'".$new_value."',".
-            "'推广奖返现',".
+            "'推广补贴',".
             "'0',".
             "'".time()."', ".
             "'".$xianjinbi_systemnote."' ".
@@ -1171,10 +1171,10 @@ function save_tuiguang_fanli($uid,$leftqu_array=array(),$rightqu_array=array()){
 		"'".$original_value."',".
 		"'".$kouchu_aixinbi."',".
 		"'".$new_value."',".
-		"'推广补贴返爱心币',".
+		"'推广补贴赠爱心币',".
 		"'0',".
 		"'".time()."', ".
-		"'推广补贴返爱心币-扣除兑换成爱心币'".
+		"'推广补贴赠爱心币-扣除兑换成爱心币'".
 	")";
 	$db->query($sql);
         
@@ -1191,10 +1191,10 @@ function save_tuiguang_fanli($uid,$leftqu_array=array(),$rightqu_array=array()){
 		"'".$original_value."',".
 		"'".$kouchu_xiaofeibi."',".
 		"'".$new_value."',".
-		"'推广补贴返消费币',".
+		"'推广补贴赠消费币',".
 		"'0',".
 		"'".time()."', ".
-		"'推广补贴返消费币-扣除兑换成消费币'".
+		"'推广补贴赠消费币-扣除兑换成消费币'".
 	")";
 	$db->query($sql);
         return 1;
@@ -1310,7 +1310,7 @@ function pc_set_fuwuzhongxin_butie($uid, $good_amount){
 		"'".$original_value."',".
 		"'".$change_value."',".
 		"'".$new_value."',".
-		"'服务中心返利',".
+		"'服务中心补贴',".
 		"'0',".
 		"'".time()."' ".
 	")";
