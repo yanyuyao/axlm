@@ -177,6 +177,54 @@ function submit_surplus_form(){
     <div class="user-right">
     	<div class="box">
     	<!-- 用户信息界面 start--> 
+<!--{if $action eq 'myinfo'}--> 
+ <h5 class="user-title user-title-t"><span>个人信息</span></h5>
+          <div class="blank"></div>
+ <table width="100%" border="0" cellpadding="10" cellspacing="1" bgcolor="#eee">
+                    <tr>
+                      <td width="35%" align="right">用户名称：</td>
+                      <td width="65%" align="left">{$info.user_name}</td>
+                    </tr>
+                    <tr>
+                      <td align="right">邮箱：</td>
+                      <td align="left">{$info.email}</td>
+                    </tr>
+                    <tr>
+                      <td align="right">手机：</td>
+                      <td align="left">{$info.mobile_phone}</td>
+                    </tr>
+                    <tr>
+                      <td align="right">角色：</td>
+                      <td align="left">{$info.role}</td>
+                    </tr>
+                    <tr>
+                      <td align="right">身份：</td>
+                      <td align="left">{$info.identity}</td>
+                    </tr>
+                    <tr>
+                      <td align="right">等级：</td>
+                      <td align="left">{$info.level}</td>
+                    </tr>
+                    <tr>
+                        <td align="right">区域：</td>
+                        <td align="left">
+                            <!-- {if $info.fuwuzhongxin}-->
+                            {$info.fuwuzhongxin}
+                            <!-- {else} -->
+                            明德善商联盟
+                            <!-- {/if} -->
+                        </td>
+                    </tr>
+                    <tr>
+                      <td align="right">注册时间：</td>
+                      <td align="left">{$info.reg_time}</td>
+                    </tr>
+                    <tr>
+                      <td align="right">上次登录时间：</td>
+                      <td align="left">{$info.last_login}</td>
+                    </tr>
+</table>
+<!-- {/if} -->
         <!--{if $action eq 'profile'}--> 
           {insert_scripts files='utils.js'} 
           <script type="text/javascript">

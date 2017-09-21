@@ -9,6 +9,7 @@
       </div>
       <div class="info-op">
       	<ul>
+		    <li class="info-op1"><i></i><a href="user.php?act=myinfo" >个人信息</a></li>
         	<li class="info-op1"><i></i><a href="user.php?act=profile" >修改资料</a></li>
         	<li class="info-op2"><i></i><a href="user.php?act=logout" >安全退出</a></li>
             <!--<li class="info-op3"><i></i><a href="javascript:void(0);" title="会员等级">{$rank_name}</a></li>-->

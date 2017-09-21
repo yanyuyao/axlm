@@ -63,6 +63,7 @@ $ui_arr[] = 'vc_login_act';
 $ui_arr[] = 'vc_login';
 $ui_arr[] = 'update_password_success';
 $ui_arr[] = 'to_update_password';
+$ui_arr[] = 'myinfo';
 $not_login_arr[] = 'login_check_yzm';
 /* 代码增加_end By www.cfweb2015.com */
 $not_login_arr[] = 'check_mobile';
@@ -167,6 +168,49 @@ function payment_info2($pay_id)
             " WHERE pay_id = '$pay_id' AND enabled = 1";
 
     return $GLOBALS['db']->getRow($sql);
+}
+function action_myinfo(){
+     $_LANG = $GLOBALS['_LANG'];
+    $smarty = $GLOBALS['smarty'];
+    $db = $GLOBALS['db'];
+    $ecs = $GLOBALS['ecs'];
+    $user_id = $_SESSION['user_id'];
+    $levellist = $db->getAll("select id,level_name as name from ".$ecs->table('pc_user_level'));
+        if($levellist){
+            foreach ($levellist as $k=>$v){
+                $level_data[$v['id']] = $v['name'];
+            }
+        }
+        $role_data = array();
+	$rolelist = $db->getAll("select id,role_name as name from ".$ecs->table('pc_user_role'));
+        if($rolelist){
+            foreach ($rolelist as $k=>$v){
+                $role_data[$v['id']] = $v['name'];
+            }
+        }
+        $identity_data = array();
+	$identitylist = $db->getAll("select id,identity_name as name from ".$ecs->table('pc_user_identity'));
+        if($identitylist){
+            foreach ($identitylist as $k=>$v){
+                $identity_data[$v['id']] = $v['name'];
+            }
+        }
+        
+    $sql = "select pu.*, u.user_name, u.mobile_phone ,u.email,u.reg_time,u.last_login,u.last_ip from ".$ecs->table('pc_user')." pu left join ".$ecs->table('users')." u on pu.uid = u.user_id where pu.uid = $user_id ";
+//            echo "<br>".$sql;
+    
+    $info = $db->getRow($sql);
+    if($info){
+        $info['level'] = $level_data[$info['level']];
+        $info['role'] = $role_data[$info['role']];
+        $info['identity'] = $identity_data[$info['identity']];
+        $info['reg_time'] = date("Y-m-d H:i",$info['reg_time']);
+        $info['last_login'] = date("Y-m-d H:i",$info['last_login']);
+        $info['fuwuzhongxin'] = $db->getOne("select user_name from ".$ecs->table('users')." where user_id = '".$info['fuwuzhongxin_user_id']."'");
+    }
+    
+    $smarty->assign('info', $info);
+    $smarty->display('user_transaction.dwt');
 }
 function action_getUserShortInfo(){
     $_LANG = $GLOBALS['_LANG'];
