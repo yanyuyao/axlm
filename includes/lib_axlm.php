@@ -624,13 +624,13 @@ function pc_set_guanli_butie($uid,$type){
             //}}} 返现金币
                 
             $sql = "select uid, role,level from ".$ecs->table('pc_user')." where uid in (".implode(",",$tuijian_parent_array).") order by uid desc ";
-                    echo $sql;
+                    //echo $sql;
             $ulist = $db->getAll($sql);
             if($ulist){
                 
             //{{{给直推人返积分    
                 foreach($ulist as $k=>$v){
-                  echo "<br>".$v['uid']."-----".$v['role']."------".$v['level']."<br>";
+                  //echo "<br>".$v['uid']."-----".$v['role']."------".$v['level']."<br>";
                     $level = $v['level'];
                     if($level > 2){ //只给高级会员及以上返
                         
