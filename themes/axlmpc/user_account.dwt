@@ -275,19 +275,31 @@
 			  <div class="mar_top">
 				<a href="account.php?act=zhuanzhang&touser=" class="main-btn main-btn-large">转账给其他人</a>
 				<a href="account.php?act=zhuanzhanglog" style="float:right;color:#ed6803;">转账记录</a>
-				
+				<div style="margin:10px 0px;text-align:right;">
+                                <form action="account.php" method="get">
+                                    用户名：<input type="text" style="" name="search_uname" value="{$search_uname}" placeholder="用户名"/>
+                                    时间：<input type="text" name="stime" value="{$stime}" placeholder="格式 xxxx-xx-xx" /> - <input type="text" name="etime" value="{$etime}" placeholder="格式 xxxx-xx-xx"/>
+                                    <input type="hidden" name="act" value="show_expend_users" />
+                                    <input type="submit" name="submit" class="main-btn main-btn-small" value="查询" />
+                                </form>
+                                </div>
 				<table width="100%" style="margin-top:15px;" border="0" cellpadding="5" cellspacing="1" bgcolor="#eee">
 				  <tr align="center">
 					<td bgcolor="#ffffff">用户ID</td>
 					<td bgcolor="#ffffff">用户名</td>
+					<td bgcolor="#ffffff">所属层</td>
 					<td bgcolor="#ffffff">区域</td>
+					<td bgcolor="#ffffff">角色</td>
+					<td bgcolor="#ffffff">身份</td>
+					<td bgcolor="#ffffff">等级</td>
 					<td bgcolor="#ffffff">注册时间</td>
-					<td bgcolor="#ffffff">操作</td>
+					<!--<td bgcolor="#ffffff">操作</td>-->
 				  </tr>
 				   <!-- {foreach from=$userlist key=k item=val} -->
 				  <tr align="center">
 					<td bgcolor="#ffffff">{$val.uid}</td>
 					<td bgcolor="#ffffff">{$val.user_name}</td>
+					<td bgcolor="#ffffff">{$val.ceng}</td>
 					<td bgcolor="#ffffff">
 					<!-- {if $val.leftright eq 'left'} -->
 					左区
@@ -295,12 +307,23 @@
 					右区
 					<!--{/if}-->
 					</td>
+                                        <td bgcolor="#ffffff">
+						{$val.role}
+					</td>
+                                        <td bgcolor="#ffffff">
+						{$val.identity}
+					</td>
+                                        <td bgcolor="#ffffff">
+						{$val.level}
+					</td>
 					<td bgcolor="#ffffff">
 						{$val.reg_time_format}
 					</td>
-					<td bgcolor="#ffffff">
+					<!--
+                                        <td bgcolor="#ffffff">
 						<a href="account.php?act=zhuanzhang&touser={$val.uid}" class="main-btn main-btn-large">转账</a>
 					</td>
+                                        -->
 				  </tr>
 					<!-- {/foreach} -->
 				</table>

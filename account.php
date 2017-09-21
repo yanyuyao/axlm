@@ -249,13 +249,80 @@ function action_show_expend_users()
 	$db = $GLOBALS['db'];
 	$ecs = $GLOBALS['ecs'];
 	$user_id = $_SESSION['user_id'];
-	
+        $level_data = array();
+        
+        $search_uname = isset($_REQUEST['search_uname'])?$_REQUEST['search_uname']:"";
+        $stime = isset($_REQUEST['stime'])?$_REQUEST['stime']:"";
+        $etime = isset($_REQUEST['etime'])?$_REQUEST['etime']:"";
+        
+        $where = "";
+        if($search_uname){
+            $where .= " and u.user_name like '%$search_uname%'";
+        }
+        if($stime){
+            $stime_time = strtotime($stime);
+            $where .= " and reg_time >= '$stime_time'";
+        }
+        if($etime){
+            $etime_time = strtotime($etime);
+            $where .= " and reg_time <= '$etime_time'";
+        }
+//        echo $where;
+	$levellist = $db->getAll("select id,level_name as name from ".$ecs->table('pc_user_level'));
+        if($levellist){
+            foreach ($levellist as $k=>$v){
+                $level_data[$v['id']] = $v['name'];
+            }
+        }
+        $role_data = array();
+	$rolelist = $db->getAll("select id,role_name as name from ".$ecs->table('pc_user_role'));
+        if($rolelist){
+            foreach ($rolelist as $k=>$v){
+                $role_data[$v['id']] = $v['name'];
+            }
+        }
+        $identity_data = array();
+	$identitylist = $db->getAll("select id,identity_name as name from ".$ecs->table('pc_user_identity'));
+        if($identitylist){
+            foreach ($identitylist as $k=>$v){
+                $identity_data[$v['id']] = $v['name'];
+            }
+        }
+        
 	$data = array();
-	getAllUserListByUid($user_id,$data);
-
+	getAllUserListByUid($user_id,$data,1,$where);
+        $uid_array = array();
+        if($data){
+            foreach($data as $k=>$v){
+                    $uid_array[] = $v['uid'];
+                $v['level'] = $level_data[$v['level']];
+                $v['role'] = $role_data[$v['role']];
+                $v['identity'] = $identity_data[$v['identity']];
+                $v['ceng'] = $v['ceng']."层";
+                $data[$k] = $v;
+            }
+        }
 	//var_dump($data);
+        $data2 = array();
+        if($uid_array){
+            $uid_str = implode(",",$uid_array);
+            $sql = "select uid, from_unixtime(u.reg_time,'%Y-%m-%d %H-%i-%s') as reg_time_format from ".$ecs->table('pc_user')." pu left join ".$ecs->table('users')." u on pu.uid = u.user_id where pu.uid in ($uid_str) $where order by uid asc ";
+    	echo "<br>".$sql;
+            $data2 = $db->getAll($sql);
+            foreach($data2 as $k=>$v){
+                foreach($data as $kk=>$vv){
+                    if($v['uid'] == $vv['uid']){
+                        $v = $vv;
+                    }
+                }
+                $data2[$k] = $v;
+            }
+        }
 	$smarty->assign('user_id', $_SESSION['user_id']);
-	$smarty->assign('userlist', $data);
+        $smarty->assign('search_uname',$search_uname);
+        $smarty->assign('stime',$stime);
+        $smarty->assign('etime',$etime);
+	$smarty->assign('userlist', $data2);
 	
 	$smarty->display('user_account.dwt');
 }
@@ -383,19 +450,20 @@ function save_user_account_log($uid,$type,$amount_type,$amount){
 	
 }		
 //获得用户所以下线列表
-function getAllUserListByUid($uid,&$data){
-   
+function getAllUserListByUid($uid,&$data,$ceng=0){
+
 	$db = $GLOBALS['db'];
 	$ecs = $GLOBALS['ecs'];
 
-	$sql = "select uid , tuijianren_user_id, jiedianren_user_id, leftright, u.user_name,u.reg_time , from_unixtime(u.reg_time,'%Y-%m-%d %H-%i-%s') as reg_time_format from ".$ecs->table('pc_user')." pu left join ".$ecs->table('users')." u on pu.uid = u.user_id where jiedianren_user_id = ".$uid;
+	$sql = "select uid , pu.level, pu.identity, pu.role,tuijianren_user_id, jiedianren_user_id, leftright, u.user_name,u.reg_time , from_unixtime(u.reg_time,'%Y-%m-%d %H-%i-%s') as reg_time_format from ".$ecs->table('pc_user')." pu left join ".$ecs->table('users')." u on pu.uid = u.user_id where jiedianren_user_id = ".$uid." order by pu.jiedianren_user_id asc ";
 //	echo "<br>".$sql;
 	$nextuser = $db->getAll($sql);
 	
 	if($nextuser){
 		foreach($nextuser as $k=>$v){
+                    $v['ceng'] = $ceng;
                     $data[] = $v;
-                    getAllUserListByUid($v['uid'],$data);
+                    getAllUserListByUid($v['uid'],$data,$ceng+1);
 		}
 	}else{
 		return $data;
