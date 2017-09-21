@@ -308,7 +308,7 @@ function action_show_expend_users()
         if($uid_array){
             $uid_str = implode(",",$uid_array);
             $sql = "select uid, from_unixtime(u.reg_time,'%Y-%m-%d %H-%i-%s') as reg_time_format from ".$ecs->table('pc_user')." pu left join ".$ecs->table('users')." u on pu.uid = u.user_id where pu.uid in ($uid_str) $where order by uid asc ";
-            echo "<br>".$sql;
+//            echo "<br>".$sql;
             $data2 = $db->getAll($sql);
             foreach($data2 as $k=>$v){
                 foreach($data as $kk=>$vv){
