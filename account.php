@@ -290,7 +290,7 @@ function action_show_expend_users()
         }
         
 	$data = array();
-	getAllUserListByUid($user_id,$data,1,$where);
+	getAllUserListByUid($user_id,$data,0,$where);
         $uid_array = array();
         if($data){
             foreach($data as $k=>$v){
@@ -299,6 +299,7 @@ function action_show_expend_users()
                 $v['role'] = $role_data[$v['role']];
                 $v['identity'] = $identity_data[$v['identity']];
                 $v['ceng'] = $v['ceng']."层";
+                $v['jiedianren_uname'] = $db->getOne('select user_name from '.$ecs->table('users')." where user_id = ".$v['jiedianren_user_id']);
                 $data[$k] = $v;
             }
         }
@@ -307,7 +308,7 @@ function action_show_expend_users()
         if($uid_array){
             $uid_str = implode(",",$uid_array);
             $sql = "select uid, from_unixtime(u.reg_time,'%Y-%m-%d %H-%i-%s') as reg_time_format from ".$ecs->table('pc_user')." pu left join ".$ecs->table('users')." u on pu.uid = u.user_id where pu.uid in ($uid_str) $where order by uid asc ";
-    	echo "<br>".$sql;
+            echo "<br>".$sql;
             $data2 = $db->getAll($sql);
             foreach($data2 as $k=>$v){
                 foreach($data as $kk=>$vv){
@@ -315,6 +316,7 @@ function action_show_expend_users()
                         $v = $vv;
                     }
                 }
+                
                 $data2[$k] = $v;
             }
         }

@@ -292,6 +292,7 @@
 					<td bgcolor="#ffffff">角色</td>
 					<td bgcolor="#ffffff">身份</td>
 					<td bgcolor="#ffffff">等级</td>
+					<td bgcolor="#ffffff">接点人</td>
 					<td bgcolor="#ffffff">注册时间</td>
 					<!--<td bgcolor="#ffffff">操作</td>-->
 				  </tr>
@@ -315,6 +316,9 @@
 					</td>
                                         <td bgcolor="#ffffff">
 						{$val.level}
+					</td>
+                                        <td bgcolor="#ffffff">
+						{$val.jiedianren_uname}
 					</td>
 					<td bgcolor="#ffffff">
 						{$val.reg_time_format}
