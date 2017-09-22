@@ -204,7 +204,7 @@
 						  <div id="error_container"><!--{if $msg neq ''}-->{$msg}<!-- {/if} --></div>
 						  <div class="item">
 							<label class="con_un">转给：</label>
-							<input type="text" id="touser" name="touser" value="{$touser}" class="text"  autocomplete="off"  />
+							<input type="text" id="touser" name="touser" value="{$touser}" class="text"  autocomplete="off" placeholder="请输入用户名"  />
 						  </div>
 						  <div class="item">
 							<label class="con_un">转账金额：</label>

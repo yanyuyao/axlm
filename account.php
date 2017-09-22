@@ -349,6 +349,10 @@ function action_zhuanzhang(){
 //            $tousername = $db->getOne('select user_name from '.$ecs->table('users')." where user_id = $touser");
 //        }
 //	$smarty->assign('tousername',$tousername);
+        if($touser){
+            $touser = $db->getOne('select user_id from '.$ecs->table('users')." where user_name = '$touser'");
+        }
+        
 	$step = "default";
 	//检查密码
 	if($curstep == 'checkpwd'){
@@ -367,15 +371,20 @@ function action_zhuanzhang(){
 		}
 	}elseif($curstep == 'zhuanzhang'){//执行转账操作
 		$amount = intval(isset($_REQUEST['amount'])?$_REQUEST['amount']:0);
-		if($xianjinbi < $amount && $amount){
-			$msg = "转账金额不能超过您的现金币,并且转账金额不能为0";
-			$smarty->assign("msg",$msg);
-			$step = 'zhuanzhang';
-		}else{
-			zhangzhangLog('account_xianjinbi',$user_id,$touser,$amount);
-			$step = 'success';
-		}
-		
+                if(!$touser){
+                    $msg = "没有找到该用户，请确认您输入的名称是正确的";
+                    $smarty->assign("msg",$msg);
+                    $step = 'zhuanzhang';
+                }else{
+                    if($xianjinbi < $amount && $amount){
+                            $msg = "转账金额不能超过您的现金币,并且转账金额不能为0";
+                            $smarty->assign("msg",$msg);
+                            $step = 'zhuanzhang';
+                    }else{
+                            zhangzhangLog('account_xianjinbi',$user_id,$touser,$amount);
+                            $step = 'success';
+                    }
+                }
 	}else{
 		$step = "default";
 	}
