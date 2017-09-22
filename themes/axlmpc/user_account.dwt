@@ -97,15 +97,16 @@
 		   <div class="box"> 
 			  <div class="tabmenu">
 				<ul class="tab pngFix">
-				  <li class="first active"><a>我的推广</a></li>
+				  <li class="first active"><a>会员管理</a></li>
 				</ul>
 			  </div>
 			  <div class="mar_top">
 				<div class="box-inner">基本信息 </div>
 				<table width="100%" border="0" cellpadding="5" cellspacing="1" bgcolor="#eee">
 				  <tr align="center">
-					<td bgcolor="#ffffff">推广人数</td>
-					<td bgcolor="#ffffff" class="price_format">{$userTotal}人<a href="account.php?act=show_expend_users" style="margin-left:10px;margin-top:10px;">[查看]</a></td>
+					<td bgcolor="#ffffff">会员管理</td>
+					<td bgcolor="#ffffff" class="price_format">
+					<a href="account.php?act=show_expend_users" style="margin-left:10px;margin-top:10px;">[查看]</a></td>
 				  </tr>
 				</table>
 			  </div>
