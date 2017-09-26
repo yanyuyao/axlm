@@ -298,7 +298,7 @@ function action_show_expend_users()
                 $v['level'] = $level_data[$v['level']];
                 $v['role'] = $role_data[$v['role']];
                 $v['identity'] = $identity_data[$v['identity']];
-                $v['ceng'] = $v['ceng']."层";
+                $v['ceng'] = (intval($v['ceng'])+1)."层";
                 $v['jiedianren_uname'] = $db->getOne('select user_name from '.$ecs->table('users')." where user_id = ".$v['jiedianren_user_id']);
                 $data[$k] = $v;
             }

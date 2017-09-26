@@ -1600,7 +1600,11 @@ function action_shengji(){
 	
 	$sql = "UPDATE " . $ecs->table('pc_user') . " SET `tuijianren_user_id`='" . $tuijianren_user_id . "',`jiedianren_user_id`='" . $jiedianren_user_id . "',`leftright`='" . $leftright . "',`fuwuzhongxin_user_id`='" . $fuwuzhongxin_user_id . "' WHERE `uid`='" . $user_id . "'";
 	$db->query($sql);
-        
+	
+	//更改推荐人，此处填写后， 强制更改
+    $sql = "UPDATE " . $ecs->table('users') . " SET `parent_id`='" . $tuijianren_user_id . "' WHERE `user_id`='" . $user_id . "'";
+	$db->query($sql);
+	
         //{{{ 激活账户
         $order_amount_max = 0;
         $fuhe_oid = 0;
