@@ -344,6 +344,7 @@ function action_zhuanzhang(){
 	$pwd2 = $db->getOne('select pwd2 from '.$ecs->table('pc_user')." where uid = $user_id");
 	$curstep = isset($_REQUEST['step'])?$_REQUEST['step']:'';
 	$touser = isset($_REQUEST['touser'])?$_REQUEST['touser']:0;
+        $tousername = $touser;
 //        $tousername = '';
 //        if($touser){
 //            $tousername = $db->getOne('select user_name from '.$ecs->table('users')." where user_id = $touser");
@@ -375,13 +376,20 @@ function action_zhuanzhang(){
                     $msg = "没有找到该用户，请确认您输入的名称是正确的";
                     $smarty->assign("msg",$msg);
                     $step = 'zhuanzhang';
+                }elseif($touser == $user_id){
+                    $msg = "不能转账给自己";
+                    $smarty->assign("msg",$msg);
+                    $step = 'zhuanzhang';
                 }else{
-                    if($xianjinbi < $amount && $amount){
+                    $tixian_xianjinbi = $db->getOne("select money from ".$ecs->table('pc_user_tixian')." where status ='' and uid = ".$user_id);
+                    $xianjinbi_total = $xianjinbi - floatval($tixian_xianjinbi);
+                    //提现金额不能超过 （总金额-提现总金额）
+                    if($xianjinbi_total < $amount && $amount){
                             $msg = "转账金额不能超过您的现金币,并且转账金额不能为0";
                             $smarty->assign("msg",$msg);
                             $step = 'zhuanzhang';
                     }else{
-                            zhangzhangLog('account_xianjinbi',$user_id,$touser,$amount);
+                           // zhangzhangLog('account_xianjinbi',$user_id,$touser,$amount);
                             $step = 'success';
                     }
                 }
@@ -392,6 +400,7 @@ function action_zhuanzhang(){
 	$smarty->assign('step',$step);
 	$smarty->assign('user_id', $_SESSION['user_id']);
 	$smarty->assign('touser', $touser);
+	$smarty->assign('tousername', $tousername);
 	
 	$smarty->display('user_account.dwt');
 }
