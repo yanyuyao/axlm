@@ -73,10 +73,18 @@ elseif ($_REQUEST['act'] == 'post')
 	if(!$uid){
 		sys_msg($_LANG['save_fail'], 0);
 	}
+        if($value == 0){
+            sys_msg('金额不能为0', 1);
+            exit;
+        }
 	if($changetype == 'add'){
 		$new_value = $oldvalue + $value; 
 		$change_value = "+".$value;
 	}elseif($changetype == 'minus'){
+            if($oldvalue<$value){
+                sys_msg('减少的金额不能大于原有的金额', 1);
+                exit;
+            }
 		$new_value = $oldvalue - $value; 
 		$change_value = "-".$value;
 	}

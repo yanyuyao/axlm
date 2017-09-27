@@ -308,6 +308,7 @@ $_LANG['03_users_list'] = '会员列表';
 $_LANG['03_users_pc'] = '会员明细';
 $_LANG['12_users_list_fanxian'] = '返现会员';
 $_LANG['12_trade_list'] = '日交易额分成';
+$_LANG['13_tixian'] = '提现管理';
 $_LANG['12_trade_cash_list'] = '超市现金交易';
 $_LANG['01_shops'] = '商户管理';
 $_LANG['01_shops_goods'] = '商户产品管理';

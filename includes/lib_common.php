@@ -3118,6 +3118,21 @@ function formated_weight($weight)
  */
 function log_account_change($user_id, $user_money = 0, $frozen_money = 0, $rank_points = 0, $pay_points = 0, $change_desc = '', $change_type = ACT_OTHER)
 {
+	$db = $GLOBALS['db'];
+	$ecs = $GLOBALS['ecs'];
+	if($change_type == 5){
+		$change_desc = '提现';
+		$pc_user = $db->getRow("select * from ".$ecs->table('pc_user')." where uid = ".$user_id);
+		if($pc_user){
+			$xianjinbi = $pc_user['account_xianjinbi'];
+			//扣除现金币
+			change_account_info($user_id, "xianjinbi", "-", $user_money);
+		}
+		return 0;
+	}
+	if($change_type == 6){
+		$change_desc = '提现返积分';
+	}
     /* 插入帐户变动记录 */
     $account_log = array(
         'user_id'       => $user_id,

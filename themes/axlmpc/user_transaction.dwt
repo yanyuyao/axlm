@@ -1110,7 +1110,7 @@ function submit_surplus_form(){
                 <tr>
                 <td width="10%" align="right">类型:</td>
                 <td align="left">
-                    <input type="radio" name="tixian_account_type" value="zhifubao" class=""  />支付宝&nbsp;&nbsp;&nbsp;&nbsp;
+                    <input type="radio" name="tixian_account_type" value="zhifubao" class=""  checked='checked'/>支付宝&nbsp;&nbsp;&nbsp;&nbsp;
                     <input type="radio" name="tixian_account_type" value="yinhang" class=""  />银行
 		</td>
               </tr>

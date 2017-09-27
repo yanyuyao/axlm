@@ -3816,53 +3816,16 @@ function action_act_account ()
 	$db = $GLOBALS['db'];
 	$ecs = $GLOBALS['ecs'];
 	$user_id = $_SESSION['user_id'];
-	
+	$fenxiao = unserialize($GLOBALS['_CFG']['fenxiao']);
+
+	include_once (ROOT_PATH . 'includes/lib_clips.php');
+	include_once (ROOT_PATH . 'includes/lib_order.php');
 	$amount = isset($_POST['amount']) ? floatval($_POST['amount']) : 0;
-	$tixian_account_type = isset($_POST['tixian_account_type']) ? $_POST['tixian_account_type'] : 0;
-	$tixian_account_info = isset($_POST['tixian_account_info']) ? $_POST['tixian_account_info'] : 0;
-	$tixian_account_realname = isset($_POST['tixian_account_realname']) ? $_POST['tixian_account_realname'] : 0;
-	$tixian_account_yinhang = isset($_POST['tixian_account_yinhang']) ? $_POST['tixian_account_yinhang'] : 0;
-        
-	$user_note = isset($_POST['user_note']) ? $_POST['user_note'] : '';
-	if($tixian_account_type){
-                    $checkLastTixianSql = "select * from ".$ecs->table('pc_user_tixian')." where uid = $user_id and status = '' ";
-                    $checkLastTixian = $db->getRow($checkLastTixianSql);
-                    if($checkLastTixian){
-                            show_message('您上次的提现还没有完成，请等待');
-                            exit;
-                    }
-                    $tixian_kouchu_xiaofei = $db->getOne('select svalue from '.$ecs->table('pc_config').' where sname = "tixian_kouchu_xiaofei"');
-                    $tixian_kouchu_shuishou = $db->getOne('select svalue from '.$ecs->table('pc_config').' where sname = "tixian_kouchu_shuishou"');
-                    $tixian_kouchu_guanlifei = $db->getOne('select svalue from '.$ecs->table('pc_config').' where sname = "tixian_kouchu_guanlifei"');
-                    $tixian_kouchu_xiaofei = $tixian_kouchu_xiaofei?floatval($tixian_kouchu_xiaofei):0;
-                    $tixian_kouchu_shuishou = $tixian_kouchu_shuishou?floatval($tixian_kouchu_shuishou):0;
-                    $tixian_kouchu_guanlifei = $tixian_kouchu_guanlifei?floatval($tixian_kouchu_guanlifei):0;
-
-                    $daozhang = $amount * floatval(1-$tixian_kouchu_xiaofei-$tixian_kouchu_shuishou-$tixian_kouchu_guanlifei);
-
-                    $sql = "insert into ".$ecs->table('pc_user_tixian')."(uid,realname,tixian_type,account,yinghainame,money,zhuanqu_xiaofeibi,shuishou,guanlifei,daozhang_money,note,status,ctime)values(".
-                                    "'".$user_id."',".
-                                    "'".$tixian_account_realname."',".
-                                    "'".$tixian_account_type."',".
-                                    "'".$tixian_account_info."',".
-                                    "'".$tixian_account_yinhang."',".
-                                    "'".$amount."',".
-                                    "'".$amount*$tixian_kouchu_xiaofei."',".
-                                    "'".$amount*$tixian_kouchu_shuishou."',".
-                                    "'".$amount*$tixian_kouchu_guanlifei."',".
-                                    "'".$daozhang."',".
-                                    "'".$user_note."',".
-                                    "'',".
-                                    "'".time()."'".
-                                    ")";
-                    $flag = $db->query($sql);
-                    if($flag){
-                            show_message('提现成功');
-                    }else{
-                            show_message('提现失败');
-                    }
-                    return $flag;
-        }
+	$tixian_account_type = isset($_POST['tixian_account_type']) ? $_POST['tixian_account_type'] : '';
+	$tixian_account_info = isset($_POST['tixian_account_info']) ? $_POST['tixian_account_info'] : '';
+	$tixian_account_realname = isset($_POST['tixian_account_realname']) ? $_POST['tixian_account_realname'] : '';
+	$tixian_account_yinhang = isset($_POST['tixian_account_yinhang']) ? $_POST['tixian_account_yinhang'] : '';
+	
 	if($amount <= 0)
 	{
 		show_message($_LANG['amount_gt_zero']);
@@ -3881,8 +3844,9 @@ function action_act_account ()
 	if($tixian_account_type){ $surplus['tixian_account_type'] = $tixian_account_type; }
 	if($tixian_account_realname){ $surplus['tixian_account_realname'] = $tixian_account_realname; }
 	if($tixian_account_info){ $surplus['tixian_account_info'] = $tixian_account_info;}
+	if($tixian_account_yinhang){ $surplus['tixian_account_yinhang'] = $tixian_account_yinhang;}
 	
-	$payment_info = payment_info2($surplus['payment_id']);
+	$payment_info = payment_info($surplus['payment_id']);
 	if($payment_info['pay_code'] == 'alipay_bank')
 	{
 		$surplus['defaultbank'] = isset($_POST['www_68ecshop_com_bank']) ? trim($_POST['www_68ecshop_com_bank']) : '';
@@ -3891,19 +3855,40 @@ function action_act_account ()
 	/* 退款申请的处理 */
 	if($surplus['process_type'] == 1)
 	{
-		
+		/*判断当前是否有有退款申请*/
+		$tuikuan_sql = 'select * from '.$ecs->table('user_account').' where is_paid = 0 and alipay_return = "" and user_id = '.$user_id;
+		//echo $tuikuan_sql;
+		$is_have_tuikuan = $db->getRow($tuikuan_sql);
+		if($is_have_tuikuan){
+			show_message('您当前有未完成的提现申请，请等待完成后再提交', $_LANG['back_page_up'], '', 'info');
+		}
 		/* 判断是否有足够的余额的进行退款的操作 */
-		$sur_amount = get_user_surplus($user_id);
+		//$sur_amount = get_user_surplus($user_id);
+		//echo "select account_xianjinbi from ".$ecs->table('pc_user')." where uid = ".$user_id;
+		$sur_amount = $db->getOne("select account_xianjinbi from ".$ecs->table('pc_user')." where uid = ".$user_id);
 		if($amount > $sur_amount)
 		{
 			$content = $_LANG['surplus_amount_error'];
 			show_message($content, $_LANG['back_page_up'], '', 'info');
 		}
 		
+		//$daozhang_amount = '-' . $amount;
+		//if($fenxiao['tixian_shouxufei']){
+		//	$shouxufei = floatval($fenxiao['tixian_shouxufei'])/100;
+		//}else{$shouxufei = 0;}
+		//if($fenxiao['tixian_fanjifen']){
+		//	$tixian_fanjifen = floatval($fenxiao['tixian_fanjifen'])/100;
+		//}else{$tixian_fanjifen = 0;}
+		//
+		//$daozhang_amount = '-'.floatval($amount - $amount*$shouxufei - $amount*$tixian_fanjifen);
+		$daozhang_amount = $amount;
+		//echo $daozhang_amount;
+			
 		// 插入会员账目明细
 		$amount = '-' . $amount;
+		
 		$surplus['payment'] = '';
-		$surplus['rec_id'] = insert_user_account($surplus, $amount);
+		$surplus['rec_id'] = insert_user_tixian_account($surplus, $amount,$daozhang_amount);
 		
 		/* 如果成功提交 */
 		if($surplus['rec_id'] > 0)
@@ -3929,7 +3914,7 @@ function action_act_account ()
 		
 		// 获取支付方式名称
 		$payment_info = array();
-		$payment_info = payment_info2($surplus['payment_id']);
+		$payment_info = payment_info($surplus['payment_id']);
 		$surplus['payment'] = $payment_info['pay_name'];
 		
 		if($surplus['rec_id'] > 0)

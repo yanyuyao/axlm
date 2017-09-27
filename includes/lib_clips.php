@@ -413,8 +413,8 @@ function add_booking($booking)
 function insert_user_account($surplus, $amount)
 {
     $sql = 'INSERT INTO ' .$GLOBALS['ecs']->table('user_account').
-           ' (user_id, admin_user, amount, add_time, paid_time, admin_note, user_note, process_type, payment, is_paid,tixian_account_info, tixian_account_type,tixian_account_realname)'.
-            " VALUES ('$surplus[user_id]', '', '$amount', '".gmtime()."', 0, '', '$surplus[user_note]', '$surplus[process_type]', '$surplus[payment]', 0, '".$surplus['tixian_account_info']."','".$surplus['tixian_account_type']."', '".$surplus['tixian_account_realname']."')";
+           ' (user_id, admin_user, amount, add_time, paid_time, admin_note, user_note, process_type, payment, is_paid,tixian_account_info, tixian_account_type,tixian_account_realname,tixian_account_yinhang)'.
+            " VALUES ('$surplus[user_id]', '', '$amount', '".gmtime()."', 0, '', '$surplus[user_note]', '$surplus[process_type]', '$surplus[payment]', 0, '".$surplus['tixian_account_info']."','".$surplus['tixian_account_type']."', '".$surplus['tixian_account_realname']."','".$surplus['tixian_account_yinhang']."')";
     $GLOBALS['db']->query($sql);
 	//echo $sql;
     return $GLOBALS['db']->insert_id();
@@ -1105,4 +1105,14 @@ function get_user_shu($user_id)
 }
 /*$sql = "SELECT g.goods_thumb,o.*,i.* FROM ".$GLOBALS['ecs']->table('goods')."as g,".$GLOBALS('ecs')->table('order_info')."as i,".$GLOBALS('ecs')->table('order_goods')."as  o  WHERE i.user_id = '$user_id' AND i.order_id=o.order_id  AND	i.shipping_status='2' AND o.goods_id = g.goods_id";
 	*/
+	
+	function insert_user_tixian_account($surplus, $amount,$daozhang_amount)
+{
+    $sql = 'INSERT INTO ' .$GLOBALS['ecs']->table('user_account').
+           ' (user_id, admin_user, amount, daozhuang_amount,add_time, paid_time, admin_note, user_note, process_type, payment, is_paid,tixian_account_info, tixian_account_type,tixian_account_realname)'.
+            " VALUES ('$surplus[user_id]', '', '$amount', '$daozhang_amount','".gmtime()."', 0, '', '$surplus[user_note]', '$surplus[process_type]', '$surplus[payment]', 0, '".$surplus['tixian_account_info']."','".$surplus['tixian_account_type']."', '".$surplus['tixian_account_realname']."')";
+    $GLOBALS['db']->query($sql);
+	//echo $sql;
+    return $GLOBALS['db']->insert_id();
+}
 ?> 

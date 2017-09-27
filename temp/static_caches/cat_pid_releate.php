@@ -2,19 +2,6 @@
 $data = array (
   0 => 
   array (
-    'cat_id' => '367',
-    'cat_name' => '女性健康',
-    'measure_unit' => '',
-    'parent_id' => '0',
-    'is_show' => '1',
-    'show_in_nav' => '0',
-    'grade' => '0',
-    'sort_order' => '50',
-    'has_children' => '2',
-    'goods_num' => '4',
-  ),
-  1 => 
-  array (
     'cat_id' => '370',
     'cat_name' => '电器',
     'measure_unit' => '',
@@ -25,6 +12,19 @@ $data = array (
     'sort_order' => '50',
     'has_children' => '3',
     'goods_num' => 0,
+  ),
+  1 => 
+  array (
+    'cat_id' => '367',
+    'cat_name' => '女性健康',
+    'measure_unit' => '',
+    'parent_id' => '0',
+    'is_show' => '1',
+    'show_in_nav' => '0',
+    'grade' => '0',
+    'sort_order' => '50',
+    'has_children' => '2',
+    'goods_num' => '4',
   ),
   2 => 
   array (
@@ -54,19 +54,6 @@ $data = array (
   ),
   4 => 
   array (
-    'cat_id' => '371',
-    'cat_name' => '净水机',
-    'measure_unit' => '',
-    'parent_id' => '370',
-    'is_show' => '1',
-    'show_in_nav' => '0',
-    'grade' => '0',
-    'sort_order' => '50',
-    'has_children' => '0',
-    'goods_num' => '1',
-  ),
-  5 => 
-  array (
     'cat_id' => '372',
     'cat_name' => '水杯',
     'measure_unit' => '',
@@ -78,7 +65,7 @@ $data = array (
     'has_children' => '0',
     'goods_num' => '1',
   ),
-  6 => 
+  5 => 
   array (
     'cat_id' => '373',
     'cat_name' => '净化器',
@@ -90,6 +77,19 @@ $data = array (
     'sort_order' => '50',
     'has_children' => '0',
     'goods_num' => '2',
+  ),
+  6 => 
+  array (
+    'cat_id' => '371',
+    'cat_name' => '净水机',
+    'measure_unit' => '',
+    'parent_id' => '370',
+    'is_show' => '1',
+    'show_in_nav' => '0',
+    'grade' => '0',
+    'sort_order' => '50',
+    'has_children' => '0',
+    'goods_num' => '1',
   ),
 );
 ?>

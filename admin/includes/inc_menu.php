@@ -142,15 +142,16 @@ $modules['07_content']['02_articlecat_list'] = 'articlecat.php?act=list';
 //$modules['07_content']['article_auto'] = 'article_auto.php?act=list';//文章自动发布
 // $modules['07_content']['shop_help'] = 'shophelp.php?act=list_cat';
 // $modules['07_content']['shop_info'] = 'shopinfo.php?act=list';
-
-$modules['08_members']['01_shops'] = 'shops.php?act=list';
-$modules['08_members']['01_shops_goods'] = 'shops_goods.php?act=list';
+//老的商户列表和商户产品列表
+//$modules['08_members']['01_shops'] = 'shops.php?act=list';
+//$modules['08_members']['01_shops_goods'] = 'shops_goods.php?act=list';
 
 $modules['08_members']['03_users_list'] = 'users.php?act=list';
 $modules['08_members']['03_users_pc'] = 'pc_users.php?act=list';
 //$modules['08_members']['12_users_list_fanxian'] = 'fanxian_user.php?act=list'; 原来的返现用户
 //$modules['08_members']['12_trade_list'] = 'trade_list.php?act=list';//之前的分红2016
 $modules['08_members']['12_trade_list'] = 'fenhong2017.php?act=list';
+$modules['08_members']['13_tixian'] = 'tixian2.php?act=list';
 //$modules['08_members']['12_trade_cash_list'] = 'trade_cash_list.php?act=list'; //日交易额
 
 $modules['08_members']['04_users_export'] = 'users_export.php'; // 代码增加
@@ -164,7 +165,7 @@ $modules['08_members']['04_users_add'] = 'users.php?act=add';
 //隐藏0114
 //$modules['08_members']['06_list_integrate'] = 'integrate.php?act=list'; //会员整合
 $modules['08_members']['08_unreply_msg'] = 'user_msg.php?act=list_all';
-$modules['08_members']['09_user_account'] = 'user_account.php?act=list';
+//$modules['08_members']['09_user_account'] = 'user_account.php?act=list'; //充值和提现申请
 //$modules['08_members']['10_user_account_manage'] = 'user_account_manage.php?act=list';
 //$modules['08_members']['09_postman_list'] = 'postman.php?act=list'; //快递员列表
 //$modules['08_members']['11_tixian'] = 'tixian.php?act=list';
