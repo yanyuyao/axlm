@@ -12,7 +12,18 @@ function getTopCat($catid){
         return $catinfo['cat_id'];
     }
 }
-
+function check_zhuanqu_product_byGid($gid){
+    $ecs = $GLOBALS['ecs'];
+    $db = $GLOBALS['db'];
+    $sql = "select g.goods_id,g.cat_id from ".$ecs->table('goods')." as g where g.goods_id = $gid ";
+    $goods = $db->getRow($sql);
+    $topcat = getTopCat($goods['cat_id']);
+    if($topcat == 367){//女性产品的大分类id
+        return 1;
+    }
+    
+    return 0;
+}
 function check_zhuanqu_product($oid){
     $ecs = $GLOBALS['ecs'];
     $db = $GLOBALS['db'];

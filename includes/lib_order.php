@@ -664,6 +664,7 @@ function order_fee($order, $goods, $consignee)
                     'tax'              => 0);
     $weight = 0;
 
+    $zhuanqu_money = 0;
     /* 商品总价 */
     foreach ($goods AS $val)
     {
@@ -675,6 +676,11 @@ function order_fee($order, $goods, $consignee)
 
         $total['goods_price']  += $val['goods_price'] * $val['goods_number'];
         $total['market_price'] += $val['market_price'] * $val['goods_number'];
+        
+        
+        if(check_zhuanqu_product_byGid($val['goods_id'])){
+            $zhuanqu_money += floatval($val['goods_price'] * $val['goods_number']);
+        }
     }
 
     $total['saving']    = $total['market_price'] - $total['goods_price'];
@@ -694,6 +700,14 @@ function order_fee($order, $goods, $consignee)
             $total['discount'] = $total['goods_price'];
         }
     }
+    //{{{
+    //是否有二次进货折扣
+    //var_dump($order);
+    $pc_user_level =  $GLOBALS['db']->getOne("select level from ". $GLOBALS['ecs']->table('pc_user')." where uid = '".$_SESSION['user_id']."'"); 
+    if($pc_user_level > 2 && $zhuanqu_money){ //高级会员
+        $total['discount'] = $zhuanqu_money/2;
+    }
+    //}}}
     $total['discount_formated'] = price_format($total['discount'], false);
 
     /* 税额 */

@@ -2667,14 +2667,15 @@ elseif ($_REQUEST['step'] == 'done')
                 $pc_userinfo = $db->getRow($sql);
                 if($order['pay_name'] == '现金币'){//account_xianjinbi
                     $xianjinbi = floatval($pc_userinfo['account_xianjinbi']);
-                    if($order['goods_amount'] > $xianjinbi){
+                  
+                    if(($order['goods_amount']-$order['discount']) > $xianjinbi){
                         show_message('现金余额不足，请联系管理员进行充值');
                         exit;
                     }    
                 }
                 if($order['pay_name'] == '消费币'){//account_xianjinbi
                     $xiaofeibi = floatval($pc_userinfo['account_xiaofeibi']);
-                     if($order['goods_amount'] > $xiaofeibi){
+                     if(($order['goods_amount']-$order['discount']) > $xiaofeibi){
                         show_message('消费币余额不足，请联系管理员进行充值');
                         exit;
                     }   

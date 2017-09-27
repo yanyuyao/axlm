@@ -21,7 +21,7 @@ function axlmpc($user_id,$order_id,$order_amount,$good_amount,$paytype=''){
     $tuijianren_user_id = $pcuserinfo['tuijianren_user_id'];
     $jiedianren_user_id = $pcuserinfo['jiedianren_user_id'];
     $fuwuzhongxin_user_id = $pcuserinfo['fuwuzhongxin_user_id'];
-    
+
     if($order_id){
         //获得该订单中女性专区的产品总金额
         $is_zhuanqu_product = check_zhuanqu_product($order_id);
@@ -33,27 +33,39 @@ function axlmpc($user_id,$order_id,$order_amount,$good_amount,$paytype=''){
             //只有用户二次购物，且够6000的也返积分，这里需要判断是否是二次购物，也就是账户已经激活了
             if($good_amount > 6000 && $pcuserinfo['status'] == 1){
                 pc_set_guanli_butie($user_id,"goods");
+                save_jifenbi_fanli($user_id,$good_amount/2,'购物赠积分币'); //二次进货打五折
+                //step 8: 服务中心补贴，升级后， 查看是否给服务中心返利
+                if($fuwuzhongxin_user_id){
+                    pc_set_fuwuzhongxin_butie($fuwuzhongxin_user_id,$good_amount/2);
+                }
+            }else{
+                save_jifenbi_fanli($user_id,$good_amount,'购物赠积分币');
+                //step 8: 服务中心补贴，升级后， 查看是否给服务中心返利
+                if($fuwuzhongxin_user_id){
+                    pc_set_fuwuzhongxin_butie($fuwuzhongxin_user_id,$good_amount);
+                }
             }
             
-            save_jifenbi_fanli($user_id,$good_amount,'购物赠积分币');   
-            //step 2: 设置金融账户变更，见3,4,5,6,7,8   
-            if($paytype == '现金币'){
-                change_account_info($user_id, "xianjinbi", "-", $good_amount);
-            }elseif($paytype == '消费币'){
-                change_account_info($user_id, "xiaofeibi", "-", $good_amount);
-            }
-
-            //step 7: 联盟商家补贴
-            //step 8: 服务中心补贴，升级后， 查看是否给服务中心返利
-            if($fuwuzhongxin_user_id){
-                pc_set_fuwuzhongxin_butie($fuwuzhongxin_user_id,$good_amount);
-            }
         }else{ //不是专区的产品才给推荐奖励
             //step 9: 购物给直推人返利,购买非专区的产品才给直推人返利
+            
             $parent_id = $db->getOne("select parent_id from ".$ecs->table('users')." where user_id = ".$user_id);
             if($parent_id && $parent_id != $user_id){
                 pc_set_zhitui_fanli($user_id,$parent_id,$order_id,$good_amount);
             }
+            save_jifenbi_fanli($user_id,$good_amount,'购物赠积分币');
+            
+        }
+      
+        //step 2: 设置金融账户变更，见3,4,5,6,7,8   
+
+        //step 7: 联盟商家补贴
+        
+            
+        if($paytype == '现金币'){
+            change_account_info($user_id, "xianjinbi", "-", $order_amount);
+        }elseif($paytype == '消费币'){
+            change_account_info($user_id, "xiaofeibi", "-", $order_amount);
         }
     }
  
