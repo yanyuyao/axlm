@@ -49,10 +49,10 @@
     <th>提现金额</th>
     <th>实际到账</th>
     <th>支付方式</th>
-    <th>支付宝账户</th>
-    <th>支付宝真实姓名</th>
-    <th>支付宝处理时间</th>
-    <th>支付宝处理状态</th>
+    <th>支付宝账户/银行账户</th>
+    <th>真实姓名</th>
+    <th>处理时间</th>
+    <th>处理状态</th>
     <th>状态</th>
     <th>{$lang.handler}</th>
   </tr>
@@ -67,7 +67,7 @@
     <td align="center">{$item.add_date}</td>
     <td align="right">{$item.surplus_amount}</td>
     <td align="right">{$item.daozhuang_amount}</td>
-    <td>{if $item.tixian_account_type eq 'zhifubao'}支付宝{/if}</td>
+    <td>{if $item.tixian_account_type eq 'zhifubao'}支付宝{elseif $item.tixian_account_type eq 'yinhang'}银行{/if}</td>
     <td>{$item.tixian_account_info}</td>
     <td align="center">{$item.tixian_account_realname}</td>
     <td align="center">{$item.alipay_exec_time}</td>

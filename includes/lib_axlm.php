@@ -1371,116 +1371,154 @@ function pc_set_zhitui_fanli($fuid,$puid,$oid,$good_amount){
     
 }
 
-function fenhongjisuan($bili='0.1'){
+function fenhongjisuan($bili='0.1',$type=""){
     $ecs = $GLOBALS['ecs'];
     $db = $GLOBALS['db'];
-    $bili = $bili;
-    if($db->getOne("select id from ".$ecs->table('pc_fenhong')." where fenhong_date = '".date('Y-m-d')."'")){
-        sys_msg('已存在【'.date('Y-m-d').'】分红记录', 0 ,$links);
-        return 0;
-    }
-    
-    //计算已付款的所有订单，当天的付款，且付款时间是今日
-    $start_time = strtotime(date("Y-m-d")." 00:00:00");
-    $end_time = strtotime(date("Y-m-d")." 23:59:59");
-    $sql = "select order_id, user_id,goods_amount,pay_time from ".$ecs->table('order_info')." where pay_time > ".$start_time." and pay_time < ".$end_time." and pay_status = 2 ";
-    $order_list = $db->getAll($sql);
-    
-    $sumsql = "select sum(goods_amount) from ".$ecs->table('order_info')." where pay_time > ".$start_time." and pay_time < ".$end_time." and pay_status = 2 ";
-    $trade_today = floatval($db->getOne($sumsql));
-    if(!$trade_today){
-        sys_msg('交易额为0，不可分红', 0 ,$links);
-        return 0;
-    }
-    $trade_fanli_today = $trade_today * $bili;
-   //var_dump($trade_today);
-
-    //举个例子，假设上月份全球直销总业绩为1亿，那么公司将拿出1亿×6%=600万元给所有的VIP会员分。
-    //具体按加权平均的方法进行分配，比如张三是白金VIP会员，他上月的收入为100元，而假设公司全体白金VIP会员上月的总收入为400元，那么用100元÷400元再×600万元=150万元，最后再150万÷100=15000积分。这就是张三所得的VIP福利分红积分。0
-    //当期个人积分（福利分红积分）＝当期个人总收入（除以）当期符合资格的所有人的总收入（乘以）当期公司业绩总和（乘以）不同级别一期业绩对应的百分比
-    $fenhong_save_data = array();
-    
-    //根据当日个人交易额计算分红数
-//    if($order_list){
-//        foreach($order_list as $k=>$v){
-//            $user_save_data = $v;
-//            $user_fenhong = floatval($v['goods_amount']/$trade_today * $trade_fanli_today);
-//            $user_save_data['fenhong_num'] = $user_fenhong;
-//            $user_save_data['fenhong_date'] = date("Y-m-d");
-//            if (array_key_exists($v['user_id'],$fenhong_save_data)){
-//                $fenhong_save_data[$v['user_id']]['fenhong_num'] = floatval($fenhong_save_data[$v['user_id']]['fenhong_num']) + $user_fenhong;
-//            }else{
-//                $fenhong_save_data[$v['user_id']] = $user_save_data;
-//            }
-//        }
-//    }
-    
-    //360分割
-    //echo $trade_fanli_today;
-//    if($trade_fanli_today){
-        $user_fenhong_dian = array();
-        $userlist = $db->getAll("select uid,uid as user_id, account_jifenbi from ".$ecs->table('pc_user')." where status = 1 and account_jifenbi > 0");
+    //累计分红到分红池
+    if($type == "leiji"){
+         //计算已付款的所有订单，当天的付款，且付款时间是今日
+        $cur_date = date("Y-m-d");
+        //$cur_date = "2017-09-19";
+        $start_time = strtotime($cur_date." 00:00:00");
+        $end_time = strtotime($cur_date." 23:59:59");
+        $bili = $bili;
         
-        $total_jifenbi = $db->getOne("select sum(account_jifenbi) from ".$ecs->table('pc_user')." where status = 1 and account_jifenbi > 0");
-        $total_jifenbi = intval($total_jifenbi);
-        $total_fenhongdian = intval($total_jifenbi/360);
-        
-        foreach($userlist as $k=>$v){
-            $user_jifenbi_fenhongdain = intval($v['account_jifenbi']/360);
-            $user_fenhong = floatval($user_jifenbi_fenhongdain/$total_fenhongdian) * $trade_fanli_today;
-            $v['fenhong_num'] = $user_fenhong;
-            $v['fenhong_date'] = date("Y-m-d");
-            $v['total_fenhongdian'] = $total_fenhongdian;
-            $v['user_fenhongdian'] = $user_jifenbi_fenhongdain;
-            
-            $fenhong_save_data[$k] = $v;
+        if($db->getOne("select id from ".$ecs->table('pc_day_amount_fenhong_log')." where fenhong_date = '".$cur_date."'")){
+            sys_msg('已存在【'.date('Y-m-d').'】分红记录', 0 ,$links);
+            return 0;
         }
-//    }
-    
-   if($fenhong_save_data){
-       $save_sql = "insert into ".$ecs->table('pc_fenhong')."(fenhong_date,trade_today,trade_fanli,trade_user_total,trade_fenhongdian)values(".
-               "'".date("Y-m-d")."',".
-               "'".$trade_today."',".
-               "'".$trade_fanli_today."',".
-               "'".count($fenhong_save_data)."',".
-               "'".$v['total_fenhongdian']."'".
-               ")";
-       $db->query($save_sql);
+        
+        $sql = "select order_id, user_id,order_amount,pay_time from ".$ecs->table('order_info')." where pay_time > ".$start_time." and pay_time < ".$end_time." and pay_status = 2 ";
+        $order_list = $db->getAll($sql);
 
-       foreach($fenhong_save_data as $k=>$v){
-           //记录分红返利log
-            $save_sql = "insert into ".$ecs->table('pc_fenhong_log')."(user_id,fenhong,fenhong_date,user_fenhongdian,ctime)values(".
-                   "'".$v['user_id']."',".
-                   "'".$v['fenhong_num']."',".
-                   "'".date("Y-m-d")."',".
-                   "'".$v['user_fenhongdian']."',".
-                   "'".time()."'".
-                   ")";
-            $db->query($save_sql);
-           
-            //分红出的是消费币
-            $userinfo = get_pc_user_allinfo($v['user_id']);
-            $original_value = intval($userinfo['account_xiaofeibi']);
-            $change_value = floatval($v['fenhong_num']);
-            $new_value = $original_value + $change_value;
+        $sumsql = "select sum(order_amount) from ".$ecs->table('order_info')." where pay_time > ".$start_time." and pay_time < ".$end_time." and pay_status = 2 ";
+        $trade_today = floatval($db->getOne($sumsql));
+        if(!$trade_today){
+            sys_msg('交易额为0，不可分红', 0 ,$links);
+            return 0;
+        }
+        $trade_fanli_today = $trade_today * $bili;
+        
+        $sql = "insert into ".$ecs->table('pc_day_amount_fenhong_log')."(fenhong_date,day_amount, day_fenhong_amount, ctime)values('".$cur_date."','".$trade_today."','".$trade_fanli_today."','".time()."')";
+//        echo $sql."<br>";
+        $db->query($sql);
+        
+        $sql ="select svalue from ".$ecs->table('pc_config')." where sname = 'fenhongchi'";
+//        echo $sql."<br>";
+        $fenhongchi = $db->getOne($sql);
+        $old_value = floatval($fenhongchi);
+        $change_value = floatval($trade_fanli_today);
+        $new_value = $old_value+$change_value;
+        
+        $sql = "update ".$ecs->table('pc_config')." set svalue = '".$new_value."' where sname = 'fenhongchi'";
+        $db->query($sql);
+        
+        $sql = "insert into ".$ecs->table('pc_fenhongchi_log')."(change_date,old_value,change_value,new_value,ctime)values(".
+                "'".$cur_date."',".
+                "'".$old_value."',".
+                "'".$change_value."',".
+                "'".$new_value."',".
+                "'".time()."'".
+                ")";
+//        echo $sql."<br>";
+        $db->query($sql);
+        
+        
+    }elseif($type == 'fenhong'){ //给每个人符合条件的人分红
+                $cur_date = date("Y-m-d");
+                //$cur_date = "2017-09-19";
+        
+                $fenhong_user_money = $bili; //每个分红点的金额
+                $sql = "select * from ".$ecs->table('pc_fenhong')." where fenhong_date='".$cur_date."'";
+                $is_check = $db->getRow($sql);
+                if($is_check){
+                    return 0;
+                }
+                
+                $pc_user_list = $db->getAll("select id,uid,account_jifenbi from ".$ecs->table('pc_user')." where account_jifenbi > 0 and status = 1");
+                $pc_fenhongdian = array();
+                $pc_total_fenhongdian = 0;
+                foreach($pc_user_list as $k=>$v){
+                    $pc_fenhongdian[] = array(
+                        "user_id"=>$v['uid'],
+                        "account_jifenbi"=>$v['account_jifenbi'],
+                        "fenhongdain"=>intval($v['account_jifenbi']/360),
+                        "fenhong_user_money"=>$fenhong_user_money*intval($v['account_jifenbi']/360)
+                    );
+                    $pc_total_fenhongdian += intval($v['account_jifenbi']/360);
+                }
+               
+                $trade_today = $pc_total_fenhongdian * $fenhong_user_money; //今日总分红点金额
+                
+            if($pc_fenhongdian){
+                
+                //保存分红信息， 总分红点，总分红金额，总用户个数，用户总分红金额，每个分红点金额
+                $save_sql = "insert into ".$ecs->table('pc_fenhong')."(fenhong_date,fenhong_total,fenhong_money,fenhong_user_total,fenhong_dian_money)values(".
+                        "'".date("Y-m-d")."',".
+                        "'".$pc_total_fenhongdian."',".
+                        "'".$trade_today."',".
+                        "'".count($pc_user_list)."',".
+                        "'".$fenhong_user_money."'".
+                        ")";
+                $db->query($save_sql);
 
-            $sql = "update ".$ecs->table('pc_user')." set account_xiaofeibi = ".$new_value." where uid = ".$v['user_id'];
-            $db->query($sql);
-            $sql = "insert into ".$ecs->table('pc_user_account_log')."(uid,type,original_value,change_value,new_value,note,adminid,ctime) values(".
-                    "'".$v['user_id']."',".
-                    "'account_xiaofeibi',".
-                    "'".$original_value."',".
-                    "'".$change_value."',".
-                    "'".$new_value."',".
-                    "'分红返利',".
-                    "'0',".
-                    "'".time()."' ".
-            ")";
-            $db->query($sql);
-           
-       }
-   }
-    
+                foreach($pc_fenhongdian as $k=>$v){
+                    //记录分红返利log
+                     $save_sql = "insert into ".$ecs->table('pc_fenhong_log')."(user_id,fenhong,fenhong_date,user_fenhongdian,ctime)values(".
+                            "'".$v['user_id']."',".
+                            "'".$v['fenhong_user_money']."',".
+                            "'".date("Y-m-d")."',".
+                            "'".$v['fenhongdain']."',".
+                            "'".time()."'".
+                            ")";
+                     $db->query($save_sql);
+
+                     //分红出的是消费币
+                     $userinfo = get_pc_user_allinfo($v['user_id']);
+                     $original_value = intval($userinfo['account_xiaofeibi']);
+                     $change_value = floatval($v['fenhong_user_money']);
+                     $new_value = $original_value + $change_value;
+
+                     $sql = "update ".$ecs->table('pc_user')." set account_xiaofeibi = ".$new_value." where uid = ".$v['user_id'];
+                     $db->query($sql);
+                     $sql = "insert into ".$ecs->table('pc_user_account_log')."(uid,type,original_value,change_value,new_value,note,adminid,ctime) values(".
+                             "'".$v['user_id']."',".
+                             "'account_xiaofeibi',".
+                             "'".$original_value."',".
+                             "'".$change_value."',".
+                             "'".$new_value."',".
+                             "'分红返利',".
+                             "'0',".
+                             "'".time()."' ".
+                     ")";
+                     $db->query($sql);
+
+                }
+                
+                //更新分红池金额
+                $sql ="select svalue from ".$ecs->table('pc_config')." where sname = 'fenhongchi'";
+        //        echo $sql."<br>";
+                $fenhongchi = $db->getOne($sql);
+                $old_value = floatval($fenhongchi);
+                $change_value = floatval($trade_today);
+                $new_value = $old_value-$change_value;
+
+                $sql = "update ".$ecs->table('pc_config')." set svalue = '".$new_value."' where sname = 'fenhongchi'";
+                $db->query($sql);
+
+                $sql = "insert into ".$ecs->table('pc_fenhongchi_log')."(change_date,old_value,change_value,new_value,ctime)values(".
+                        "'".$cur_date."',".
+                        "'".$old_value."',".
+                        "'-".$change_value."',".
+                        "'".$new_value."',".
+                        "'".time()."'".
+                        ")";
+        //        echo $sql."<br>";
+                $db->query($sql);
+                //}}}更新分红池金额
+            }
+    }
+   
 }
     
 //    $level_1 = array();

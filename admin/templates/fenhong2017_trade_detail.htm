@@ -8,12 +8,14 @@
 <table>
 	<tr>
 		<th>用户ID</th>
+		<th>用户名</th>
 		<th>分红金额</th>
 		<th>执行时间</th>
 	</tr>
 	{foreach from=$list item=d}
 	<tr>
 		<td>{$d.user_id}</td>
+		<td>{$d.user_name}</td>
 		<td>{$d.fenhong}</td>
 		<td>{$d.ctime_format}</td>
 	</tr>
@@ -21,7 +23,10 @@
   <tr><td class="no-records" colspan="10">{$lang.no_records}</td></tr>
   {/foreach}
 </table>
-<div style="margin-top:10px;padding:10px;background:#eee;">{$tongji}</div>
+<div style="margin-top:10px;padding:10px;background:#eee;">
+    分红日期：{$info.fenhong_date}  总分红点：{$info.fenhong_total}  分红总金额：{$info.fenhong_money}<br>
+    分红总人数：{$info.fenhong_user_total}  单个分红点金额:{$info.fenhong_dian_money}
+</div>
 <!-- {else} -->
 目前没有交易记录
 <!-- {/if}-->

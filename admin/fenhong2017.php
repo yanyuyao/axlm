@@ -22,19 +22,23 @@ $timestamp = time();
 $fanxian = unserialize($GLOBALS['_CFG']['fanxian']);
 
 $separate_on = $fanxian['fanxian_open'];
-$rand_fenhong_bili = floatval(rand(5,10)/100);
+//$rand_fenhong_bili = floatval(rand(5,10)/100);
+$rand_fenhong_bili = 0.1;
 $smarty->assign("rand_fenhong_bili",$rand_fenhong_bili);
 
 if ($_REQUEST['act'] == 'list')
 {
     $bili = 0.1;
     //计算已付款的所有订单，当天的付款，且付款时间是今日
-    $start_time = strtotime(date("Y-m-d")." 00:00:00");
-    $end_time = strtotime(date("Y-m-d")." 23:59:59");
-    $sql = "select order_id, user_id,goods_amount,pay_time from ".$ecs->table('order_info')." where pay_time > ".$start_time." and pay_time < ".$end_time." and pay_status = 2 ";
+    $cur_date = date("Y-m-d");
+    //$cur_date = "2017-09-19";
+    $start_time = strtotime($cur_date." 00:00:00");
+    $end_time = strtotime($cur_date." 23:59:59");
+    $sql = "select order_id, user_id,order_amount,pay_time from ".$ecs->table('order_info')." where pay_time > ".$start_time." and pay_time < ".$end_time." and pay_status = 2 ";
+    //echo $sql;
     $order_list = $db->getAll($sql);
     
-    $sumsql = "select sum(goods_amount) from ".$ecs->table('order_info')." where pay_time > ".$start_time." and pay_time < ".$end_time." and pay_status = 2 ";
+    $sumsql = "select sum(order_amount) from ".$ecs->table('order_info')." where pay_time > ".$start_time." and pay_time < ".$end_time." and pay_status = 2 ";
     $trade_today = floatval($db->getOne($sumsql));
     //$trade_fanli_today = $trade_today * $bili;
     
@@ -45,6 +49,24 @@ if ($_REQUEST['act'] == 'list')
     $smarty->assign("order_total",$order_total);
     $smarty->assign("order_total_amount",$order_total_amount);
     $smarty->assign("order_total_fenhong_amount",$order_total_fenhong_amount);
+    
+    
+    $fenhongchi = $db->getOne("select svalue from ".$ecs->table('pc_config')." where sname = 'fenhongchi'");
+    $pc_user_list = $db->getAll("select id,uid,account_jifenbi from ".$ecs->table('pc_user')." where account_jifenbi > 0 and status = 1");
+    $pc_fenhongdian = array();
+    $pc_total_fenhongdian = 0;
+    foreach($pc_user_list as $k=>$v){
+        $pc_fenhongdian[] = array(
+            "uid"=>$v['uid'],
+            "account_jifenbi"=>$v['account_jifenbi'],
+            "fenhongdain"=>intval($v['account_jifenbi']/360)
+        );
+        $pc_total_fenhongdian += intval($v['account_jifenbi']/360);
+    }
+    $smarty->assign("fenhongchi",$fenhongchi);
+    $smarty->assign("fenhong_total_user",count($pc_user_list));
+    $smarty->assign("fenhong_total_dian",$pc_total_fenhongdian);
+    
     
     $logdb = get_trade_list(); 
     $smarty->assign('full_page',  1);
@@ -112,9 +134,10 @@ elseif ($_REQUEST['act'] == 'day')
 	}
 	
         $info = $db->getRow("select * from ".$ecs->table('pc_fenhong')." where id = ".$id);
+        //var_dump($info);
 	$smarty->assign("info",$info);
 	
-        $list = $db->getAll("select * from ".$ecs->table('pc_fenhong_log')." where fenhong_date = '".$info['fenhong_date']."'");
+        $list = $db->getAll("select pf.*,u.user_name from ".$ecs->table('pc_fenhong_log')."pf left join ".$ecs->table('users')." u on pf.user_id = u.user_id where fenhong_date = '".$info['fenhong_date']."'");
         //echo "select * from ".$ecs->table('pc_fenhong_log')." where fenhong_date = '".$info['fenhong_date']."'";
         if($list){
             foreach($list as $k=>$v){
@@ -129,7 +152,7 @@ elseif ($_REQUEST['act'] == 'day')
         $smarty->display("fenhong2017_trade_detail.htm");
 	
 }
-//系统执行调用
+//系统执行调用 将当日分红金额，累计到分红池
 elseif ($_REQUEST['act'] == 'daytrade')
 {
     $bili = floatval(isset($_REQUEST['fenhong_bili'])?$_REQUEST['fenhong_bili']:0);
@@ -146,8 +169,45 @@ elseif ($_REQUEST['act'] == 'daytrade')
         sys_msg('分红比例不能为空', 0 ,$links);
         return 0;
     }
-	fenhongjisuan($bili);
-        sys_msg('操作成功', 0 ,$links);
+    
+    //将分红金额累计到分红池
+    fenhongjisuan($bili,"leiji");
+    sys_msg('操作成功', 0 ,$links);
+    
+}elseif ($_REQUEST['act'] == 'dayfenhong')
+{
+    $fenhong_user_money = floatval(isset($_REQUEST['fenhong_user_money'])?$_REQUEST['fenhong_user_money']:0);
+    $fenhong_total_dian = intval(isset($_REQUEST['fenhong_total_dian'])?$_REQUEST['fenhong_total_dian']:0);
+    $fenhongchi = floatval(isset($_REQUEST['fenhongchi'])?$_REQUEST['fenhongchi']:0);
+    //echo $fenhong_user_money;
+
+    if($fenhong_user_money <= 0){
+        sys_msg('分红金额不能小于0', 0 ,$links);
+        return 0;
+    }
+    if($fenhongchi <= 0){
+        sys_msg('分红池金额小于0，不能执行分红', 0 ,$links);
+        return 0;
+    }
+    if($fenhong_total_dian <= 0){
+        sys_msg('分红总点不能为0，不能执行分红', 0 ,$links);
+        return 0;
+    }
+    if(($fenhong_total_dian*$fenhong_user_money)>$fenhongchi){
+        sys_msg('分红金额大于分红池金额', 0 ,$links);
+        return 0;
+    }
+    $cur_date = date("Y-m-d");
+    $sql = "select * from ".$ecs->table('pc_fenhong')." where fenhong_date='".$cur_date."'";
+    $is_check = $db->getRow($sql);
+    if($is_check){
+        sys_msg('当日已分红，不可重复执行', 0 ,$links);
+        return 0;
+    }else{
+        fenhongjisuan($fenhong_user_money,"fenhong");
+    }
+        
+    sys_msg('操作成功', 0 ,$links);
 }
 
 /** added by Ran **/
