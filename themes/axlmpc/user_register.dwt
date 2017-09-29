@@ -27,9 +27,7 @@
 <script>
 function erweima1(obj, sType) { var oDiv = document.getElementById(obj); if (sType == 'show') { oDiv.style.display = 'block';} if (sType == 'hide') { oDiv.style.display = 'none';} }
 </script>
-
 <!-- #BeginLibraryItem "/library/page_header_short.lbi" --><!-- #EndLibraryItem -->
-<div class="blank"></div>
 <div class="w" style="background:url('themes/axlmpc/axlm/images/banner-bg.jpg');"> 
 <div class="w990" style="min-height:600px;"> 
   <!-- {if $shop_reg_closed eq 1} -->
@@ -175,7 +173,7 @@ function erweima1(obj, sType) { var oDiv = document.getElementById(obj); if (sTy
 </div>
 </div>
 <div class="site-footer">
-    <div class="footer-related" style="background:#fff;">
+    <div class="footer-related" style="background:#fff;padding-bottom:0px;">
   		<!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
   </div>
 </div>

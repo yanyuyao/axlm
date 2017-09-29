@@ -12,6 +12,4 @@ window.onerror = killerrors;
 <script type="text/javascript" src="themes/axlmpc/js/page.js"></script>
 <script type="text/javascript" src="themes/axlmpc/js/bubbleup.js"></script>
 {include file='library/user_header.lbi'}
-<div class="w1210" style="text-align:center;border-bottom:2px solid #f28202">
-	{include file='library/page_header_short.lbi'}
-</div>
+{include file='library/page_header_short.lbi'}

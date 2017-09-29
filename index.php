@@ -717,8 +717,6 @@ function get_article_new( $id = array(0), $getwhat = 'art_id', $num = 0, $isrand
 	}
 	return $articles;
 }
-echo 88888;
-exit;
 /* 代码增加_start  By  www.cfweb2015.com   */
 make_html();
 /* 代码增加_end  By  www.cfweb2015.com   */

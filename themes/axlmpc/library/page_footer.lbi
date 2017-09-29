@@ -1,80 +1,33 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<link type="text/css" rel="stylesheet" href="themes/axlmpc/axlm/css/short.css" />
+<link href="/themes/axlmpc/axlm_new/css/footer.css" rel="stylesheet" type="text/css">
 <!-- footer -->
-	<div class="footer">
-		<div class="footer-icons">
-			<ul>
-				<li><a href="#" class="g"></a></li>
-				<li><a href="#" class="in"></a></li>
-				<li><a href="#" class="twitter"></a></li>
-				<li><a href="#" class="u-tube"></a></li>
-				<li><a href="#" class="be"></a></li>
-				<li><a href="#" class="facebook"></a></li>
-			</ul>
-		</div>
-		<div class="container" style="background:none;"> 
-			<div class="footer-info">
-				<div class="footer-info-left">
-					<p><a href="javascript:;">{$copyright}</a> <a href="javascript:;">{$shop_address} {$shop_postcode}</a></p>
-				</div>
-				<div class="footer-info-right">
-                    
-					<p class="nav_bottom">
-						<ul>
-						<!-- {if $navigator_list.bottom} -->
-						<!-- {foreach name=nav_bottom_list from=$navigator_list.bottom item=nav} -->
-						<li>
-						<a href="{$nav.url}" {if $nav.opennew eq 1}target="_blank"{/if}>{$nav.name}</a>
-						<em {if $smarty.foreach.nav_bottom_list.last}style="display:none"{/if}></em>
-						</li>
-						<!-- {/foreach} -->
-						<!-- {/if} -->
-						</ul>
-					</p>
-				</div>
-				<div class="clearfix"> </div>
-				<p>
-					 <a href="javascript:;" style="color:#fff;"><!-- 客服电话{if $service_phone} -->
-					  Tel: {$service_phone}
-					  <!-- 结束客服电话{/if} --></a>
-					 <a href="javascript:;" style="color:#fff;"><!-- 邮件{if $service_email} -->
-					  E-mail: {$service_email}
-					  <!-- 结束邮件{/if} --></a>
-				 </p>
-				<p>
-					  <!-- 统计代码{if $stats_code} -->
-					  {$stats_code}
-					  <!-- 结束 统计代码{/if} -->
-					  <!-- QQ 号码 {foreach from=$qq item=im} -->
-					  <!-- {if $im} -->
-					  <a href="http://wpa.qq.com/msgrd?V=1&amp;uin={$im}&amp;Site={$shop_name}&amp;Menu=yes" target="_blank" style="color:#fff;"><img src="http://wpa.qq.com/pa?p=1:{$im}:4" height="16" border="0" alt="QQ" style="color:#fff;"/> {$im}</a>
-					  <!-- {/if} -->
-					  <!-- {/foreach} 结束QQ号码 -->
-					  <!-- 淘宝旺旺 {foreach from=$ww item=im} -->
-					  <!-- {if $im} -->
-					  <a href="http://amos1.taobao.com/msg.ww?v=2&uid={$im|escape:u8_url}&s=2" target="_blank" style="color:#fff;"><img src="http://amos1.taobao.com/online.ww?v=2&uid={$im|escape:u8_url}&s=2" width="16" height="16" border="0" style="color:#fff;" alt="淘宝旺旺" />{$im}</a>
-					  <!-- {/if} -->
-					  <!--{/foreach} 结束淘宝旺旺 -->
-					  <!-- Yahoo Messenger {foreach from=$ym item=im} -->
-					  <!-- {if $im} -->
-					  <a href="http://edit.yahoo.com/config/send_webmesg?.target={$im}n&.src=pg" target="_blank" style="color:#fff;"><img src="../images/yahoo.gif" width="18" height="17" border="0" alt="Yahoo Messenger"  style="color:#fff;" /> {$im}</a>
-					  <!-- {/if} -->
-					  <!-- {/foreach} 结束Yahoo Messenger -->
-					  <!-- MSN Messenger {foreach from=$msn item=im} -->
-					  <!-- {if $im} -->
-					  <img src="../images/msn.gif" width="18" height="17" border="0" alt="MSN" /> <a href="msnim:chat?contact={$im}">{$im}</a>
-					  <!-- {/if} -->
-					  <!-- {/foreach} 结束MSN Messenger -->
-					  <!-- Skype {foreach from=$skype item=im} -->
-					  <!-- {if $im} -->
-					  <img src="http://mystatus.skype.com/smallclassic/{$im|escape:url}" alt="Skype" width="18"/><a href="skype:{$im|escape:url}?call">{$im}</a>
-					  <!-- {/if} -->
-					  <!-- {/foreach} -->
-				</p>
-		
-			</div>
-		</div>
-	</div>
+		<footer class="hy-footer">
+                    <div class="hy-footer-nav1">
+                        <ul>
+                            <li><img src="/themes/axlmpc/axlm_new/images/axlm-footer-icon1.png"><br>超值</li>
+                            <li><img src="/themes/axlmpc/axlm_new/images/axlm-footer-icon2.png"><br>全国支付</li>
+                            <li><img src="/themes/axlmpc/axlm_new/images/axlm-footer-icon3.png"><br>安全交易</li>
+                            <li><img src="/themes/axlmpc/axlm_new/images/axlm-footer-icon4.png"><br>诚信商家</li>
+                            <li><img src="/themes/axlmpc/axlm_new/images/axlm-footer-icon5.png"><br>24小时客服</li>
+                            <div style="clear:both;"></div>
+                        </ul>
+                        <div class="hy-footer-copyright">
+                            &copy; 2015-2017 明德善商联盟 版权所有，并保留所有权利。明德善商联盟<br>
+                            Tel: 400-617-6169;0534-539-3331<span class="hy-blank"></span>E-mail:647311986@qq.com
+                        </div>
+                    </div>
+                    <div class="hy-footer-nav2">
+                            <ul>
+                            <a href="index.php"><li class="hy-footer-nav2-lifirst">首页</li></a>
+                            <a href="catalog.php"><li>产品中心</li></a>
+                            <a href="stores.php"><li>联盟商家</li></a>
+                            <a href="article_list.php"><li>新闻资讯</li></a>
+                            <a href="help.php"><li>使用教程</li></a>
+                            <a href="user.php"><li>个人中心</li></a>
+                            <div style="clear:both;"></div>
+                        </ul>
+                    </div>
+                </footer>
 <!-- //footer -->
 
   

@@ -1,31 +1,17 @@
-<link type="text/css" rel="stylesheet" href="themes/axlmpc/axlm/css/short.css" />
-<div class="logo-r w1210" style="width:1210px;margin:0px auto 15px;">
-                        <div class="logo-info-r" ><a href="/index.php" class="logo" style="background:none;width:150px;"><img src="/logo.png" style="height:80px;"></a> <!-- #BeginLibraryItem "/library/user_right.lbi" --><!-- #EndLibraryItem --> </div>
-                        <div class="header-nav" style="float:right;">
-							<nav class="navbar navbar-default">
-								
-								<!-- Collect the nav links, forms, and other content for toggling -->
-								<div class="collapse navbar-collapse nav-wil" id="bs-example-navbar-collapse-1">
-								 <ul class="nav navbar-nav" style="float:left;">
-									<!--
-									<li class="active"><a href="index.html">首页</a></li>
-									<li class="act"><a href="blog.html">产品中心</a></li>
-									<li class="dropdown act">
-									  <a href="news.html" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">新闻资讯<span class="caret"></span></a>
-									</li>
-									<li class="act"><a href="services.html">使用教程</a></li>
-									<li class="act"><a href="services.html">影视专区</a></li>
-									<li class="act"><a href="personal.html">妇科知道</a></li>
-									<li class="act"><a href="personal.html">个人中心</a></li>
-									-->
-										<li class="act"><a class="nav" href="index.php" title="首页">首页</a></li>
-										<!-- {foreach name=nav_middle_list from=$navigator_list.middle item=nav } -->
-										<li class="act"><a class="nav {if $nav.active eq 1}current{/if}" href="{$nav.url}" title="{$nav.name}" {if $nav.opennew eq 1}target="_blank" {/if}>{$nav.name}</a></li>
-										<!-- {/foreach} -->
-								  </ul>
-								</div><!-- /.navbar-collapse -->
-							</nav>
-                
-			</div>
+<link href="/themes/axlmpc/axlm_new/css/header.css" rel="stylesheet" type="text/css">
+     <header class="hy-header">
+        <div class="hy-header-content">
+            <ul>
+                <a href="index.php"><li class="hy-header-active">首页</li></a>
+                <a href="catalog.php"><li>产品中心</li></a>
+                <a href="stores.php"><li>联盟商家</li></a>
+            </ul>
+            <img class="hy-header-logo" src="/themes/axlmpc/axlm_new/images/axlm-logo.png">
+            <ul class="hy-header-right">
+                <a href="index.php"><li>新闻资讯</li></a>
+                <a href="catalog.php"><li>使用教程</li></a>
+                <a href="stores.php"><li class="hy-header-person"><img class="hy-header-person-icon" src="/themes/axlmpc/axlm_new/images/axlm-person.png">个人中心</li></a>
+            </ul>
+        </div>
+    </header>
 <div style="clear:both;"></div>
-</div> 
