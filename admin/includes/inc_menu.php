@@ -177,8 +177,8 @@ $modules['10_priv_admin']['admin_role'] = 'role.php?act=list';
 //$modules['10_priv_admin']['suppliers_list'] = 'suppliers.php?act=list'; // 供货商
 
 $modules['11_system']['01_shop_config'] = 'shop_config.php?act=list_edit';
-$modules['11_system']['02_fanxian_config'] = 'fanxian_config.php?act=default';
-$modules['11_system']['02_fanxian_system_config'] = 'pc_config.php?act=default';
+//$modules['11_system']['02_fanxian_config'] = 'fanxian_config.php?act=default';
+//$modules['11_system']['02_fanxian_system_config'] = 'pc_config.php?act=default';
 $modules['11_system']['02_payment_list'] = 'payment.php?act=list';
 $modules['11_system']['03_shipping_list'] = 'shipping.php?act=list';
 $modules['11_system']['04_mail_settings'] = 'shop_config.php?act=mail_settings';

@@ -37,7 +37,8 @@ function action_list ()
 	$user_id = $_SESSION['user_id'];
 	
 	/* 检查权限 */
-	admin_priv('users_manage');
+	admin_priv('surplus_manage');
+        
 	$sql = "SELECT rank_id, rank_name, min_points FROM " . $ecs->table('user_rank') . " ORDER BY min_points ASC ";
 	$rs = $db->query($sql);
 	
