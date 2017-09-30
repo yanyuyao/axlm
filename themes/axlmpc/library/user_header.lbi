@@ -2,11 +2,11 @@
 <div id="site-nav">
   <div class="sn-container w1210" style="width:1210px;"> 
     {insert_scripts files='utils.js,common.min.js'} 
-    <font id="login-info" class="sn-login-info">{insert name='member_info'}</font>
-    <ul class="sn-quick-menu">
+    <font id="login-info" class="sn-login-info" style="font-size:12px;">{insert name='member_info'}</font>
+    <ul class="sn-quick-menu" style="font-size:12px;">
       <li class="sn-mytaobao menu-item">
         <div class="sn-menu"> 
-          <a class="menu-hd" href="user.php" target="_top" rel="nofollow">我的信息<b></b></a>
+          <a class="menu-hd" href="user.php" target="_top" rel="nofollow" style="color:#666666;">我的信息<b></b></a>
           <div id="menu-2" class="menu-bd">
             <div class="menu-bd-panel"> 
             	<a href="user.php?act=order_list" target="_top" rel="nofollow">已买到的宝贝</a> 
@@ -25,7 +25,7 @@
       </li>
       <li class="sn-favorite menu-item">
         <div class="sn-menu"> 
-          <a class="menu-hd" href="user.php?act=collection_list" target="_top" rel="nofollow">收藏夹<b></b></a>
+          <a class="menu-hd" href="user.php?act=collection_list" target="_top" rel="nofollow" style="color:#666666;">收藏夹<b></b></a>
           <div id="menu-4" class="menu-bd">
             <div class="menu-bd-panel"> 
             	<a href="user.php?act=collection_list" target="_top" rel="nofollow">收藏的宝贝</a> 
