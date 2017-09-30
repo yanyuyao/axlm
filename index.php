@@ -148,33 +148,62 @@ if (!$smarty->is_cached('index.dwt', $cache_id))
 
 	//{{{ran added 
 		
-		$smarty->assign('goods_1',      get_pc_goods_info(293));
-		$smarty->assign('goods_2',      get_pc_goods_info(292));
-		$smarty->assign('goods_3',      get_pc_goods_info(294));
-		
-		$smarty->assign('goods_4',      get_pc_goods_info(304));
-		$smarty->assign('goods_5',      get_pc_goods_info(303));
-		$smarty->assign('goods_6',      get_pc_goods_info(305));
-		
-		$smarty->assign('tabgoods_1',      get_pc_goods_info(293));
-		$smarty->assign('tabgoods_2',      get_pc_goods_info(292));
-		$smarty->assign('tabgoods_3',      get_pc_goods_info(304));
-		$smarty->assign('tabgoods_4',      get_pc_goods_info(305));
+//		$smarty->assign('goods_1',      get_pc_goods_info(293));
+//		$smarty->assign('goods_2',      get_pc_goods_info(292));
+//		$smarty->assign('goods_3',      get_pc_goods_info(294));
+//		
+//		$smarty->assign('goods_4',      get_pc_goods_info(304));
+//		$smarty->assign('goods_5',      get_pc_goods_info(303));
+//		$smarty->assign('goods_6',      get_pc_goods_info(305));
+//		
+//		$smarty->assign('tabgoods_1',      get_pc_goods_info(293));
+//		$smarty->assign('tabgoods_2',      get_pc_goods_info(292));
+//		$smarty->assign('tabgoods_3',      get_pc_goods_info(304));
+//		$smarty->assign('tabgoods_4',      get_pc_goods_info(305));
 	//}}}
 	//var_dump(get_recommend_goods('best'));
+    $hot_goods = get_recommend_goods('hot');
+    //var_dump($hot_goods);
     $smarty->assign('best_goods',      get_recommend_goods('best'));    // 推荐商品
     $smarty->assign('new_goods',       get_recommend_goods('new'));     // 最新商品
     $smarty->assign('hot_goods',       get_recommend_goods('hot'));     // 热点文章
-    $smarty->assign('promotion_goods', get_promote_goods()); // 特价商品
-    $smarty->assign('brand_list',      get_brands());
-    $smarty->assign('promotion_info',  get_promotion_info()); // 增加一个动态显示所有促销信息的标签栏
+   // $smarty->assign('promotion_goods', get_promote_goods()); // 特价商品
+   // $smarty->assign('brand_list',      get_brands());
+   // $smarty->assign('promotion_info',  get_promotion_info()); // 增加一个动态显示所有促销信息的标签栏
 
-    $smarty->assign('invoice_list',    index_get_invoice_query());  // 发货查询
-    $smarty->assign('new_articles',    index_get_new_articles());   // 最新文章
-    $smarty->assign('group_buy_goods', index_get_group_buy());      // 团购商品
-    $smarty->assign('auction_list',    index_get_auction());        // 拍卖活动
-    $smarty->assign('shop_notice',     $_CFG['shop_notice']);       // 商店公告
-	$smarty->assign('cat_goods_list',  get_cat_goods_list());
+    //$smarty->assign('invoice_list',    index_get_invoice_query());  // 发货查询
+    //$smarty->assign('new_articles',    index_get_new_articles());   // 最新文章
+    //$smarty->assign('group_buy_goods', index_get_group_buy());      // 团购商品
+    //$smarty->assign('auction_list',    index_get_auction());        // 拍卖活动
+    //$smarty->assign('shop_notice',     $_CFG['shop_notice']);       // 商店公告
+    $cat_goods_list = get_cat_goods_list();
+    //var_dump($cat_goods_list);
+    $floor_goods_list = array();
+    if($cat_goods_list){
+        foreach($cat_goods_list as $k=>$v){
+            //var_dump($v);
+            //echo $v['ext_info']['short_name']."--------------".$v['id']."<br>";
+            $subCategory = array();
+            $cat_child_sql = "select cat_id,cat_name from ".$GLOBALS['ecs']->table('category')." where parent_id = ".$v['id'];
+            $cat_child_list = $GLOBALS['db']->getAll($cat_child_sql);
+            $cat_child_arr[] = $cats;
+            if($cat_child_list){
+                foreach($cat_child_list as $k=>$kv){
+                    $subCategory[] = $kv;
+                }
+            } 
+            $floor_goods_list[] = array(
+                "cat_id"=>$v['id'],
+                "cat_name"=>$v['ext_info']['short_name'],
+                "subCategory"=>$subCategory,
+                "goods_list"=>get_category_recommend_goods2('best',$v['id'])
+                );
+        }
+    }
+  
+    var_dump($floor_goods_list);
+    $smarty->assign('cat_goods_list',  $cat_goods_list);
+    $smarty->assign('floor_goods_list',  $floor_goods_list);
 
     /* 首页主广告设置 */
     $smarty->assign('index_ad',     $_CFG['index_ad']);

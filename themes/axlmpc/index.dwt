@@ -22,8 +22,8 @@
     	<div class="swiper-container index-swiper-container">
             <div class="swiper-wrapper">
                 <div class="swiper-slide"><img src="themes/axlmpc/axlm_new/images/axlm-banner1.jpg"></div>
-                <div class="swiper-slide"><img src="themes/axlmpc/axlm_new/images/axlm-banner1.jpg"></div>
-                <div class="swiper-slide"><img src="themes/axlmpc/axlm_new/images/axlm-banner1.jpg"></div>
+                <div class="swiper-slide"><img src="themes/axlmpc/axlm/images/banner_2.png"></div>
+                <div class="swiper-slide"><img src="themes/axlmpc/axlm/images/banner_3.png"></div>
             </div>
             <!-- Add Pagination -->
             <div class="swiper-pagination"></div>
@@ -40,304 +40,279 @@
             	孔雀计划
             </div>
             <img class="index-body-nav1-p-info1" src="themes/axlmpc/axlm_new/images/axlm-p-info.png">
-            <img class="index-body-nav1-p-info2" src="themes/axlmpc/axlm_new/images/axlm-p-info2.png">
+            <a href="goods.php?id=294"><img class="index-body-nav1-p-info2" src="themes/axlmpc/axlm_new/images/axlm-p-info2.png"></a>
             <ul class="index-body-content index-body-nav1-p">
+                <!--{foreach from=$hot_goods item=g key=key}--> 
+                    <!--{if $key eq 0}-->
+                        <li class="index-body-nav1-p-lifirst"><a href="{$g.url}"><img src="{$g.thumb"></a></li>
+                    <!--{elseif $key eq 1}-->
+                        <li><a href="{$g.url}"><img src="{$g.thumb"></a></li>
+                    <!--{else}-->
+                    <!--{/if}-->
+                <!--{/foreach}-->
+                <li><a href="goods.php?id=294"><img src="themes/axlmpc/axlm_new/images/axlm-p3.jpg"></a></li>
+                <!--{foreach from=$new_goods item=g key=key}--> 
+                    <!--{if $key eq 0}-->
+                        <li><a href="{$g.url}"><img src="{$g.thumb}"></a></li>
+                    <!--{elseif $key eq 1}-->
+                        <li><a href="{$g.url}"><img src="{$g.thumb}"></a></li>
+                    <!--{else}-->
+                    <!--{/if}-->
+                <!--{/foreach}--> 
+<!--
             	<li class="index-body-nav1-p-lifirst"><img src="themes/axlmpc/axlm_new/images/axlm-p1.jpg"></li>
                 <li><img src="themes/axlmpc/axlm_new/images/axlm-p2.jpg"></li>
                 <li><img src="themes/axlmpc/axlm_new/images/axlm-p3.jpg"></li>
                 <li><img src="themes/axlmpc/axlm_new/images/axlm-p4.jpg"></li>
                 <li><img src="themes/axlmpc/axlm_new/images/axlm-p1.jpg"></li>
+-->
             </ul>
-            <div class="index-body-nav1-p-bt">海洋生物抗菌多肽妇洁凝胶</div>
+            <div class="index-body-nav1-p-bt"><a href="goods.php?id=294" style="color:#fff;">海洋生物抗菌多肽妇洁凝胶</a></div>
         </div>
         <div class="index-body-nav2">
         	<!--floor1 start-->
+                <!--{if isset($floor_goods_list[0])}-->
         	<div class="index-body-content index-body-nav2-single index-body-nav2-single-1f">
-            	<div class="index-body-nav2-single-left">
-                	<div class="index-body-nav2-single-left-btk">
-                    	<div class="index-body-nav2-single-left-floor">1F</div>
-                        <div class="index-body-nav2-single-left-bt">潮牌服饰</div>
-                        <a href="#"><div class="index-body-nav2-single-left-more">MORE></div></a>
+                    <div class="index-body-nav2-single-left">
+                            <div class="index-body-nav2-single-left-btk">
+                            <div class="index-body-nav2-single-left-floor">1F</div>
+                            <div class="index-body-nav2-single-left-bt">{$floor_goods_list[0].cat_name}</div>
+                            <a href="category.php?id={$floor_goods_list[0].cat_id}"><div class="index-body-nav2-single-left-more">MORE></div></a>
+                        </div>
+                        <ul>
+                        <!--{if $floor_goods_list[0].subCategory} -->
+                            <!--{foreach from=$floor_goods_list[0].subCategory item=c key=key}-->
+                                <!--{if $key eq 0}-->
+                                    <a href="category.php?id={$c.cat_id}"><li class="index-body-nav2-single-left-list-active">{$c.cat_name}</li></a>
+                                <!--{else}-->
+                                    <a href="category.php?id={$c.cat_id}"><li>{$c.cat_name}</li></a>
+                                <!--{/if}-->
+                            <!--{/foreach}-->
+                        <!--{/if}-->
+                        </ul>
                     </div>
-					<ul>
-                    	<a href="#"><li class="index-body-nav2-single-left-list-active">SAMSONITE</li></a>
-                        <a href="#"><li>DELSEY</li></a>
-                        <a href="#"><li>MCM</li></a>
-                        <a href="#"><li>LANCEL</li></a>
-                        <a href="#"><li>FION</li></a>
-                        <a href="#"><li>BRAUN BUFFEL</li></a>
-                    </ul>
+                    <div class="index-body-nav2-single-p">
+                            <div class="index-body-nav2-single-p2k">
+                                <!--{if $floor_goods_list[0].goods_list}--> 
+                                <!--{foreach from=$floor_goods_list[0].goods_list item=c key=key}--> 
+                                    <!--{if $key neq 0}-->
+                                    <a href="goods.php?id={$c.id}">
+                                    <div class="index-body-nav2-single-p2">
+                                        <img src="{$c.thumb}">
+                                        <div class="index-body-nav2-single-p2-price">
+                                            RMB {$c.shop_price}
+                                            <div class="index-body-nav2-single-p2-price2">原价:{$c.market_price}</div>
+                                        </div>
+                                    </div>
+                                    </a>
+                                    <!--{/if}-->
+                                <!--{/foreach}-->
+                                <!--{/if}-->
+                            </div>
+                            <!--{if $floor_goods_list[0].goods_list}--> 
+                                <!--{foreach from=$floor_goods_list[0].goods_list item=c key=key}-->
+                                    <!--{if $key eq 0}-->
+                                    <a href="goods.php?id={$c.id}">
+                                        <div class="index-body-nav2-single-p1">
+                                            <img src="{$c.thumb}">
+                                            <div class="index-body-nav2-single-p1-info">
+                                                    <div class="index-body-nav2-single-p1-info-bt">{$c.name}</div>
+                                                <div class="index-body-nav2-single-p1-info-price">
+                                                    RMB {$c.shop_price}
+                                                    <span class="index-body-nav2-single-p1-info-price2">原价:{$c.market_price}</span>    
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <!--{/if}-->
+                                <!--{/foreach}-->
+                            <!--{/if}-->
+                    </div>
                 </div>
-                <div class="index-body-nav2-single-p">
-                	<div class="index-body-nav2-single-p2k">
-                        <a href="#">
-                        <div class="index-body-nav2-single-p2">
-                            <img src="themes/axlmpc/axlm_new/images/axlm-pp1.jpg">
-                            <div class="index-body-nav2-single-p2-price">
-                                RMB 99.00
-                                <div class="index-body-nav2-single-p2-price2">原价:88.00</div>
-                            </div>
-                        </div>
-                        </a>
-                        <a href="#">
-                        <div class="index-body-nav2-single-p2">
-                            <img src="themes/axlmpc/axlm_new/images/axlm-pp1.jpg">
-                            <div class="index-body-nav2-single-p2-price">
-                                RMB 99.00
-                                <div class="index-body-nav2-single-p2-price2">原价:88.00</div>
-                            </div>
-                        </div>
-                        </a>
-                        <a href="#">
-                        <div class="index-body-nav2-single-p2">
-                            <img src="themes/axlmpc/axlm_new/images/axlm-pp1.jpg">
-                            <div class="index-body-nav2-single-p2-price">
-                                RMB 99.00
-                                <div class="index-body-nav2-single-p2-price2">原价:88.00</div>
-                            </div>
-                        </div>
-                        </a>
-                        <a href="#">
-                        <div class="index-body-nav2-single-p2">
-                            <img src="themes/axlmpc/axlm_new/images/axlm-pp1.jpg">
-                            <div class="index-body-nav2-single-p2-price">
-                                RMB 99.00
-                                <div class="index-body-nav2-single-p2-price2">原价:88.00</div>
-                            </div>
-                        </div>
-                        </a>
-                        <a href="#">
-                    </div>
-                    <a href="#">
-                	<div class="index-body-nav2-single-p1">
-                    	<img src="themes/axlmpc/axlm_new/images/axlm-pp1.jpg">
-                        <div class="index-body-nav2-single-p1-info">
-                        	<div class="index-body-nav2-single-p1-info-bt">KEEP IT COOL AND CASUAL</div>
-                            <div class="index-body-nav2-single-p1-info-price">
-                            	RMB 99.00
-                            	<span class="index-body-nav2-single-p1-info-price2">原价:88.00</span>    
-                            </div>
-                        </div>
-                    </div>
-                    </a>
-                </div>
-            </div>
+                <!--{/if}-->
 			<!--floor1 end-->
 			<!--floor2 start-->
+<!--{if isset($floor_goods_list[1])}-->
         	<div class="index-body-content index-body-nav2-single index-body-nav2-single-2f">
             	<div class="index-body-nav2-single-left">
                 	<div class="index-body-nav2-single-left-btk">
                     	<div class="index-body-nav2-single-left-floor">2F</div>
-                        <div class="index-body-nav2-single-left-bt">潮牌服饰</div>
-                        <a href="#"><div class="index-body-nav2-single-left-more">MORE></div></a>
+                        <div class="index-body-nav2-single-left-bt">{$floor_goods_list[1].cat_name}</div>
+                        <a href="category.php?id={$floor_goods_list[1].cat_id}"><div class="index-body-nav2-single-left-more">MORE></div></a>
                     </div>
-					<ul>
-                    	<a href="#"><li class="index-body-nav2-single-left-list-active">SAMSONITE</li></a>
-                        <a href="#"><li>DELSEY</li></a>
-                        <a href="#"><li>MCM</li></a>
-                        <a href="#"><li>LANCEL</li></a>
-                        <a href="#"><li>FION</li></a>
-                        <a href="#"><li>BRAUN BUFFEL</li></a>
+                    <ul>
+                    	<!--{if $floor_goods_list[1].subCategory} -->
+                            <!--{foreach from=$floor_goods_list[1].subCategory item=c key=key}-->
+                                <!--{if $key eq 0}-->
+                                    <a href="category.php?id={$c.cat_id}"><li class="index-body-nav2-single-left-list-active">{$c.cat_name}</li></a>
+                                <!--{else}-->
+                                    <a href="category.php?id={$c.cat_id}"><li>{$c.cat_name}</li></a>
+                                <!--{/if}-->
+                            <!--{/foreach}-->
+                        <!--{/if}-->
                     </ul>
                 </div>
                 <div class="index-body-nav2-single-p">
                 	<div class="index-body-nav2-single-p2k">
-                        <a href="#">
-                        <div class="index-body-nav2-single-p2">
-                            <img src="themes/axlmpc/axlm_new/images/axlm-pp1.jpg">
-                            <div class="index-body-nav2-single-p2-price">
-                                RMB 99.00
-                                <div class="index-body-nav2-single-p2-price2">原价:88.00</div>
-                            </div>
+                                <!--{if $floor_goods_list[1].goods_list}--> 
+                                <!--{foreach from=$floor_goods_list[1].goods_list item=c key=key}--> 
+                                    <!--{if $key neq 0}-->
+                                    <a href="goods.php?id={$c.id}">
+                                    <div class="index-body-nav2-single-p2">
+                                        <img src="{$c.thumb}">
+                                        <div class="index-body-nav2-single-p2-price">
+                                            RMB {$c.shop_price}
+                                            <div class="index-body-nav2-single-p2-price2">原价:{$c.market_price}</div>
+                                        </div>
+                                    </div>
+                                    </a>
+                                    <!--{/if}-->
+                                <!--{/foreach}-->
+                                <!--{/if}-->
                         </div>
-                        </a>
-                        <a href="#">
-                        <div class="index-body-nav2-single-p2">
-                            <img src="themes/axlmpc/axlm_new/images/axlm-pp1.jpg">
-                            <div class="index-body-nav2-single-p2-price">
-                                RMB 99.00
-                                <div class="index-body-nav2-single-p2-price2">原价:88.00</div>
-                            </div>
-                        </div>
-                        </a>
-                        <a href="#">
-                        <div class="index-body-nav2-single-p2">
-                            <img src="themes/axlmpc/axlm_new/images/axlm-pp1.jpg">
-                            <div class="index-body-nav2-single-p2-price">
-                                RMB 99.00
-                                <div class="index-body-nav2-single-p2-price2">原价:88.00</div>
-                            </div>
-                        </div>
-                        </a>
-                        <a href="#">
-                        <div class="index-body-nav2-single-p2">
-                            <img src="themes/axlmpc/axlm_new/images/axlm-pp1.jpg">
-                            <div class="index-body-nav2-single-p2-price">
-                                RMB 99.00
-                                <div class="index-body-nav2-single-p2-price2">原价:88.00</div>
-                            </div>
-                        </div>
-                        </a>
-                        <a href="#">
-                    </div>
-                    <a href="#">
-                	<div class="index-body-nav2-single-p1">
-                    	<img src="themes/axlmpc/axlm_new/images/axlm-pp1.jpg">
-                        <div class="index-body-nav2-single-p1-info">
-                        	<div class="index-body-nav2-single-p1-info-bt">KEEP IT COOL AND CASUAL</div>
-                            <div class="index-body-nav2-single-p1-info-price">
-                            	RMB 99.00
-                            	<span class="index-body-nav2-single-p1-info-price2">原价:88.00</span>    
-                            </div>
-                        </div>
-                    </div>
-                    </a>
+                            <!--{if $floor_goods_list[1].goods_list}--> 
+                                <!--{foreach from=$floor_goods_list[1].goods_list item=c key=key}-->
+                                    <!--{if $key eq 0}-->
+                                    <a href="goods.php?id={$c.id}">
+                                        <div class="index-body-nav2-single-p1">
+                                            <img src="{$c.thumb}">
+                                            <div class="index-body-nav2-single-p1-info">
+                                                    <div class="index-body-nav2-single-p1-info-bt">{$c.name}</div>
+                                                <div class="index-body-nav2-single-p1-info-price">
+                                                    RMB {$c.shop_price}
+                                                    <span class="index-body-nav2-single-p1-info-price2">原价:{$c.market_price}</span>    
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <!--{/if}-->
+                                <!--{/foreach}-->
+                            <!--{/if}-->
                 </div>
             </div>
+<!--{/if}-->
 			<!--floor2 end-->
 			<!--floor3 start-->
+<!--{if isset($floor_goods_list[2])}-->
         	<div class="index-body-content index-body-nav2-single index-body-nav2-single-3f">
             	<div class="index-body-nav2-single-left">
                 	<div class="index-body-nav2-single-left-btk">
                     	<div class="index-body-nav2-single-left-floor">3F</div>
-                        <div class="index-body-nav2-single-left-bt">潮牌服饰</div>
-                        <a href="#"><div class="index-body-nav2-single-left-more">MORE></div></a>
+                        <div class="index-body-nav2-single-left-bt">{$floor_goods_list[2].cat_name}</div>
+                        <a href="category.php?id={$floor_goods_list[2].cat_id}"><div class="index-body-nav2-single-left-more">MORE></div></a>
                     </div>
-					<ul>
-                    	<a href="#"><li class="index-body-nav2-single-left-list-active">SAMSONITE</li></a>
-                        <a href="#"><li>DELSEY</li></a>
-                        <a href="#"><li>MCM</li></a>
-                        <a href="#"><li>LANCEL</li></a>
-                        <a href="#"><li>FION</li></a>
-                        <a href="#"><li>BRAUN BUFFEL</li></a>
+                    <ul>
+                    	<!--{if $floor_goods_list[2].subCategory} -->
+                            <!--{foreach from=$floor_goods_list[2].subCategory item=c key=key}-->
+                                <!--{if $key eq 0}-->
+                                    <a href="category.php?id={$c.cat_id}"><li class="index-body-nav2-single-left-list-active">{$c.cat_name}</li></a>
+                                <!--{else}-->
+                                    <a href="category.php?id={$c.cat_id}"><li>{$c.cat_name}</li></a>
+                                <!--{/if}-->
+                            <!--{/foreach}-->
+                        <!--{/if}-->
                     </ul>
                 </div>
                 <div class="index-body-nav2-single-p">
                 	<div class="index-body-nav2-single-p2k">
-                        <a href="#">
-                        <div class="index-body-nav2-single-p2">
-                            <img src="themes/axlmpc/axlm_new/images/axlm-pp1.jpg">
-                            <div class="index-body-nav2-single-p2-price">
-                                RMB 99.00
-                                <div class="index-body-nav2-single-p2-price2">原价:88.00</div>
-                            </div>
-                        </div>
-                        </a>
-                        <a href="#">
-                        <div class="index-body-nav2-single-p2">
-                            <img src="themes/axlmpc/axlm_new/images/axlm-pp1.jpg">
-                            <div class="index-body-nav2-single-p2-price">
-                                RMB 99.00
-                                <div class="index-body-nav2-single-p2-price2">原价:88.00</div>
-                            </div>
-                        </div>
-                        </a>
-                        <a href="#">
-                        <div class="index-body-nav2-single-p2">
-                            <img src="themes/axlmpc/axlm_new/images/axlm-pp1.jpg">
-                            <div class="index-body-nav2-single-p2-price">
-                                RMB 99.00
-                                <div class="index-body-nav2-single-p2-price2">原价:88.00</div>
-                            </div>
-                        </div>
-                        </a>
-                        <a href="#">
-                        <div class="index-body-nav2-single-p2">
-                            <img src="themes/axlmpc/axlm_new/images/axlm-pp1.jpg">
-                            <div class="index-body-nav2-single-p2-price">
-                                RMB 99.00
-                                <div class="index-body-nav2-single-p2-price2">原价:88.00</div>
-                            </div>
-                        </div>
-                        </a>
-                        <a href="#">
+                                <!--{if $floor_goods_list[2].goods_list}--> 
+                                <!--{foreach from=$floor_goods_list[2].goods_list item=c key=key}--> 
+                                    <!--{if $key neq 0}-->
+                                    <a href="goods.php?id={$c.id}">
+                                    <div class="index-body-nav2-single-p2">
+                                        <img src="{$c.thumb}">
+                                        <div class="index-body-nav2-single-p2-price">
+                                            RMB {$c.shop_price}
+                                            <div class="index-body-nav2-single-p2-price2">原价:{$c.market_price}</div>
+                                        </div>
+                                    </div>
+                                    </a>
+                                    <!--{/if}-->
+                                <!--{/foreach}-->
+                                <!--{/if}-->
                     </div>
-                    <a href="#">
-                	<div class="index-body-nav2-single-p1">
-                    	<img src="themes/axlmpc/axlm_new/images/axlm-pp1.jpg">
-                        <div class="index-body-nav2-single-p1-info">
-                        	<div class="index-body-nav2-single-p1-info-bt">KEEP IT COOL AND CASUAL</div>
-                            <div class="index-body-nav2-single-p1-info-price">
-                            	RMB 99.00
-                            	<span class="index-body-nav2-single-p1-info-price2">原价:88.00</span>    
-                            </div>
-                        </div>
-                    </div>
-                    </a>
+                    <!--{if $floor_goods_list[2].goods_list}--> 
+                                <!--{foreach from=$floor_goods_list[2].goods_list item=c key=key}-->
+                                    <!--{if $key eq 0}-->
+                                    <a href="goods.php?id={$c.id}">
+                                        <div class="index-body-nav2-single-p1">
+                                            <img src="{$c.thumb}">
+                                            <div class="index-body-nav2-single-p1-info">
+                                                    <div class="index-body-nav2-single-p1-info-bt">{$c.name}</div>
+                                                <div class="index-body-nav2-single-p1-info-price">
+                                                    RMB {$c.shop_price}
+                                                    <span class="index-body-nav2-single-p1-info-price2">原价:{$c.market_price}</span>    
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <!--{/if}-->
+                                <!--{/foreach}-->
+                            <!--{/if}-->
                 </div>
             </div>
+<!--{/if}-->
 			<!--floor3 end-->
 			<!--floor4 start-->
+<!--{if isset($floor_goods_list[3])}-->
         	<div class="index-body-content index-body-nav2-single index-body-nav2-single-4f">
             	<div class="index-body-nav2-single-left">
                 	<div class="index-body-nav2-single-left-btk">
                     	<div class="index-body-nav2-single-left-floor">4F</div>
-                        <div class="index-body-nav2-single-left-bt">潮牌服饰</div>
-                        <a href="#"><div class="index-body-nav2-single-left-more">MORE></div></a>
+                        <div class="index-body-nav2-single-left-bt">{$floor_goods_list[3].cat_name}</div>
+                        <a href="category.php?id={$floor_goods_list[3].cat_id}"><div class="index-body-nav2-single-left-more">MORE></div></a>
                     </div>
-					<ul>
-                    	<a href="#"><li class="index-body-nav2-single-left-list-active">SAMSONITE</li></a>
-                        <a href="#"><li>DELSEY</li></a>
-                        <a href="#"><li>MCM</li></a>
-                        <a href="#"><li>LANCEL</li></a>
-                        <a href="#"><li>FION</li></a>
-                        <a href="#"><li>BRAUN BUFFEL</li></a>
+		<ul>
+                    	<!--{if $floor_goods_list[3].subCategory} -->
+                            <!--{foreach from=$floor_goods_list[3].subCategory item=c key=key}-->
+                                <!--{if $key eq 0}-->
+                                    <a href="category.php?id={$c.cat_id}"><li class="index-body-nav2-single-left-list-active">{$c.cat_name}</li></a>
+                                <!--{else}-->
+                                    <a href="category.php?id={$c.cat_id}"><li>{$c.cat_name}</li></a>
+                                <!--{/if}-->
+                            <!--{/foreach}-->
+                        <!--{/if}-->
                     </ul>
                 </div>
                 <div class="index-body-nav2-single-p">
                 	<div class="index-body-nav2-single-p2k">
-                        <a href="#">
-                        <div class="index-body-nav2-single-p2">
-                            <img src="themes/axlmpc/axlm_new/images/axlm-pp1.jpg">
-                            <div class="index-body-nav2-single-p2-price">
-                                RMB 99.00
-                                <div class="index-body-nav2-single-p2-price2">原价:88.00</div>
-                            </div>
-                        </div>
-                        </a>
-                        <a href="#">
-                        <div class="index-body-nav2-single-p2">
-                            <img src="themes/axlmpc/axlm_new/images/axlm-pp1.jpg">
-                            <div class="index-body-nav2-single-p2-price">
-                                RMB 99.00
-                                <div class="index-body-nav2-single-p2-price2">原价:88.00</div>
-                            </div>
-                        </div>
-                        </a>
-                        <a href="#">
-                        <div class="index-body-nav2-single-p2">
-                            <img src="themes/axlmpc/axlm_new/images/axlm-pp1.jpg">
-                            <div class="index-body-nav2-single-p2-price">
-                                RMB 99.00
-                                <div class="index-body-nav2-single-p2-price2">原价:88.00</div>
-                            </div>
-                        </div>
-                        </a>
-                        <a href="#">
-                        <div class="index-body-nav2-single-p2">
-                            <img src="themes/axlmpc/axlm_new/images/axlm-pp1.jpg">
-                            <div class="index-body-nav2-single-p2-price">
-                                RMB 99.00
-                                <div class="index-body-nav2-single-p2-price2">原价:88.00</div>
-                            </div>
-                        </div>
-                        </a>
-                        <a href="#">
+                        <!--{if $floor_goods_list[3].goods_list}--> 
+                                <!--{foreach from=$floor_goods_list[3].goods_list item=c key=key}--> 
+                                    <!--{if $key neq 0}-->
+                                    <a href="goods.php?id={$c.id}">
+                                    <div class="index-body-nav2-single-p2">
+                                        <img src="{$c.thumb}">
+                                        <div class="index-body-nav2-single-p2-price">
+                                            RMB {$c.shop_price}
+                                            <div class="index-body-nav2-single-p2-price2">原价:{$c.market_price}</div>
+                                        </div>
+                                    </div>
+                                    </a>
+                                    <!--{/if}-->
+                                <!--{/foreach}-->
+                                <!--{/if}-->
                     </div>
-                    <a href="#">
-                	<div class="index-body-nav2-single-p1">
-                    	<img src="themes/axlmpc/axlm_new/images/axlm-pp1.jpg">
-                        <div class="index-body-nav2-single-p1-info">
-                        	<div class="index-body-nav2-single-p1-info-bt">KEEP IT COOL AND CASUAL</div>
-                            <div class="index-body-nav2-single-p1-info-price">
-                            	RMB 99.00
-                            	<span class="index-body-nav2-single-p1-info-price2">原价:88.00</span>    
-                            </div>
-                        </div>
-                    </div>
-                    </a>
+                    <!--{if $floor_goods_list[3].goods_list}--> 
+                                <!--{foreach from=$floor_goods_list[3].goods_list item=c key=key}-->
+                                    <!--{if $key eq 0}-->
+                                    <a href="goods.php?id={$c.id}">
+                                        <div class="index-body-nav2-single-p1">
+                                            <img src="{$c.thumb}">
+                                            <div class="index-body-nav2-single-p1-info">
+                                                    <div class="index-body-nav2-single-p1-info-bt">{$c.name}</div>
+                                                <div class="index-body-nav2-single-p1-info-price">
+                                                    RMB {$c.shop_price}
+                                                    <span class="index-body-nav2-single-p1-info-price2">原价:{$c.market_price}</span>    
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <!--{/if}-->
+                                <!--{/foreach}-->
+                            <!--{/if}-->
                 </div>
             </div>
+<!--{/if}-->
 			<!--floor4 end-->
         </div>
         
