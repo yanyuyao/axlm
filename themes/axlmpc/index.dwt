@@ -44,9 +44,9 @@
             <ul class="index-body-content index-body-nav1-p">
                 <!--{foreach from=$hot_goods item=g key=key}--> 
                     <!--{if $key eq 0}-->
-                        <li class="index-body-nav1-p-lifirst"><a href="{$g.url}"><img src="{$g.thumb"></a></li>
+                        <li class="index-body-nav1-p-lifirst"><a href="{$g.url}"><img src="{$g.thumb}"></a></li>
                     <!--{elseif $key eq 1}-->
-                        <li><a href="{$g.url}"><img src="{$g.thumb"></a></li>
+                        <li><a href="{$g.url}"><img src="{$g.thumb}"></a></li>
                     <!--{else}-->
                     <!--{/if}-->
                 <!--{/foreach}-->
