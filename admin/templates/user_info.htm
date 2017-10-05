@@ -10,7 +10,6 @@
     <td class="label">{$lang.username}:</td>
     <td>{if $form_action eq "update"}{$user.user_name}<input type="hidden" name="username" value="{$user.user_name}" />{else}<input type="text" name="username" maxlength="60" value="{$user.user_name}" />{$lang.require_field}{/if}</td>
   </tr>
-  <
   {if $form_action eq "update"}
   <tr style="display:none;">
     <td class="label">{$lang.user_money}:</td>
@@ -247,10 +246,12 @@
   </tr>
   {/if}
   {if $affiliate.on eq 1 && $affdb}
+ 
   <tr>
     <td class="label">{$lang.affiliate_user}:</td>
     <td>[<a href="users.php?act=aff_list&auid={$user.user_id}">{$lang.show_affiliate_users}</a>][<a href="affiliate_ck.php?act=list&auid={$user.user_id}">{$lang.show_affiliate_orders}</a>]</td>
   </tr>
+   <!--
   <tr>
     <td></td>
     <td>   
@@ -270,6 +271,7 @@
     </table>
     </td>
   </tr>
+  -->
   {/if}
   <tr>
     <td colspan="2" align="center">
