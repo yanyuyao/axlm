@@ -353,6 +353,8 @@ function action_zhuanzhang(){
         if($touser){
             $touser = $db->getOne('select user_id from '.$ecs->table('users')." where user_name = '$touser'");
         }
+		
+	
         
 	$step = "default";
 	//检查密码
@@ -389,7 +391,7 @@ function action_zhuanzhang(){
                             $smarty->assign("msg",$msg);
                             $step = 'zhuanzhang';
                     }else{
-                           // zhangzhangLog('account_xianjinbi',$user_id,$touser,$amount);
+                            zhangzhangLog('account_xianjinbi',$user_id,$touser,$amount);
                             $step = 'success';
                     }
                 }
