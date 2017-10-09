@@ -2117,7 +2117,7 @@ function countdown(obj, msg) {
 							<!-- {/foreach} -->
 						</select>
 					  </div>
-					  <!-- {if !$pc_user.tuijianren_user_id} -->
+					  <!-- {if !$pc_user.tuijianren_user_id && $pc_user.tuijianren_user_id != null} -->
 						<div class="find_box_end">
 						  <p class="on_go"> <a href="security.php"  class="back">返回账户安全中心&gt;&gt;</a> </p>
 						</div>
