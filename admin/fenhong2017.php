@@ -52,17 +52,21 @@ if ($_REQUEST['act'] == 'list')
     
     
     $fenhongchi = $db->getOne("select svalue from ".$ecs->table('pc_config')." where sname = 'fenhongchi'");
-    $pc_user_list = $db->getAll("select id,uid,account_jifenbi from ".$ecs->table('pc_user')." where account_jifenbi > 0 and status = 1");
+	//echo "select id,uid,account_jifenbi,account_fenhong_amount from ".$ecs->table('pc_user')." where account_jifenbi > 0 and status = 1";
+    $pc_user_list = $db->getAll("select id,uid,account_jifenbi,account_fenhong_amount from ".$ecs->table('pc_user')." where account_jifenbi > 0 and status = 1");
     $pc_fenhongdian = array();
     $pc_total_fenhongdian = 0;
     foreach($pc_user_list as $k=>$v){
         $pc_fenhongdian[] = array(
             "uid"=>$v['uid'],
             "account_jifenbi"=>$v['account_jifenbi'],
-            "fenhongdain"=>intval($v['account_jifenbi']/360)
+            "account_fenhong_amount"=>$v['account_fenhong_amount'],
+            "fenhongdain"=>intval($v['account_jifenbi']/360)-intval($v['account_fenhong_amount']/360) //剩余的分红点，去除掉已分红的点
         );
-        $pc_total_fenhongdian += intval($v['account_jifenbi']/360);
+		
+        $pc_total_fenhongdian += intval($v['account_jifenbi']/360)-intval($v['account_fenhong_amount']/360);
     }
+	//var_dump($pc_fenhongdian);
     $smarty->assign("fenhongchi",$fenhongchi);
     $smarty->assign("fenhong_total_user",count($pc_user_list));
     $smarty->assign("fenhong_total_dian",$pc_total_fenhongdian);
@@ -155,7 +159,8 @@ elseif ($_REQUEST['act'] == 'day')
 //系统执行调用 将当日分红金额，累计到分红池
 elseif ($_REQUEST['act'] == 'daytrade')
 {
-    $bili = floatval(isset($_REQUEST['fenhong_bili'])?$_REQUEST['fenhong_bili']:0);
+    //$bili = floatval(isset($_REQUEST['fenhong_bili'])?$_REQUEST['fenhong_bili']:0);
+    $bili = 0.1;
     //echo $bili;
     if($bili > 0.1){
         sys_msg('分红比例最高不能超过10%', 0 ,$links);

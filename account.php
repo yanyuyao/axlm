@@ -40,7 +40,7 @@ $back_act = '';
 *
 */
 $not_login_arr = array(
-	'default', 'detaillog','show_expend_users','zhuanzhang','zhuanzhanglog'
+	'default', 'detaillog','show_expend_users','zhuanzhang','zhuanzhanglog','fenhonglog'
 );
 /* 余额额支付密码_更改_END_www.cfweb2015.com */
 
@@ -211,8 +211,11 @@ function action_detaillog()
 	$db = $GLOBALS['db'];
 	$ecs = $GLOBALS['ecs'];
 	$user_id = $_SESSION['user_id'];
-	
-	$sql = "select * from ".$ecs->table('pc_user_account_log')." where uid = ".$user_id;
+	if(isset($_REQUEST['type']) && $_REQUEST['type'] == 'fenhonglog'){
+		$sql = "select * from ".$ecs->table('pc_user_account_log')." where uid = ".$user_id." and note like '%分红%'";
+	}else{
+		$sql = "select * from ".$ecs->table('pc_user_account_log')." where uid = ".$user_id;
+	}
 	//echo $sql;
 	$detaillog = $db->getAll($sql);
 	

@@ -1374,6 +1374,7 @@ function pc_set_zhitui_fanli($fuid,$puid,$oid,$good_amount){
 function fenhongjisuan($bili='0.1',$type=""){
     $ecs = $GLOBALS['ecs'];
     $db = $GLOBALS['db'];
+	
     //累计分红到分红池
     if($type == "leiji"){
          //计算已付款的所有订单，当天的付款，且付款时间是今日
@@ -1388,8 +1389,11 @@ function fenhongjisuan($bili='0.1',$type=""){
         $bili = $bili;
         
         if($db->getOne("select id from ".$ecs->table('pc_day_amount_fenhong_log')." where fenhong_date = '".$cur_date."'")){
-            sys_msg('已存在【'.date('Y-m-d').'】分红记录', 0 ,$links);
-            return 0;
+            //sys_msg('已存在【'.date('Y-m-d').'】分红记录', 0 ,$links);
+			$fenhong_cron_log = fopen("data/fenhong_cron_log.log","a+");
+            fwrite($fenhong_cron_log,"已存在【'.date('Y-m-d').'】分红记录\r\n");
+			fclose($fenhong_cron_log);
+			return 0;
         }
         
         $sql = "select order_id, user_id,order_amount,pay_time from ".$ecs->table('order_info')." where pay_time > ".$start_time." and pay_time < ".$end_time." and pay_status = 2 ";
@@ -1399,7 +1403,10 @@ function fenhongjisuan($bili='0.1',$type=""){
         //echo $sumsql;
 		$trade_today = floatval($db->getOne($sumsql));
         if(!$trade_today){
-            sys_msg('交易额为0，不可分红', 0 ,$links);
+			$fenhong_cron_log = fopen("data/fenhong_cron_log.log","a+");
+            fwrite($fenhong_cron_log,"【".date('Y-m-d')."】交易额为0，不可分红\r\n");
+			fclose($fenhong_cron_log);
+            //sys_msg('交易额为0，不可分红', 0 ,$links);
             return 0;
         }
         $trade_fanli_today = $trade_today * $bili;
@@ -1427,7 +1434,9 @@ function fenhongjisuan($bili='0.1',$type=""){
                 ")";
 //        echo $sql."<br>";
         $db->query($sql);
-        
+        $fenhong_cron_log = fopen("data/fenhong_cron_log.log","a+");
+		fwrite($fenhong_cron_log,"【".date('Y-m-d')."】执行完成\r\n");
+		fclose($fenhong_cron_log);
         
     }elseif($type == 'fenhong'){ //给每个人符合条件的人分红
                 $cur_date = date("Y-m-d");
@@ -1440,17 +1449,20 @@ function fenhongjisuan($bili='0.1',$type=""){
                     return 0;
                 }
                 
-                $pc_user_list = $db->getAll("select id,uid,account_jifenbi from ".$ecs->table('pc_user')." where account_jifenbi > 0 and status = 1");
+                $pc_user_list = $db->getAll("select id,uid,account_jifenbi,account_fenhong_amount from ".$ecs->table('pc_user')." where account_jifenbi > 0 and status = 1");
                 $pc_fenhongdian = array();
                 $pc_total_fenhongdian = 0;
                 foreach($pc_user_list as $k=>$v){
                     $pc_fenhongdian[] = array(
                         "user_id"=>$v['uid'],
                         "account_jifenbi"=>$v['account_jifenbi'],
-                        "fenhongdain"=>intval($v['account_jifenbi']/360),
-                        "fenhong_user_money"=>$fenhong_user_money*intval($v['account_jifenbi']/360)
+						"account_fenhong_amount"=>$v['account_fenhong_amount'],
+                        "fenhong_user_money"=>$fenhong_user_money*(intval($v['account_jifenbi']/360)-intval($v['account_fenhong_amount']/360)),
+                        //"fenhongdain"=>intval($v['account_jifenbi']/360),
+						"fenhongdain"=>intval($v['account_jifenbi']/360)-intval($v['account_fenhong_amount']/360), //剩余的分红点，去除掉已分红的点
                     );
-                    $pc_total_fenhongdian += intval($v['account_jifenbi']/360);
+                    //$pc_total_fenhongdian += intval($v['account_jifenbi']/360);
+					$pc_total_fenhongdian += intval($v['account_jifenbi']/360)-intval($v['account_fenhong_amount']/360);
                 }
                
                 $trade_today = $pc_total_fenhongdian * $fenhong_user_money; //今日总分红点金额
@@ -1492,7 +1504,7 @@ function fenhongjisuan($bili='0.1',$type=""){
                              "'".$original_value."',".
                              "'".$change_value."',".
                              "'".$new_value."',".
-                             "'分红返利',".
+                             "'分红',".
                              "'0',".
                              "'".time()."' ".
                      ")";

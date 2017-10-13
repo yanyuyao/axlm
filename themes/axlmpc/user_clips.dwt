@@ -30,8 +30,8 @@
         <ul class="clearfix">
           <li class="first">
             <div class="title"><span>账号余额</span></div>
-            <div class="pic"><a href="user.php?act=account_log"><i class="user_bg"></i></a></div>
-            <p><a href="user.php?act=account_log">{$info.surplus}</a></p>
+            <div class="pic"><a href="account.php"><i class="user_bg"></i></a></div>
+            <p><a href="account.php">￥{$pc_user.account_xianjinbi}</a></p>
           </li>
 		  
           <li class="second">
@@ -41,9 +41,9 @@
           </li>
 		  
           <li class="third">
-            <div class="title"><span>可用积分</span></div>
-            <div class="pic"><i class="user_bg"></i></div>
-            <p><a href="exchange.php">{$info.integral}</a></p>
+            <div class="title"><span>可用积分币</span></div>
+            <div class="pic">积分币：{$pc_user.shengyu_jifenbi}</div>
+            <p><a href="account.php">已分红：{$pc_user.account_fenhong_amount}</a></p>
           </li>
         </ul>
       </div>

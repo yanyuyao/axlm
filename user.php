@@ -459,6 +459,11 @@ function action_default ()
     $smarty->assign('recomm', $recomm); // 获取当前用户是否是分成用户判断是否显示我的推荐
 	/* 代码增加--cb--推荐分成-- by www.cfweb2015.com _end */
 	
+	$pc_user_info = $db->getRow("select * from ".$ecs->table('pc_user')." where uid = ".$user_id);
+	if($pc_user_info){
+		$pc_user_info['shengyu_jifenbi'] = $pc_user_info['account_jifenbi']-$pc_user_info['account_fenhong_amount'];
+	}
+	$smarty->assign("pc_user",$pc_user_info);
 	$smarty->assign('info', get_user_default($user_id)); // 获取用户中心默认页面所需的数据
 	$smarty->assign('gouwuche', get_user_gouwuche($user_id)); // 获取当前用户购物车里面的数据
 	$smarty->assign('jifen', get_user_jifen()); // 获取当前积分商城里面的数据
