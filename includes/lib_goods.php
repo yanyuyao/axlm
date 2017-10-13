@@ -517,16 +517,17 @@ function get_category_recommend_goods2($type = '', $cats = '', $brand = 0, $min 
 
     $sql =  'SELECT g.goods_id, g.goods_name, g.goods_name_style,g.goods_brief, g.market_price,g.is_best,g.is_new,g.is_hot,g.shop_price AS org_price, g.promote_price, ' .
                 "IFNULL(mp.user_price, g.shop_price * '$_SESSION[discount]') AS shop_price, ".
-                'promote_start_date, promote_end_date, g.goods_brief, g.goods_thumb, goods_img, b.brand_name ' .
+                'promote_start_date, promote_end_date, g.goods_brief, g.goods_thumb, goods_img,original_img, b.brand_name ' .
             'FROM ' . $GLOBALS['ecs']->table('goods') . ' AS g ' .
             'LEFT JOIN ' . $GLOBALS['ecs']->table('brand') . ' AS b ON b.brand_id = g.brand_id ' .
             "LEFT JOIN " . $GLOBALS['ecs']->table('member_price') . " AS mp ".
                     "ON mp.goods_id = g.goods_id AND mp.user_rank = '$_SESSION[user_rank]' ".
             'WHERE g.is_on_sale = 1 AND g.is_alone_sale = 1 AND g.is_delete = 0 ' . $brand_where . $price_where . $ext;
+	//echo $sql;
     $num = 0;
     $type2lib = array('best'=>'recommend_best', 'new'=>'recommend_new', 'hot'=>'recommend_hot', 'promote'=>'recommend_promotion');
-    $num = get_library_number($type2lib[$type]);
-
+    //$num = get_library_number($type2lib[$type]);
+	$num = 5;
     switch ($type)
     {
         case 'best':
@@ -590,6 +591,7 @@ function get_category_recommend_goods2($type = '', $cats = '', $brand = 0, $min 
         $goods[$idx]['shop_price']   = price_format($row['shop_price']);
         $goods[$idx]['thumb']        = get_image_path($row['goods_id'], $row['goods_thumb'], true);
         $goods[$idx]['goods_img']    = get_image_path($row['goods_id'], $row['goods_img']);
+        $goods[$idx]['original_img']    = get_image_path($row['goods_id'], $row['original_img']);
         $goods[$idx]['url']          = build_uri('goods', array('gid' => $row['goods_id']), $row['goods_name']);
         $goods[$idx]['short_style_name'] = add_style($goods[$idx]['short_name'], $row['goods_name_style']);
         $idx++;
@@ -597,7 +599,12 @@ function get_category_recommend_goods2($type = '', $cats = '', $brand = 0, $min 
 
     return $goods;
 }
-
+function get_lianmeng_shangjia(){
+	$sql = "select * from ".$GLOBALS['ecs']->table('supplier_street')." where status = 1 ";
+	//echo $sql;
+	$list = $GLOBALS['db']->getAll($sql);
+	return $list;
+}
 /**
  * 获得商品的详细信息
  *

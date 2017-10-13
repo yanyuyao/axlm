@@ -200,8 +200,11 @@ if (!$smarty->is_cached('index.dwt', $cache_id))
                 );
         }
     }
-  
-   // var_dump($floor_goods_list);
+	
+	$lianmengshangjia_list = get_lianmeng_shangjia();
+	//var_dump($lianmengshangjia_list);
+	$smarty->assign("lianmengshangjia_list",$lianmengshangjia_list);
+    //var_dump($floor_goods_list);
     $smarty->assign('cat_goods_list',  $cat_goods_list);
     $smarty->assign('floor_goods_list',  $floor_goods_list);
 

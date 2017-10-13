@@ -3,12 +3,16 @@
   <div class="user-joinin"> {insert name='member_info1'}
     <dl>
       <dt>欢迎来到 爱心联盟 商城</dt>
-      <dd> 若您还没有填写入驻申请资料<br>
+      <dd style="margin-top:-10px;"> 若您还没有填写入驻申请资料<br>
         请点击“<a href="{if !$smarty.session.user_id >0}javascript:;{else}apply.php{/if}">我要入驻</a>”进行入驻资料填写</dd>
-      <dd>若您的店铺还未开通<br>
+      <dd style="margin-top:-10px;">若您的店铺还未开通<br>
         请通过“<a href="{if !$smarty.session.user_id >0}javascript:;{else}apply.php{/if}">查看入驻进度</a>”了解店铺开通的最新状况 </dd>
     </dl>
-    <div class="bottom"><a href="{if !$smarty.session.user_id >0}javascript:;{else}apply.php{/if}" target="_blank">我要入驻</a><a href="{if !$smarty.session.user_id >0}javascript:;{else}apply.php{/if}" target="_blank">查看入驻进度</a></div>
+    <div class="bottom">
+		<a href="{if !$smarty.session.user_id >0}javascript:;{else}apply.php{/if}" target="_blank">我要入驻</a>
+		<a href="{if !$smarty.session.user_id >0}javascript:;{else}apply.php{/if}" target="_blank">查看入驻进度</a>
+		<a href="/supplier/" style="margin-top:10px;">登录商家管理中心</a>
+	</div>
   </div>
 </div>
 <!--登陆弹框-->

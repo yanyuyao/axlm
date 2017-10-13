@@ -98,7 +98,7 @@
                                     <!--{if $key neq 0}-->
                                     <a href="goods.php?id={$c.id}">
                                     <div class="index-body-nav2-single-p2">
-                                        <img src="{$c.thumb}">
+                                        <img src="{$c.original_img}">
                                         <div class="index-body-nav2-single-p2-price">
                                             RMB {$c.shop_price}
                                             <div class="index-body-nav2-single-p2-price2">原价:{$c.market_price}</div>
@@ -114,7 +114,7 @@
                                     <!--{if $key eq 0}-->
                                     <a href="goods.php?id={$c.id}">
                                         <div class="index-body-nav2-single-p1">
-                                            <img src="{$c.thumb}">
+                                            <img src="{$c.original_img}">
                                             <div class="index-body-nav2-single-p1-info">
                                                     <div class="index-body-nav2-single-p1-info-bt">{$c.name}</div>
                                                 <div class="index-body-nav2-single-p1-info-price">
@@ -159,7 +159,7 @@
                                     <!--{if $key neq 0}-->
                                     <a href="goods.php?id={$c.id}">
                                     <div class="index-body-nav2-single-p2">
-                                        <img src="{$c.thumb}">
+                                        <img src="{$c.original_img}">
                                         <div class="index-body-nav2-single-p2-price">
                                             RMB {$c.shop_price}
                                             <div class="index-body-nav2-single-p2-price2">原价:{$c.market_price}</div>
@@ -175,7 +175,7 @@
                                     <!--{if $key eq 0}-->
                                     <a href="goods.php?id={$c.id}">
                                         <div class="index-body-nav2-single-p1">
-                                            <img src="{$c.thumb}">
+                                            <img src="{$c.original_img}">
                                             <div class="index-body-nav2-single-p1-info">
                                                     <div class="index-body-nav2-single-p1-info-bt">{$c.name}</div>
                                                 <div class="index-body-nav2-single-p1-info-price">
@@ -220,7 +220,7 @@
                                     <!--{if $key neq 0}-->
                                     <a href="goods.php?id={$c.id}">
                                     <div class="index-body-nav2-single-p2">
-                                        <img src="{$c.thumb}">
+                                        <img src="{$c.original_img}">
                                         <div class="index-body-nav2-single-p2-price">
                                             RMB {$c.shop_price}
                                             <div class="index-body-nav2-single-p2-price2">原价:{$c.market_price}</div>
@@ -236,7 +236,7 @@
                                     <!--{if $key eq 0}-->
                                     <a href="goods.php?id={$c.id}">
                                         <div class="index-body-nav2-single-p1">
-                                            <img src="{$c.thumb}">
+                                            <img src="{$c.original_img}">
                                             <div class="index-body-nav2-single-p1-info">
                                                     <div class="index-body-nav2-single-p1-info-bt">{$c.name}</div>
                                                 <div class="index-body-nav2-single-p1-info-price">
@@ -254,37 +254,25 @@
 <!--{/if}-->
 			<!--floor3 end-->
 			<!--floor4 start-->
-<!--{if isset($floor_goods_list[3])}-->
+<!--{if $lianmengshangjia_list} -->
         	<div class="index-body-content index-body-nav2-single index-body-nav2-single-4f">
             	<div class="index-body-nav2-single-left">
                 	<div class="index-body-nav2-single-left-btk">
                     	<div class="index-body-nav2-single-left-floor">4F</div>
-                        <div class="index-body-nav2-single-left-bt">{$floor_goods_list[3].cat_name}</div>
-                        <a href="category.php?id={$floor_goods_list[3].cat_id}"><div class="index-body-nav2-single-left-more">MORE></div></a>
+                        <div class="index-body-nav2-single-left-bt">联盟商家</div>
+                        <a href="stores.php"><div class="index-body-nav2-single-left-more">MORE></div></a>
                     </div>
-		<ul>
-                    	<!--{if $floor_goods_list[3].subCategory} -->
-                            <!--{foreach from=$floor_goods_list[3].subCategory item=c key=key}-->
-                                <!--{if $key eq 0}-->
-                                    <a href="category.php?id={$c.cat_id}"><li class="index-body-nav2-single-left-list-active">{$c.cat_name}</li></a>
-                                <!--{else}-->
-                                    <a href="category.php?id={$c.cat_id}"><li>{$c.cat_name}</li></a>
-                                <!--{/if}-->
-                            <!--{/foreach}-->
-                        <!--{/if}-->
-                    </ul>
                 </div>
                 <div class="index-body-nav2-single-p">
                 	<div class="index-body-nav2-single-p2k">
-                        <!--{if $floor_goods_list[3].goods_list}--> 
-                                <!--{foreach from=$floor_goods_list[3].goods_list item=c key=key}--> 
+                        <!--{if $lianmengshangjia_list}--> 
+                                <!--{foreach from=$lianmengshangjia_list item=c key=key}--> 
                                     <!--{if $key neq 0}-->
-                                    <a href="goods.php?id={$c.id}">
+                                    <a href="supplier.php?suppId={$c.supplier_id}">
                                     <div class="index-body-nav2-single-p2">
-                                        <img src="{$c.thumb}">
+                                        <img src="{$c.logo}">
                                         <div class="index-body-nav2-single-p2-price">
-                                            RMB {$c.shop_price}
-                                            <div class="index-body-nav2-single-p2-price2">原价:{$c.market_price}</div>
+                                            {$c.supplier_name}
                                         </div>
                                     </div>
                                     </a>
@@ -292,17 +280,16 @@
                                 <!--{/foreach}-->
                                 <!--{/if}-->
                     </div>
-                    <!--{if $floor_goods_list[3].goods_list}--> 
-                                <!--{foreach from=$floor_goods_list[3].goods_list item=c key=key}-->
+                    <!--{if $lianmengshangjia_list}--> 
+                                <!--{foreach from=$lianmengshangjia_list item=c key=key}-->
                                     <!--{if $key eq 0}-->
-                                    <a href="goods.php?id={$c.id}">
+                                    <a href="supplier.php?suppId={$c.supplier_id}">
                                         <div class="index-body-nav2-single-p1">
-                                            <img src="{$c.thumb}">
+                                            <img src="{$c.logo}">
                                             <div class="index-body-nav2-single-p1-info">
-                                                    <div class="index-body-nav2-single-p1-info-bt">{$c.name}</div>
+                                                    <div class="index-body-nav2-single-p1-info-bt">{$c.supplier_name}</div>
                                                 <div class="index-body-nav2-single-p1-info-price">
-                                                    RMB {$c.shop_price}
-                                                    <span class="index-body-nav2-single-p1-info-price2">原价:{$c.market_price}</span>    
+                                                    
                                                 </div>
                                             </div>
                                         </div>
