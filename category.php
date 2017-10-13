@@ -664,7 +664,7 @@ $display  = (isset($_REQUEST['display']) && in_array(trim(strtolower($_REQUEST['
 				$goodslist[] = array();
 			}
 		}
-        file_put_contents('./33$goodslist$goodslist$goodslist.txt',var_export($goodslist,true));
+        //file_put_contents('./33$goodslist$goodslist$goodslist.txt',var_export($goodslist,true));
 		$smarty->assign('goods_list',       $goodslist);
 		$smarty->assign('category',         $cat_id);
 		$smarty->assign('script_name', 'category');

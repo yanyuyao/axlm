@@ -100,13 +100,15 @@
                             {insert name='customer_service'}
                         </div>
                     </li>
+					<!--
                     <li class="quick-area">
                     	<a class="quick-links-a" href="javascript:;"><i class="qr-code"></i></a>
-                        <div class="sidebar-code quick-sidebar">
+                        <div class="sidebar-code quick-sidebar" style="">
                         	<i class="arrow-right"></i>
                             <img src="themes/axlmpc/images/weixin.jpg"/>
                         </div>
                     </li>
+					-->
                     <li class="returnTop">
                         <a href="javascript:;" class="return_top quick-links-a"><i class="top"></i></a>
                         <div class="popup">

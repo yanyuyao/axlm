@@ -170,6 +170,7 @@ function payment_info2($pay_id)
     return $GLOBALS['db']->getRow($sql);
 }
 function action_myinfo(){
+	
      $_LANG = $GLOBALS['_LANG'];
     $smarty = $GLOBALS['smarty'];
     $db = $GLOBALS['db'];
@@ -5036,8 +5037,8 @@ function action_affiliate ()
 	}
 	$affiliate['on'] = 1;
 	$recomm = 1;
-    file_put_contents('./33$affiliate.txt',var_export($affiliate,true));
-    file_put_contents('./33$recomm.txt',var_export($recomm,true));
+    //file_put_contents('./33$affiliate.txt',var_export($affiliate,true));
+    //file_put_contents('./33$recomm.txt',var_export($recomm,true));
 	$smarty->assign('shopname', $_CFG['shop_name']);
 	$smarty->assign('userid', $user_id);
 	$smarty->assign('shopurl', $ecs->url());

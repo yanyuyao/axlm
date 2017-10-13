@@ -353,8 +353,6 @@ function action_zhuanzhang(){
         if($touser){
             $touser = $db->getOne('select user_id from '.$ecs->table('users')." where user_name = '$touser'");
         }
-		
-	
         
 	$step = "default";
 	//检查密码

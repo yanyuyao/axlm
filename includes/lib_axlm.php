@@ -1381,6 +1381,10 @@ function fenhongjisuan($bili='0.1',$type=""){
         //$cur_date = "2017-09-19";
         $start_time = strtotime($cur_date." 00:00:00");
         $end_time = strtotime($cur_date." 23:59:59");
+		
+		//$start_time = strtotime("2017-08-01 00:00:00");
+        //$end_time = strtotime("2017-10-05 23:59:59");
+		
         $bili = $bili;
         
         if($db->getOne("select id from ".$ecs->table('pc_day_amount_fenhong_log')." where fenhong_date = '".$cur_date."'")){
@@ -1392,7 +1396,8 @@ function fenhongjisuan($bili='0.1',$type=""){
         $order_list = $db->getAll($sql);
 
         $sumsql = "select sum(order_amount) from ".$ecs->table('order_info')." where pay_time > ".$start_time." and pay_time < ".$end_time." and pay_status = 2 ";
-        $trade_today = floatval($db->getOne($sumsql));
+        //echo $sumsql;
+		$trade_today = floatval($db->getOne($sumsql));
         if(!$trade_today){
             sys_msg('交易额为0，不可分红', 0 ,$links);
             return 0;

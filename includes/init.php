@@ -24,7 +24,7 @@ $is_show_wap = false;
 //}
 
 error_reporting(0);
-
+date_default_timezone_set('PRC');
 if (__FILE__ == '')
 {
     die('Fatal error code: 0');

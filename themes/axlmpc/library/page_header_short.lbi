@@ -9,9 +9,9 @@
             </ul>
             <img class="hy-header-logo" src="/themes/axlmpc/axlm_new/images/axlm-logo.png" style="margin-top:10px;">
             <ul class="hy-header-right">
-                <a href="index.php"><li>新闻资讯</li></a>
-                <a href="catalog.php"><li>使用教程</li></a>
-                <a href="stores.php"><li class="hy-header-person"><img class="hy-header-person-icon" src="/themes/axlmpc/axlm_new/images/axlm-person.png">个人中心</li></a>
+                <a href="article_list.php"><li>新闻资讯</li></a>
+                <a href="help.php"><li>使用教程</li></a>
+                <a href="user.php"><li class="hy-header-person"><img class="hy-header-person-icon" src="/themes/axlmpc/axlm_new/images/axlm-person.png">个人中心</li></a>
             </ul>
         </div>
     </header>

@@ -412,11 +412,13 @@ function add_booking($booking)
  */
 function insert_user_account($surplus, $amount)
 {
+	var_dump($surplus);
+	
     $sql = 'INSERT INTO ' .$GLOBALS['ecs']->table('user_account').
            ' (user_id, admin_user, amount, add_time, paid_time, admin_note, user_note, process_type, payment, is_paid,tixian_account_info, tixian_account_type,tixian_account_realname,tixian_account_yinhang)'.
             " VALUES ('$surplus[user_id]', '', '$amount', '".gmtime()."', 0, '', '$surplus[user_note]', '$surplus[process_type]', '$surplus[payment]', 0, '".$surplus['tixian_account_info']."','".$surplus['tixian_account_type']."', '".$surplus['tixian_account_realname']."','".$surplus['tixian_account_yinhang']."')";
     $GLOBALS['db']->query($sql);
-	//echo $sql;
+	echo $sql;
     return $GLOBALS['db']->insert_id();
 }
 
