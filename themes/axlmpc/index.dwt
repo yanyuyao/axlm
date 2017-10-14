@@ -69,7 +69,31 @@
             </ul>
             <div class="index-body-nav1-p-bt"><a href="goods.php?id=294" style="color:#fff;">海洋生物抗菌多肽妇洁凝胶</a></div>
         </div>
+	<style>
+		#left-banner-box{
+		-webkit-transition: all .5s ease-out;
+        -moz-transition: all .5s ease-out;
+        -o-transition: all .5s ease-out;
+        transition: all .5s ease-out;
+        POSITION:absolute;
+        TOP:150px;
+        width:200px;
+        height:587px;
+		left:100px;
+		z-index:9999;
+		}
+	</style>
+	<script language="JavaScript" type="text/javascript">
+		document.onscroll=function(){
+			document.getElementById("left-banner-box").style.top=document.body.scrollTop+150+'px';
+		};
+		 
+	</script>
+	<!-- left banner -->
+		<a href="search.php"><img src="/images/left-banner.png" id="left-banner-box"/></a>
+	<!-- end left banner -->
         <div class="index-body-nav2">
+			
         	<!--floor1 start-->
                 <!--{if isset($floor_goods_list[0])}-->
         	<div class="index-body-content index-body-nav2-single index-body-nav2-single-1f">
