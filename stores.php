@@ -34,6 +34,20 @@ date_default_timezone_set('PRC');
 $smarty->assign('time',$time);
 $smarty->assign('online_bonus',$row);
 
+if(isset($_REQUEST['act']) && $_REQUEST['act'] =='map' ){
+	$title = isset($_REQUEST['shop_title'])?$_REQUEST['shop_title']:'';
+	$suppid = isset($_REQUEST['suppid'])?$_REQUEST['suppid']:'';
+	if($suppid){
+		$supplier_sql = "select supplier_name,company_name,address,latitude,longitude from ".$GLOBALS['ecs']->table('supplier')." where supplier_id = ".$suppid;
+		//echo $supplier_sql;
+		$supplier_data = $GLOBALS['db']->getRow($supplier_sql);
+		//var_dump($supplier_data);
+		$smarty->assign("info",$supplier_data);
+		$smarty->display('map.dwt');
+		exit;
+	}
+}
+
 //判断 弹框登陆 验证码是否显示
 $captcha = intval($_CFG['captcha']);
 if(($captcha & CAPTCHA_LOGIN) && (! ($captcha & CAPTCHA_LOGIN_FAIL) || (($captcha & CAPTCHA_LOGIN_FAIL) && $_SESSION['login_fail'] > 2)) && gd_version() > 0)

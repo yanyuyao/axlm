@@ -32,6 +32,9 @@
       <p class="flow-desc">
       <span>所在地：</span>{$shop.address}
       </p>
+      <p class="flow-desc">
+      <span><a href="javascript:window.open ('/stores.php?act=map&suppid={$shop.supplier_id}', 'newwindow', 'height=570, width=710, top=100, left=200, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=n o, status=no');">查看地图</a><img src="/images/mapicon.png" width="16" height="16" border="0"  /></span>
+      </p>
       <p class="flow-desc"> 
       	<a href="supplier.php?suppId={$shop.supplier_id}" title="进入店铺，查看所有的商品">共<strong>{$shop.goods_number}</strong>件宝贝>></a> 
       </p>
