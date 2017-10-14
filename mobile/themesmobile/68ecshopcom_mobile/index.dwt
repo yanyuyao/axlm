@@ -108,9 +108,21 @@ window.setTimeout( "run()", 2000 );
 </li>
 </ul>
 </div>
+<!---妇女儿童--->
+<div class="brand">
+<h4><span>妇女儿童专区</span><i><a href="/mobile/category.php?id=367">更多</a></i></h4>
+<a href="/mobile/category.php?id=367"><img src="/mobile/images/funvertong-banner.jpg" style="width:100%;" /></a>
+</div>
+<!--- end 推荐爱心联盟商户--->
+<!---助老养残--->
+<div class="brand">
+<h4><span>助老养残专区</span><i><a href="/mobile/category.php?id=370">更多</a></i></h4>
+<a href="/mobile/category.php?id=370"><img src="/mobile/images/zhulaoyangcan.jpg" style="width:100%;" /></a>
+</div>
+<!--- end 推荐爱心联盟商户--->
 <!---推荐爱心联盟商户--->
 <div class="brand">
-<h4><span>商家联盟</span><i><a href="/mobile/supplier_near.php">更多</a></i></h4>
+<h4><span>联盟商家</span><i><a href="/mobile/supplier_near.php">更多</a></i></h4>
 <a href="/mobile/supplier_near.php"><img src="themesmobile/68ecshopcom_mobile/images/shops_banner.jpg" style="width:100%;" /></a>
 </div>
 <!--- end 推荐爱心联盟商户--->
