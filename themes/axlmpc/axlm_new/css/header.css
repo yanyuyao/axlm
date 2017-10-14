@@ -7,7 +7,7 @@ body{
 	margin:0;
 }
 .hy-header{
-	width:100%; min-width:1903px; text-align:center;
+	width:100%; /*min-width:1903px;*/ text-align:center;
 }
 .hy-header-content{
 	width:1140px; margin:0 auto; background-color:#fff; line-height:100px;

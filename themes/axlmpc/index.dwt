@@ -39,8 +39,8 @@
             <div class="index-body-nav1-bt">
             	孔雀计划
             </div>
-            <img class="index-body-nav1-p-info1" src="themes/axlmpc/axlm_new/images/axlm-p-info.png">
-            <a href="goods.php?id=294"><img class="index-body-nav1-p-info2" src="themes/axlmpc/axlm_new/images/axlm-p-info2.png"></a>
+            <img class="index-body-nav1-p-info1" src="themes/axlmpc/axlm_new/images/axlm-p-center.png">
+            <!--<a href="goods.php?id=294"><img class="index-body-nav1-p-info2" src="themes/axlmpc/axlm_new/images/axlm-p-info2.png"></a>-->
             <ul class="index-body-content index-body-nav1-p">
                 <!--{foreach from=$hot_goods item=g key=key}--> 
                     <!--{if $key eq 0}-->
@@ -82,12 +82,34 @@
 		left:100px;
 		z-index:9999;
 		}
+		@media only screen and (max-width:1280px){
+			#left-banner-box{
+				-webkit-transition: all .5s ease-out;
+				-moz-transition: all .5s ease-out;
+				-o-transition: all .5s ease-out;
+				transition: all .5s ease-out;
+				POSITION:absolute;
+				TOP:150px;
+				width:80px;
+				height:357px;
+				left:10px;
+				z-index:9999;
+			}
+		}
 	</style>
 	<script language="JavaScript" type="text/javascript">
 		document.onscroll=function(){
 			document.getElementById("left-banner-box").style.top=document.body.scrollTop+150+'px';
 		};
-		 
+		/*
+		window.onresize = function(){
+			 if(document.body.clientWidth <= 1280){
+				document.getElementById("left-banner-box").src="/images/left-banner-small.png";
+			 }else{
+				document.getElementById("left-banner-box").src="/images/left-banner.png";
+			 }
+		};
+		*/
 	</script>
 	<!-- left banner -->
 		<a href="search.php"><img src="/images/left-banner.png" id="left-banner-box"/></a>

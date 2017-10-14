@@ -4,7 +4,7 @@ body{
 	margin:0;
 }
 .index-body{
-	width:100%; text-align:center; min-width:1903px;
+	width:100%; text-align:center; /*min-width:1903px;*/
 }
 .index-swiper-container{	
 	width:100%; height:660px;
@@ -14,6 +14,7 @@ body{
 }
 .index-body-nav1{
 	width:100%; height:800px; position:relative; color:#fff; text-align:center; background-image:url(../images/axlm-bg1.png); background-size:cover; background-repeat:no-repeat;
+	background-position:center;
 }
 .index-body-nav1-text{
 	width:100%; text-align:center; line-height:20px; font-size:12px;
@@ -22,16 +23,18 @@ body{
 	font-size:20px; line-height:50px; font-weight:bold;
 }
 .index-body-nav1-bt{
-	position:absolute; width:198px; top:113px; left:860px; font-size:17px;
+	position:absolute; /*width:198px;*/ top:113px; /*left:860px;*/ font-size:17px;
+	width:100%;
+	text-align:center;
 }
 .index-body-nav1-p-info1{
-	position:absolute; top:260px; left:480px; width:956px; height:271px;
+	/*position:absolute; top:260px; top:220px; left:480px;*/ width:956px; /*height:271px;*/ height:335px;margin-top:130px;
 }
 .index-body-nav1-p-info2{
 	position:absolute; top:223px; left:795px; width:333px; height:335px;
 }
 .index-body-nav1-p{
-	padding:0; margin-top:500px;
+	padding:0; /*margin-top:500px;*/margin-top:40px;
 }
 .index-body-nav1-p li{
 	width:210px; height:135px; border:1px solid #c60029; box-shadow:1px 1px 3px #f0bac4; list-style:none; float:left; margin-left:22.5px;
@@ -43,7 +46,7 @@ body{
 	width:100%; height:100%;
 }
 .index-body-nav1-p-bt{
-	position:absolute; left:820px; bottom:16px; width:278px; font-size:17px;
+	position:absolute; /*left:820px;*/ bottom:16px; /*width:278px;*/ width:100%; font-size:17px;
 }
 .index-body-nav2{
 	width:100%; padding-top:330px; padding-bottom:10px; background-color:#eee; background-image:url(../images/axlm-bg2.jpg); background-repeat:no-repeat; background-position:top; background-size:100%;

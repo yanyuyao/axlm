@@ -4,7 +4,8 @@ body{
 	margin:0;
 }
 .hy-footer{
-	width:100%; min-width:1903px;
+	width:100%; 
+	/*min-width:1903px;*/
 }
 .hy-footer-nav1{
 	width:100%; background-color:#d2d5de; text-align:center;
