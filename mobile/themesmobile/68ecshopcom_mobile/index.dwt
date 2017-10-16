@@ -116,8 +116,8 @@ window.setTimeout( "run()", 2000 );
 <!--- end 推荐爱心联盟商户--->
 <!---助老养残--->
 <div class="brand">
-<h4><span>助老养残专区</span><i><a href="/mobile/category.php?id=370">更多</a></i></h4>
-<a href="/mobile/category.php?id=370"><img src="/mobile/images/zhulaoyangcan.jpg" style="width:100%;" /></a>
+<h4><span>助残养老专区</span><i><a href="/mobile/category.php?id=370">更多</a></i></h4>
+<a href="/mobile/category.php?id=370"><img src="/mobile/images/zhulaoyangcan.jpg?v=1" style="width:100%;" /></a>
 </div>
 <!--- end 推荐爱心联盟商户--->
 <!---推荐爱心联盟商户--->
