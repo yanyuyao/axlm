@@ -27,6 +27,7 @@ $smarty->assign("is_show_fenhong", $is_show_fenhong);
 
 
 /*新版微信改动*/
+/*
 if(isset($_GET['wxid']) && !isset($_GET['is_update']))
 {
 	if(inject_check($_GET['wxid'])){
@@ -72,6 +73,7 @@ else
 		}
 	}
 }
+*/
 /*end*/
 $user_id = isset($_SESSION['user_id'])?$_SESSION['user_id']:0;
 
