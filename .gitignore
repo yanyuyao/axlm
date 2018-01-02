@@ -12,3 +12,5 @@ images/
 admin/images/login_dl-heyu.jpg
 *.jpg
 *.json
+*.png
+*.jpg
